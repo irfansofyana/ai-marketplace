@@ -1,0 +1,8 @@
+{
+	"name": "personal-assistant",
+	"description": "Productivity plugin for article summarization, journal management, and bookmark organization using Claude Code",
+	"version": "1.0.0",
+	"author": {
+		"name": "irfansofyana"
+	}
+}
