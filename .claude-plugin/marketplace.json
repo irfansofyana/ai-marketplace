@@ -13,6 +13,11 @@
 			"name": "personal-assistant",
 			"source": "./plugins/01-personal-assistant",
 			"description": "Productivity plugin for article summarization, journal management, and bookmark organization"
+		},
+		{
+			"name": "common-engineering",
+			"source": "./plugins/02-common-engineering",
+			"description": "Foundational engineering tools for diagram generation and documentation"
 		}
 	]
 }
