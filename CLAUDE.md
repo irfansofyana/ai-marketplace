@@ -126,7 +126,7 @@ Commands are invoked as: `/plugin-name:command-name`
 ## Current Plugins
 
 - **00-test** (`./plugins/00-test`): Test plugin for learning the basics
-- **01-personal-assistant** (`./plugins/01-personal-assistant`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden)
+- **01-personal-assistant** (`./plugins/01-personal-assistant`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden). **Requires environment variables** - see `plugins/01-personal-assistant/README.md` for setup instructions.
 
 ## Adding a Command to an Existing Plugin
 

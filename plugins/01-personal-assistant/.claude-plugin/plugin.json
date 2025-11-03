@@ -4,5 +4,45 @@
 	"version": "1.0.0",
 	"author": {
 		"name": "irfansofyana"
+	},
+	"mcpServers": {
+		"mcp-logseq": {
+      		"type": "stdio",
+      		"command": "uv",
+      		"args": [
+        		"run",
+        		"--with",
+        		"mcp-logseq",
+        		"mcp-logseq"
+      		],
+      		"env": {
+        		"LOGSEQ_API_TOKEN": "${LOGSEQ_API_TOKEN}",
+        		"LOGSEQ_API_URL": "http://localhost:12315"
+      		}
+    	},
+		"exa": {
+			"type": "http",
+      		"url": "https://mcp.exa.ai/mcp",
+      		"headers": {}
+    	},
+		"linkwarden": {
+      		"type": "stdio",
+      		"command": "docker",
+      		"args": [
+        		"run",
+        		"--rm",
+        		"-i",
+        		"--init",
+        		"-e",
+        		"LINKWARDEN_BASE_URL=${LINKWARDEN_BASE_URL}",
+        		"-e",
+        		"LINKWARDEN_TOKEN=${LINKWARDEN_TOKEN}",
+				"ghcr.io/irfansofyana/linkwarden-mcp-server:v0.1.0"
+      		],
+			"env": {
+				"LINKWARDEN_BASE_URL": "${LINKWARDEN_BASE_URL}",
+				"LINKWARDEN_TOKEN": "${LINKWARDEN_TOKEN}"
+			}
+    	}
 	}
 }

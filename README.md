@@ -8,17 +8,15 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 
 ## Available Plugins
 
-### personal-assistant
+### [personal-assistant](./plugins/01-personal-assistant/)
 Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden).
 
-**Commands:**
-- `/personal-assistant:journal-entry` - Create new journal entries in Logseq
-- `/personal-assistant:search-journal` - Search your Logseq journals
-- `/personal-assistant:summarize-article` - Summarize articles from URLs with optional Linkwarden save
-- `/personal-assistant:save-bookmark` - Save bookmarks to Linkwarden with metadata
+See [plugins/01-personal-assistant/README.md](./plugins/01-personal-assistant/README.md) for detailed setup and usage instructions.
 
-### test-plugin
+### [test-plugin](./plugins/00-test/)
 A test plugin for learning and experimenting with the plugin system.
+
+See [plugins/00-test/](./plugins/00-test/) for plugin structure and examples.
 
 ## Getting Started
 
