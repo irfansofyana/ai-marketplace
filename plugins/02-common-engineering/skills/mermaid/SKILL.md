@@ -43,29 +43,45 @@ Sequence diagrams are interaction diagrams that show how processes operate with 
 
 After generating any sequence diagram, you MUST:
 
-1. **Create temp file:**
+1. **Create temp files:**
    ```bash
    echo "YOUR_SEQUENCE_DIAGRAM_HERE" > /tmp/mermaid_validate.mmd
    ```
 
-2. **Run validation:**
+2. **Run enhanced validation (your bash script approach):**
    ```bash
-   mmdc -i /tmp/mermaid_validate.mmd -o /tmp/mermaid_validate.svg -q 2>&1; echo $?
+   mmdc -i /tmp/mermaid_validate.mmd -o /tmp/mermaid_validate.svg 2>/tmp/mermaid_validate.err
+   rc=$?
+   if [ $rc -ne 0 ]; then
+     echo "🛑 mmdc failed (exit code $rc)."; cat /tmp/mermaid_validate.err; exit 1
+   fi
+
+   # Check SVG for error markers that mmdc might miss
+   if grep -q -i 'Syntax error in graph\|mermaidError\|errorText\|Parse error' /tmp/mermaid_validate.svg; then
+     echo "🛑 Mermaid syntax error found in output SVG"
+     exit 1
+   fi
+
+   # Verify SVG actually contains diagram content (not just error text)
+   if ! grep -q '<svg.*width.*height' /tmp/mermaid_validate.svg; then
+     echo "🛑 SVG output appears invalid or empty"
+     exit 1
+   fi
+
+   echo "✅ Diagram appears valid"
    ```
 
 3. **If validation fails, apply fixes:**
    - Check participant syntax: ensure `participant` or `actor` keywords used correctly
    - Verify arrow syntax: `->>`, `-->>`, `-)` patterns are correct
    - Validate control structures: `alt`, `loop`, `par` blocks are properly closed
+   - Review error details in `/tmp/mermaid_validate.err` for specific issues
 
-4. **Re-validate until successful:**
-   ```bash
-   mmdc -i /tmp/mermaid_validate.mmd -o /tmp/mermaid_validate.svg -q 2>&1; echo $?
-   ```
+4. **Re-validate until successful:** (repeat step 2)
 
 5. **Cleanup and confirm:**
    ```bash
-   rm -f /tmp/mermaid_validate.mmd /tmp/mermaid_validate.svg
+   rm -f /tmp/mermaid_validate.mmd /tmp/mermaid_validate.svg /tmp/mermaid_validate.err
    ```
 
 **VALIDATION MUST PASS BEFORE PRESENTING TO USER!**
@@ -152,14 +168,32 @@ Architecture diagrams show relationships between services and resources commonly
 
 After generating any architecture diagram, you MUST:
 
-1. **Create temp file:**
+1. **Create temp files:**
    ```bash
    echo "YOUR_ARCHITECTURE_DIAGRAM_HERE" > /tmp/mermaid_validate.mmd
    ```
 
-2. **Run validation:**
+2. **Run enhanced validation (your bash script approach):**
    ```bash
-   mmdc -i /tmp/mermaid_validate.mmd -o /tmp/mermaid_validate.svg -q 2>&1; echo $?
+   mmdc -i /tmp/mermaid_validate.mmd -o /tmp/mermaid_validate.svg 2>/tmp/mermaid_validate.err
+   rc=$?
+   if [ $rc -ne 0 ]; then
+     echo "🛑 mmdc failed (exit code $rc)."; cat /tmp/mermaid_validate.err; exit 1
+   fi
+
+   # Check SVG for error markers that mmdc might miss
+   if grep -q -i 'Syntax error in graph\|mermaidError\|errorText\|Parse error' /tmp/mermaid_validate.svg; then
+     echo "🛑 Mermaid syntax error found in output SVG"
+     exit 1
+   fi
+
+   # Verify SVG actually contains diagram content (not just error text)
+   if ! grep -q '<svg.*width.*height' /tmp/mermaid_validate.svg; then
+     echo "🛑 SVG output appears invalid or empty"
+     exit 1
+   fi
+
+   echo "✅ Diagram appears valid"
    ```
 
 3. **If validation fails, apply automatic fixes:**
@@ -167,15 +201,13 @@ After generating any architecture diagram, you MUST:
    - **Remove colons**: `[API:prod]` → `[API Prod]`
    - **Remove special characters**: keep only alphanumeric, spaces, underscores
    - **Fix IDs**: ensure no spaces in service/group IDs (use underscores)
+   - Review error details in `/tmp/mermaid_validate.err` for specific issues
 
-4. **Re-validate until successful:**
-   ```bash
-   mmdc -i /tmp/mermaid_validate.mmd -o /tmp/mermaid_validate.svg -q 2>&1; echo $?
-   ```
+4. **Re-validate until successful:** (repeat step 2)
 
 5. **Cleanup and confirm:**
    ```bash
-   rm -f /tmp/mermaid_validate.mmd /tmp/mermaid_validate.svg
+   rm -f /tmp/mermaid_validate.mmd /tmp/mermaid_validate.svg /tmp/mermaid_validate.err
    ```
 
 **VALIDATION MUST PASS BEFORE PRESENTING TO USER!**
@@ -300,8 +332,17 @@ architecture-beta
 **Validation & mmdc Issues:**
 - **mmdc not found**: Install mermaid-cli with `npm install -g @mermaid-js/mermaid-cli`
 - **Permission errors**: Check write permissions to `/tmp` directory
-- **Silent failures**: Run validation with verbose output to see detailed errors
+- **Silent failures**: Enhanced validation now checks both exit codes AND SVG content for embedded errors
+- **False positive validation**: The new validation catches cases where mmdc returns success but SVG contains syntax errors
+- **Error file analysis**: Check `/tmp/mermaid_validate.err` for detailed error messages when validation fails
+- **SVG validation failures**: Diagrams with embedded syntax errors are now detected via SVG content scanning
 - **Persistent syntax errors**: Use the [Automatic Validation Workflow](#-automatic-validation-workflow) to automatically detect and fix common issues
+
+**Enhanced Validation Features:**
+- **Dual-layer validation**: Checks both mmdc exit codes AND SVG output for error markers
+- **Error pattern detection**: Scans for 'Syntax error in graph', 'mermaidError', 'errorText', 'Parse error' in SVG
+- **SVG integrity check**: Verifies output contains valid SVG structure with width/height attributes
+- **Detailed error reporting**: Captures mmdc stderr output for specific syntax issues
 
 ---
 
