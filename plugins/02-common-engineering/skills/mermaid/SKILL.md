@@ -1,14 +1,15 @@
 ---
 name: mermaid-diagrams
-description: Create sequence diagrams for message flows and temporal interactions, or architecture diagrams for cloud/CI-CD infrastructure relationships. Automatically validates all diagrams with mermaid-cli and applies self-healing fixes. Use for documenting API interactions, system workflows, microservices communication, or cloud service architectures.
+description: Create sequence diagrams for message flows and temporal interactions, architecture diagrams for cloud/CI-CD infrastructure relationships, or flowchart diagrams for process flows and decision logic. Automatically validates all diagrams with mermaid-cli and applies self-healing fixes. Use for documenting API interactions, system workflows, microservices communication, cloud service architectures, or process documentation.
 ---
 
 # Mermaid Diagrams
 
-Create professional diagrams using Mermaid syntax for documentation, design discussions, and system architecture planning. This skill covers two primary diagram types:
+Create professional diagrams using Mermaid syntax for documentation, design discussions, and system architecture planning. This skill covers three primary diagram types:
 
 - **Sequence Diagrams**: Show temporal interactions and message flows between actors, services, or processes
 - **Architecture Diagrams**: Visualize relationships between services and resources in cloud or CI/CD deployments
+- **Flowchart Diagrams**: Illustrate processes, decision trees, algorithms, and workflow logic
 
 ## 🚀 Automatic Validation Workflow
 
@@ -243,6 +244,95 @@ architecture-beta
 
 ---
 
+## Flowchart Diagrams
+
+Flowchart diagrams visualize processes, decision logic, algorithms, and workflows using nodes (shapes) and edges (arrows). They're ideal for documenting business processes, algorithm logic, decision trees, and step-by-step workflows.
+
+### Quick Instructions
+
+1. Start with `flowchart` keyword and direction: `flowchart TD` (Top Down), `LR` (Left Right)
+2. Define nodes with shapes: `[Process]`, `{Decision}`, `(Start/End)`, `[(Database)]`
+3. Connect with arrows: `-->` (standard), `-.->` (dotted), `==>` (thick)
+4. Add text to arrows: `-->|label|` or `-- label -->`
+5. Group related nodes: use `subgraph` blocks
+6. Apply styling: `style id fill:#color,stroke:#color`
+
+**→ For detailed syntax, see [flowchart-diagram-reference.md](flowchart-diagram-reference.md)**
+
+### 🔍 Automatic Validation Process
+
+After generating any flowchart diagram, you MUST:
+
+1. **Create temp files:**
+   ```bash
+   echo "YOUR_FLOWCHART_DIAGRAM_HERE" > /tmp/mermaid_validate.mmd
+   ```
+
+2. **Run enhanced validation (your bash script approach):**
+   ```bash
+   mmdc -i /tmp/mermaid_validate.mmd -o /tmp/mermaid_validate.svg 2>/tmp/mermaid_validate.err
+   rc=$?
+   if [ $rc -ne 0 ]; then
+     echo "🛑 mmdc failed (exit code $rc)."; cat /tmp/mermaid_validate.err; exit 1
+   fi
+
+   # Check SVG for error markers that mmdc might miss
+   if grep -q -i 'Syntax error in graph\|mermaidError\|errorText\|Parse error' /tmp/mermaid_validate.svg; then
+     echo "🛑 Mermaid syntax error found in output SVG"
+     exit 1
+   fi
+
+   # Verify SVG actually contains diagram content (not just error text)
+   if ! grep -q '<svg.*width.*height' /tmp/mermaid_validate.svg; then
+     echo "🛑 SVG output appears invalid or empty"
+     exit 1
+   fi
+
+   echo "✅ Diagram appears valid"
+   ```
+
+3. **If validation fails, apply fixes:**
+   - Check node shape syntax: ensure brackets/braces are balanced
+   - Verify arrow syntax: `-->`, `-.->`, `==>` patterns are correct
+   - Validate subgraph blocks: ensure `subgraph` has matching `end`
+   - Avoid reserved words: capitalize "end" or wrap in quotes
+   - Review error details in `/tmp/mermaid_validate.err` for specific issues
+
+4. **Re-validate until successful:** (repeat step 2)
+
+5. **Cleanup and confirm:**
+   ```bash
+   rm -f /tmp/mermaid_validate.mmd /tmp/mermaid_validate.svg /tmp/mermaid_validate.err
+   ```
+
+**VALIDATION MUST PASS BEFORE PRESENTING TO USER!**
+
+### Minimal Example
+
+```mermaid
+flowchart TD
+    Start([Start Process]) --> Input[/Enter Data/]
+    Input --> Validate{Valid Data?}
+
+    Validate -->|Yes| Process[Process Data]
+    Validate -->|No| Error[Display Error]
+
+    Error --> Input
+    Process --> DB[(Save to Database)]
+    DB --> End([End])
+```
+
+### Guidelines
+
+- Limit to 10-15 nodes per diagram for clarity
+- Use standard shapes: diamonds for decisions, cylinders for databases
+- Label arrows to clarify flow logic
+- Group related processes with `subgraph` for organization
+
+**→ See [flowchart-diagram-reference.md](flowchart-diagram-reference.md) for all node shapes, arrow types, subgraphs, and styling options**
+
+---
+
 ## When to Use Each Diagram Type
 
 ### Use Sequence Diagrams When:
@@ -261,6 +351,14 @@ architecture-beta
 - Explaining **resource dependencies** (databases, storage, networks)
 - Presenting **high-level system design**
 
+### Use Flowchart Diagrams When:
+- Documenting **business processes** and workflows
+- Illustrating **decision logic** and conditional branches
+- Visualizing **algorithm steps** and computation flow
+- Showing **approval workflows** or multi-step procedures
+- Explaining **error handling** paths and retry logic
+- Creating **troubleshooting guides** and decision trees
+
 ---
 
 ## Common Best Practices
@@ -277,12 +375,14 @@ architecture-beta
 **Diagram Size Guidelines:**
 - **Sequence**: Limit to 5-7 participants per diagram
 - **Architecture**: Limit to 8-12 services per diagram
+- **Flowchart**: Limit to 10-15 nodes per diagram
 - For larger systems, create multiple diagrams focusing on specific subsystems or layers
 
 **When Diagrams Conflict:**
 - For **runtime behavior** → use sequence diagrams
 - For **deployment structure** → use architecture diagrams
-- For complex systems, use both: architecture for overview, sequence for interactions
+- For **process/decision flows** → use flowchart diagrams
+- For complex systems, use combinations: architecture for infrastructure, sequence for interactions, flowcharts for business logic
 
 ---
 
@@ -304,6 +404,14 @@ architecture-beta
 3. **Invalid keywords in sequence diagrams**:
    - ❌ `database DB`, `service API`
    - ✓ `participant DB@{ "type": "database" }`
+
+4. **Unbalanced brackets in flowchart nodes**:
+   - ❌ `A[Text`, `B{Decision`, `C(Start`
+   - ✓ `A[Text]`, `B{Decision}`, `C(Start)`
+
+5. **Reserved words in flowcharts**:
+   - ❌ `end` (breaks diagram)
+   - ✓ `End`, `END`, or `"end"`
 
 **→ See examples above for correct syntax patterns**
 
@@ -329,6 +437,17 @@ architecture-beta
 - **Edge not connecting**: Verify both services exist and direction indicators are valid (T/B/L/R)
 - **Icon not displaying**: Check icon name spelling or use default icons
 
+**Flowchart Diagrams:**
+- **Unbalanced brackets**: Ensure all node shapes have matching opening/closing brackets
+  - ❌ Wrong: `A[Process`, `B{Decision`
+  - ✓ Correct: `A[Process]`, `B{Decision}`
+- **Reserved word "end"**: Capitalize or quote it to avoid breaking diagram
+  - ❌ Wrong: `flowchart TD\n  A --> end`
+  - ✓ Correct: `flowchart TD\n  A --> End`
+- **Arrow syntax errors**: Verify arrow patterns (`-->`, `-.->`, `==>`)
+- **Subgraph not closed**: Ensure every `subgraph` has matching `end`
+- **Node not appearing**: Check node ID is defined before use in connections
+
 **Validation & mmdc Issues:**
 - **mmdc not found**: Install mermaid-cli with `npm install -g @mermaid-js/mermaid-cli`
 - **Permission errors**: Check write permissions to `/tmp` directory
@@ -352,7 +471,8 @@ For complete syntax, advanced features, and more examples:
 
 - **[sequence-diagrams-reference.md](sequence-diagrams-reference.md)** - All arrow types, activations, control structures, styling, and configuration
 - **[architecture-diagram-reference.md](architecture-diagram-reference.md)** - Complete syntax, junctions, extended icons (200k+ from iconify), and complex patterns
+- **[flowchart-diagram-reference.md](flowchart-diagram-reference.md)** - All node shapes, arrow types, subgraphs, styling, and advanced features
 
 ---
 
-This skill enables you to create professional diagrams for documentation, design discussions, API specifications, and system architecture planning. Choose the appropriate diagram type based on whether you're documenting temporal interactions (sequence) or structural relationships (architecture).
+This skill enables you to create professional diagrams for documentation, design discussions, API specifications, system architecture planning, and process documentation. Choose the appropriate diagram type based on whether you're documenting temporal interactions (sequence), structural relationships (architecture), or process flows (flowchart).
