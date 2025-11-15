@@ -57,22 +57,33 @@ Commands are invoked as: `/plugin-name:command-name`
 
 ### Testing Plugins Locally
 
-1. **Add this marketplace to Claude Code:**
+1. **Clone this repository:**
    ```bash
-   /plugin marketplace add /Users/irfanputra/Personal/my-claude-code-marketplace
+   git clone https://github.com/irfansofyana/my-claude-code-marketplace.git
+   cd my-claude-code-marketplace
    ```
 
-2. **Install a plugin from this marketplace:**
+2. **Add this marketplace to Claude Code:**
+   ```bash
+   /plugin marketplace add $(pwd)
+   ```
+
+   Or use an absolute path:
+   ```bash
+   /plugin marketplace add /path/to/my-claude-code-marketplace
+   ```
+
+3. **Install a plugin from this marketplace:**
    ```bash
    /plugin install plugin-name@my-claude-code-marketplace
    ```
 
-3. **Browse available plugins interactively:**
+4. **Browse available plugins interactively:**
    ```bash
    /plugin
    ```
 
-4. **After making changes, reload the plugin:**
+5. **After making changes, reload the plugin:**
    ```bash
    /plugin uninstall plugin-name@my-claude-code-marketplace
    /plugin install plugin-name@my-claude-code-marketplace

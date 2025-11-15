@@ -34,13 +34,26 @@ See [plugins/00-test/](./plugins/00-test/) for plugin structure and examples.
 
 ## Getting Started
 
-### 1. Add This Marketplace to Claude Code
+### 1. Clone This Repository
 
 ```bash
-/plugin marketplace add /Users/irfanputra/Personal/my-claude-code-marketplace
+git clone https://github.com/irfansofyana/my-claude-code-marketplace.git
+cd my-claude-code-marketplace
 ```
 
-### 2. Browse Available Plugins
+### 2. Add This Marketplace to Claude Code
+
+```bash
+/plugin marketplace add $(pwd)
+```
+
+Or use an absolute path:
+
+```bash
+/plugin marketplace add /path/to/my-claude-code-marketplace
+```
+
+### 3. Browse Available Plugins
 
 ```bash
 /plugin
@@ -48,13 +61,13 @@ See [plugins/00-test/](./plugins/00-test/) for plugin structure and examples.
 
 This opens an interactive browser to explore and install plugins from this marketplace.
 
-### 3. Install a Plugin
+### 4. Install a Plugin
 
 ```bash
 /plugin install p-assist@my-claude-code-marketplace
 ```
 
-### 4. Use Plugin Commands
+### 5. Use Plugin Commands
 
 After installation, use the slash commands provided by the plugin:
 

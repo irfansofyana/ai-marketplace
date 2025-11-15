@@ -229,7 +229,6 @@ You should see:
 - Application caches
 - System logs
 - Temporary files
-- Selected node_modules folders (you choose which ones)
 
 **Disk Analyze - NEVER DELETES:**
 - System files
