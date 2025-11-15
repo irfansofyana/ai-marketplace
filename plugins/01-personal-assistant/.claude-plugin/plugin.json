@@ -41,7 +41,10 @@
 				"https://mcp.jina.ai/sse",
 				"--header",
 				"Authorization: Bearer ${JINA_API_KEY}"
-			]
+			],
+			"env": {
+				"JINA_API_KEY": "${JINA_API_KEY}"
+			}
     	},
 		"linkwarden": {
       		"type": "stdio",
