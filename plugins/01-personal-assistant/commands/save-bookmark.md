@@ -19,8 +19,10 @@ Save the following bookmark to Linkwarden:
    - If collection doesn't exist, list available collections and ask user to choose
 
 2. Fetch the URL content briefly to generate a better name:
-   - Use `mcp__exa__web_search_exa` with the URL to get page title
-   - Use the page title as the bookmark name
+   - **Primary**: Try `mcp__tavily__tavily_extract` to get page title and content
+   - **Fallback**: If Tavily fails with token limit error, use `mcp__jina__read_url`
+   - **Last resort**: If both fail, use the domain name as the bookmark name
+   - Extract the page title from the content for the bookmark name
 
 3. Extract or generate relevant tags:
    - Based on the description "$2"

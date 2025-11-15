@@ -9,7 +9,10 @@ Fetch and summarize the article at: $1
 
 **Instructions:**
 
-1. Use `mcp__exa__web_search_exa` to fetch the content from the URL
+1. Extract content from the URL using a two-tier approach:
+   - **Primary**: Try `mcp__tavily__tavily_extract` first (faster, works for most articles)
+   - **Fallback**: If Tavily fails with "exceeds maximum allowed tokens" error, use `mcp__jina__read_url`
+   - Jina handles large content better and stays within token limits
 2. Analyze and create a comprehensive summary including:
    - Main topic and key points (3-5 bullet points)
    - Key insights or takeaways

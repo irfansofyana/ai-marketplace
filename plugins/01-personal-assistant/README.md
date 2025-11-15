@@ -4,10 +4,10 @@ A comprehensive productivity plugin for Claude Code that provides article summar
 
 ## Features
 
-- **Article Summarization**: Summarize web articles and optionally save them to Linkwarden
+- **Article Summarization**: Extract and summarize web articles using Tavily, optionally save to Linkwarden
 - **Journal Management**: Create and search Logseq journal entries
 - **Bookmark Management**: Save and organize bookmarks in Linkwarden
-- **Web Search**: AI-powered web search using Exa
+- **Web Research**: AI-powered web search and content extraction using Tavily and Jina
 
 ## MCP Server Configuration
 
@@ -26,6 +26,14 @@ This plugin uses MCP (Model Context Protocol) servers to integrate with external
 - `LINKWARDEN_TOKEN`: Your Linkwarden API token
   - Get this from your Linkwarden account settings
 
+#### Tavily Integration (`tavily`)
+- `TAVILY_API_KEY`: Your Tavily API key
+  - Get this from [Tavily API](https://tavily.com/)
+
+#### Jina Integration (`jina`)
+- `JINA_API_KEY`: Your Jina API key
+  - Get this from [Jina AI](https://jina.ai/)
+
 ### Setup Instructions
 
 1. **Set up Logseq:**
@@ -40,7 +48,17 @@ This plugin uses MCP (Model Context Protocol) servers to integrate with external
    export LINKWARDEN_TOKEN="your_linkwarden_api_token_here"
    ```
 
-3. **For persistent configuration**, add these to your shell profile (`~/.zshrc`, `~/.bashrc`, etc.):
+3. **Set up Tavily:**
+   ```bash
+   export TAVILY_API_KEY="your_tavily_api_key_here"
+   ```
+
+4. **Set up Jina:**
+   ```bash
+   export JINA_API_KEY="your_jina_api_key_here"
+   ```
+
+5. **For persistent configuration**, add these to your shell profile (`~/.zshrc`, `~/.bashrc`, etc.):
    ```bash
    # Logseq
    export LOGSEQ_API_TOKEN="your_logseq_api_token_here"
@@ -49,6 +67,12 @@ This plugin uses MCP (Model Context Protocol) servers to integrate with external
    # Linkwarden
    export LINKWARDEN_BASE_URL="https://your-linkwarden-instance.com"
    export LINKWARDEN_TOKEN="your_linkwarden_api_token_here"
+
+   # Tavily
+   export TAVILY_API_KEY="your_tavily_api_key_here"
+
+   # Jina
+   export JINA_API_KEY="your_jina_api_key_here"
    ```
 
 ## Available Commands
@@ -118,7 +142,8 @@ The orchestrator agent automatically handles complex tasks that involve multiple
 
 ### MCP Servers Used
 - **mcp-logseq**: Logseq integration server
-- **exa**: AI-powered web search
+- **tavily**: AI-powered web search and content extraction
+- **jina**: Advanced web reading, screenshots, and image search
 - **linkwarden-mcp-server**: Linkwarden bookmark management
 
 ## Troubleshooting
