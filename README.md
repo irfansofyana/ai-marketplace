@@ -13,6 +13,14 @@ Productivity plugin for article summarization, journal management (Logseq), and 
 
 See [plugins/01-personal-assistant/README.md](./plugins/01-personal-assistant/README.md) for detailed setup and usage instructions.
 
+### [common-engineering](./plugins/02-common-engineering/)
+Essential toolkit for software engineers that currently focuses on professional Mermaid diagram generation with automatic
+validation, self-healing, and support for sequence, architecture, and flowchart diagrams. Future updates will add more
+common engineering utilities.
+
+See [plugins/02-common-engineering/README.md](./plugins/02-common-engineering/README.md) for installation prerequisites and
+full feature documentation.
+
 ### [test-plugin](./plugins/00-test/)
 A test plugin for learning and experimenting with the plugin system.
 
