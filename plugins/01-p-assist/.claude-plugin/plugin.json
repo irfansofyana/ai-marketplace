@@ -1,12 +1,12 @@
 {
-	"name": "personal-assistant",
+	"name": "p-assist",
 	"description": "Productivity plugin for article summarization, journal management, and bookmark organization using Claude Code",
 	"version": "1.0.0",
 	"author": {
 		"name": "irfansofyana"
 	},
 	"mcpServers": {
-		"mcp-logseq": {
+		"logseq": {
       		"type": "stdio",
       		"command": "uv",
       		"args": [
@@ -46,7 +46,7 @@
 				"JINA_API_KEY": "${JINA_API_KEY}"
 			}
     	},
-		"linkwarden": {
+		"linkwd": {
       		"type": "stdio",
       		"command": "docker",
       		"args": [

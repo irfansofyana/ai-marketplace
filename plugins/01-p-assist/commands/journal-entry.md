@@ -22,7 +22,7 @@ Create a new Logseq journal entry with the following content:
    - If it's a topic note, use a descriptive title from the content
    - Keep titles concise and searchable
 
-3. Use `mcp__mcp-logseq__create_page` to create the entry:
+3. Use `mcp__logseq__create_page` to create the entry:
    - `title`: Generated page title
    - `content`: Formatted entry content
 
@@ -39,7 +39,7 @@ Create a new Logseq journal entry with the following content:
 [First few lines of the entry]
 
 **Tips:**
-- Find this entry with: /personal-assistant:search-journal [keyword]
+- Find this entry with: /p-assist:search-journal [keyword]
 - View in Logseq to add more context or links
 ```
 

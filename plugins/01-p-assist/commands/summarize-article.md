@@ -22,7 +22,7 @@ Fetch and summarize the article at: $1
 **Optional Linkwarden Save:**
 
 If $2 equals "save":
-- Use `mcp__linkwarden__create_link` to save the article to Linkwarden
+- Use `mcp__linkwd__create_link` to save the article to Linkwarden
 - Use a descriptive name based on the article title
 - Add relevant tags based on the content
 - Include the summary in the description field

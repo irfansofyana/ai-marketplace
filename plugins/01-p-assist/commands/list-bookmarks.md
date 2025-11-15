@@ -19,12 +19,12 @@ List recent bookmarks from Linkwarden with intelligent filtering to prevent info
    - If neither: Show 8 most recent bookmarks across all collections
 
 2. **Handle collection filtering (if $1 provided):**
-   - Use `mcp__linkwarden__get_all_collections` to list collections
+   - Use `mcp__linkwd__get_all_collections` to list collections
    - Find collection ID matching "$1" (case-insensitive)
    - If collection doesn't exist, show available collections and suggest correct names
 
 3. **Fetch bookmarks with proper parameter defaults:**
-   - Use `mcp__linkwarden__get_all_links` with these parameters:
+   - Use `mcp__linkwd__get_all_links` with these parameters:
      - `collectionId`: Collection ID if filtering by collection, otherwise 0
      - `cursor: 0` - First page only (limits results to manageable amount)
      - `pinnedOnly: false` - Include all bookmarks
@@ -61,9 +61,9 @@ Showing X of Y bookmarks (showing most recent):
 
 ---
 **Tips:**
-• Use collection name to filter: /personal-assistant:list-bookmarks "Collection Name"
-• Search within bookmarks: /personal-assistant:list-bookmarks "" "search terms"
-• Save new bookmark: /personal-assistant:save-bookmark [url] [description] [collection]
+• Use collection name to filter: /p-assist:list-bookmarks "Collection Name"
+• Search within bookmarks: /p-assist:list-bookmarks "" "search terms"
+• Save new bookmark: /p-assist:save-bookmark [url] [description] [collection]
 ```
 
 **Error Handling:**
@@ -77,7 +77,7 @@ No bookmarks found matching your criteria.
 **Suggestions:**
 • Try a different collection name
 • Use broader search terms
-• Check if bookmarks exist: /personal-assistant:list-bookmarks
+• Check if bookmarks exist: /p-assist:list-bookmarks
 ```
 
 **If collection not found:**
@@ -91,7 +91,7 @@ Collection "$1" not found.
 • Collection B
 • Collection C
 
-**Usage:** /personal-assistant:list-bookmarks "Collection Name"
+**Usage:** /p-assist:list-bookmarks "Collection Name"
 ```
 
 **Parameter Adjustments for Search Mode:**

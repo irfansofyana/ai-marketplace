@@ -126,7 +126,7 @@ Commands are invoked as: `/plugin-name:command-name`
 ## Current Plugins
 
 - **00-test** (`./plugins/00-test`): Test plugin for learning the basics
-- **01-personal-assistant** (`./plugins/01-personal-assistant`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden). **Requires environment variables** - see `plugins/01-personal-assistant/README.md` for setup instructions.
+- **01-p-assist** (`./plugins/01-p-assist`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden). **Requires environment variables** - see `plugins/01-p-assist/README.md` for setup instructions.
 
 ## Adding a Command to an Existing Plugin
 
@@ -145,6 +145,82 @@ Commands are invoked as: `/plugin-name:command-name`
 
 3. Uninstall and reinstall the plugin to test the new command
 
+## MCP Server Integration & AWS Bedrock Compatibility
+
+### Tool Name Length Constraint
+
+**CRITICAL**: AWS Bedrock has a **64-character maximum** for tool names. When adding MCP servers to plugins, you MUST ensure all generated tool names stay within this limit.
+
+### Tool Name Format
+
+Claude Code generates MCP tool names using this pattern:
+```
+mcp__plugin_[plugin-name]_[server-key]__[tool-name]
+```
+
+**Example:**
+- Plugin name: `p-assist`
+- Server key: `linkwd`
+- Tool name: `get_public_collections_links`
+- Full tool name: `mcp__plugin_p-assist_linkwd__get_public_collections_links` (57 chars ✓)
+
+### Naming Best Practices
+
+1. **Keep plugin names short but meaningful**:
+   - ✓ Good: `p-assist` (productivity assistant)
+   - ✗ Bad: `personal-assistant` (too long)
+
+2. **Abbreviate MCP server keys when necessary**:
+   - ✓ Good: `linkwd` (linkwarden), `logseq` (logseq)
+   - ✗ Bad: `linkwarden`, `mcp-logseq`
+
+3. **Validation is MANDATORY**: Always verify tool names before deploying:
+   ```python
+   # Calculate: mcp__plugin_[plugin]_[server]__[longest-tool]
+   # Example: mcp__plugin_p-assist_linkwd__get_public_collections_links
+   # Length must be ≤ 64 characters
+   ```
+
+### Adding MCP Servers Checklist
+
+When adding a new MCP server to any plugin:
+
+1. ✓ Choose a short, meaningful server key name
+2. ✓ List all tools that the MCP server provides
+3. ✓ Calculate the longest tool name using the format above
+4. ✓ Verify the longest name is ≤64 characters
+5. ✓ If over 64 chars, shorten the plugin name or server key
+6. ✓ Update plugin.json with the MCP server configuration
+7. ✓ Update all command/agent files with correct tool references
+
+### Validation Script
+
+Use the provided validation script to check tool names:
+
+```bash
+# Validate tool names for a specific MCP server
+python3 scripts/validate-mcp-tool-names.py <plugin-name> <server-key> <tool-names...>
+
+# Example:
+python3 scripts/validate-mcp-tool-names.py p-assist linkwd \
+    archive_link create_link get_public_collections_links
+```
+
+The script will:
+- Calculate the full tool name for each tool
+- Check if any exceed 64 characters
+- Provide suggestions if validation fails
+- Exit with code 0 if valid, 1 if invalid
+
+### Example Validation
+
+```python
+# Plugin: p-assist, Server: linkwd
+# Longest tool: get_public_collections_links (28 chars)
+full_name = "mcp__plugin_p-assist_linkwd__get_public_collections_links"
+assert len(full_name) <= 64  # 57 chars ✓ PASS
+```
+
 ## Key Constraints
 
 - Plugin `name` in marketplace.json MUST match the `name` in the plugin's plugin.json
@@ -152,3 +228,4 @@ Commands are invoked as: `/plugin-name:command-name`
 - Command files must be `.md` files with valid YAML frontmatter
 - Changes to plugins require reinstalling them to take effect in Claude Code
 - Use semantic versioning (1.0.0, 1.1.0, 2.0.0) when updating plugins
+- **MCP tool names MUST be ≤64 characters for AWS Bedrock compatibility**

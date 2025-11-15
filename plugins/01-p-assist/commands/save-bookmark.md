@@ -14,7 +14,7 @@ Save the following bookmark to Linkwarden:
 **Instructions:**
 
 1. First, check if the collection exists:
-   - Use `mcp__linkwarden__get_all_collections` to list collections
+   - Use `mcp__linkwd__get_all_collections` to list collections
    - Find the collection ID matching "$3" (case-insensitive)
    - If collection doesn't exist, list available collections and ask user to choose
 
@@ -29,7 +29,7 @@ Save the following bookmark to Linkwarden:
    - Based on the URL domain or content type
    - Keep tags concise and relevant (2-4 tags)
 
-4. Save the bookmark using `mcp__linkwarden__create_link`:
+4. Save the bookmark using `mcp__linkwd__create_link`:
    - `url`: $1
    - `name`: Generated from page title
    - `description`: $2
@@ -50,7 +50,7 @@ Save the following bookmark to Linkwarden:
 **Description:** $2
 
 **Quick Access:**
-- View all bookmarks: /personal-assistant:list-bookmarks
+- View all bookmarks: /p-assist:list-bookmarks
 ```
 
 **Error Handling:**
