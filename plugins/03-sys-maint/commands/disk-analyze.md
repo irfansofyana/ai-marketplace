@@ -1,9 +1,11 @@
 ---
-description: Analyze disk usage, identify space hogs, and provide cleanup recommendations with optional execution
+description: Analyze disk usage, identify space hogs, and provide cleanup recommendations with optional execution (macOS only)
 allowed-tools: Bash(df:*), Bash(du:*), Bash(find:*), Bash(ls:*)
 ---
 
 # Disk Analysis and Cleanup Command
+
+**IMPORTANT**: This command is designed and tested for macOS only. It uses macOS-specific paths and utilities.
 
 Your task is to help the user analyze disk usage, identify large files and directories consuming space, provide categorized cleanup recommendations, and optionally execute approved cleanup operations.
 
@@ -96,12 +98,7 @@ Check common space hogs:
    du -sh ~/.Trash 2>/dev/null
    ```
 
-5. **Node modules** (if user is a developer):
-   ```bash
-   find ~ -name "node_modules" -type d -prune -exec du -sh {} \; 2>/dev/null | head -10
-   ```
-
-6. **Temporary files**:
+5. **Temporary files**:
    ```bash
    du -sh /tmp 2>/dev/null
    ```
@@ -148,11 +145,7 @@ CAREFUL (Higher Risk)
 ---------------------
 These require careful review and may affect functionality:
 
-6. Old node_modules folders
-   Estimated space: X.XX GB
-   Risk: Medium-High - only delete from old/unused projects
-
-7. Large files in specific directories
+6. Large files in specific directories
    [List specific large files found]
    Risk: Varies - requires manual review
 ```
@@ -234,16 +227,6 @@ If yes:
 ```bash
 sudo rm -rf /tmp/*
 ```
-
-**For node_modules:**
-Show the list of found node_modules directories:
-```bash
-find ~ -name "node_modules" -type d -prune 2>/dev/null
-```
-
-Ask: "Would you like to select specific node_modules folders to delete? (y/n)"
-
-If yes, show the list with numbers and let user choose.
 
 ### Option 2: Quick Clean (Safe Items Only)
 

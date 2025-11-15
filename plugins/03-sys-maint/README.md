@@ -1,6 +1,8 @@
 # System Maintenance Plugin
 
-A Claude Code plugin for system maintenance and cleanup tasks on macOS. Helps you reclaim disk space and manage Docker resources through interactive, safe cleanup workflows.
+A Claude Code plugin for system maintenance and cleanup tasks. Helps you reclaim disk space and manage Docker resources through interactive, safe cleanup workflows.
+
+**Platform**: macOS only (tested on macOS)
 
 ## Overview
 
@@ -271,9 +273,9 @@ You'll be prompted for your password if needed.
 
 Planned features for upcoming releases:
 
-### Phase 2: Developer Environment (v1.1.0)
-- `/sys-maint:cache-cleanup` - Clean npm, pip, brew, cargo caches
-- `/sys-maint:build-cleanup` - Remove node_modules and build artifacts
+### Phase 2: Additional Cleanup Options (v1.1.0)
+- `/sys-maint:cache-cleanup` - Clean package manager caches (brew, etc.)
+- Additional cleanup targets based on user feedback
 
 ### Phase 3: macOS Specific (v1.2.0)
 - `/sys-maint:xcode-cleanup` - Clean Xcode derived data and archives
@@ -293,8 +295,7 @@ Found a bug or have a feature request? Please open an issue in the marketplace r
 ### Ideas for New Commands
 
 We're considering adding:
-- Package manager cache cleanup (npm, pip, brew)
-- Build artifact cleanup (node_modules, target/, dist/)
+- Package manager cache cleanup (brew)
 - Large file finder and manager
 - Duplicate file detector
 - Xcode cleanup utilities

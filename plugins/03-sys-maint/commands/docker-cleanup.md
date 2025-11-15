@@ -1,9 +1,11 @@
 ---
-description: Analyze Docker resource usage and clean up containers, images, volumes, and build cache with preview and confirmation
+description: Analyze Docker resource usage and clean up containers, images, volumes, and build cache with preview and confirmation (macOS only)
 allowed-tools: Bash(docker:*)
 ---
 
 # Docker Cleanup Command
+
+**IMPORTANT**: This command is designed and tested for macOS only. It requires Docker Desktop to be installed and running.
 
 Your task is to help the user clean up Docker resources safely by analyzing current usage, showing a preview of what will be removed, getting explicit confirmation, and then executing the cleanup operations.
 
