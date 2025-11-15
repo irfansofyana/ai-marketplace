@@ -57,22 +57,33 @@ Commands are invoked as: `/plugin-name:command-name`
 
 ### Testing Plugins Locally
 
-1. **Add this marketplace to Claude Code:**
+1. **Clone this repository:**
    ```bash
-   /plugin marketplace add /Users/irfanputra/Personal/my-claude-code-marketplace
+   git clone https://github.com/irfansofyana/my-claude-code-marketplace.git
+   cd my-claude-code-marketplace
    ```
 
-2. **Install a plugin from this marketplace:**
+2. **Add this marketplace to Claude Code:**
+   ```bash
+   /plugin marketplace add $(pwd)
+   ```
+
+   Or use an absolute path:
+   ```bash
+   /plugin marketplace add /path/to/my-claude-code-marketplace
+   ```
+
+3. **Install a plugin from this marketplace:**
    ```bash
    /plugin install plugin-name@my-claude-code-marketplace
    ```
 
-3. **Browse available plugins interactively:**
+4. **Browse available plugins interactively:**
    ```bash
    /plugin
    ```
 
-4. **After making changes, reload the plugin:**
+5. **After making changes, reload the plugin:**
    ```bash
    /plugin uninstall plugin-name@my-claude-code-marketplace
    /plugin install plugin-name@my-claude-code-marketplace
@@ -127,6 +138,8 @@ Commands are invoked as: `/plugin-name:command-name`
 
 - **00-test** (`./plugins/00-test`): Test plugin for learning the basics
 - **01-p-assist** (`./plugins/01-p-assist`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden). **Requires environment variables** - see `plugins/01-p-assist/README.md` for setup instructions.
+- **02-common-engineering** (`./plugins/02-common-engineering`): Essential toolkit for software engineers with Mermaid diagram generation, automatic validation, and self-healing capabilities.
+- **03-sys-maint** (`./plugins/03-sys-maint`): System maintenance and cleanup utilities for Docker and disk space management with interactive preview and confirmation workflows.
 
 ## Adding a Command to an Existing Plugin
 

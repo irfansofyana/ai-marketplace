@@ -21,6 +21,12 @@ common engineering utilities.
 See [plugins/02-common-engineering/README.md](./plugins/02-common-engineering/README.md) for installation prerequisites and
 full feature documentation.
 
+### [sys-maint](./plugins/03-sys-maint/)
+System maintenance and cleanup utilities for Docker and disk space management. Provides interactive commands with preview
+and confirmation workflows for safely cleaning up Docker resources and analyzing disk usage.
+
+See [plugins/03-sys-maint/README.md](./plugins/03-sys-maint/README.md) for usage instructions and safety features.
+
 ### [test-plugin](./plugins/00-test/)
 A test plugin for learning and experimenting with the plugin system.
 
@@ -28,13 +34,26 @@ See [plugins/00-test/](./plugins/00-test/) for plugin structure and examples.
 
 ## Getting Started
 
-### 1. Add This Marketplace to Claude Code
+### 1. Clone This Repository
 
 ```bash
-/plugin marketplace add /Users/irfanputra/Personal/my-claude-code-marketplace
+git clone https://github.com/irfansofyana/my-claude-code-marketplace.git
+cd my-claude-code-marketplace
 ```
 
-### 2. Browse Available Plugins
+### 2. Add This Marketplace to Claude Code
+
+```bash
+/plugin marketplace add $(pwd)
+```
+
+Or use an absolute path:
+
+```bash
+/plugin marketplace add /path/to/my-claude-code-marketplace
+```
+
+### 3. Browse Available Plugins
 
 ```bash
 /plugin
@@ -42,13 +61,13 @@ See [plugins/00-test/](./plugins/00-test/) for plugin structure and examples.
 
 This opens an interactive browser to explore and install plugins from this marketplace.
 
-### 3. Install a Plugin
+### 4. Install a Plugin
 
 ```bash
 /plugin install p-assist@my-claude-code-marketplace
 ```
 
-### 4. Use Plugin Commands
+### 5. Use Plugin Commands
 
 After installation, use the slash commands provided by the plugin:
 
@@ -201,7 +220,9 @@ my-claude-code-marketplace/
 │   └── marketplace.json     # Marketplace manifest
 ├── plugins/
 │   ├── 00-test/            # Test plugin
-│   └── 01-p-assist/        # Productivity assistant plugin
+│   ├── 01-p-assist/        # Productivity assistant plugin
+│   ├── 02-common-engineering/ # Engineering tools and diagram generation
+│   └── 03-sys-maint/       # System maintenance and cleanup
 ├── CLAUDE.md               # Instructions for Claude Code
 └── README.md               # This file
 ```
