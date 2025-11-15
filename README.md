@@ -8,15 +8,20 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 
 ## Available Plugins
 
+### [test-plugin](./plugins/00-test/)
+A test plugin for learning and experimenting with the plugin system.
+
+See [plugins/00-test/](./plugins/00-test/) for plugin structure and examples.
+
 ### [personal-assistant](./plugins/01-personal-assistant/)
 Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden).
 
 See [plugins/01-personal-assistant/README.md](./plugins/01-personal-assistant/README.md) for detailed setup and usage instructions.
 
-### [test-plugin](./plugins/00-test/)
-A test plugin for learning and experimenting with the plugin system.
+### [common-engineering](./plugins/02-common-engineering/)
+Foundational engineering tools including diagram generation (Mermaid), documentation helpers, and common development utilities. Currently features professional Mermaid diagram generation with automatic validation and self-healing.
 
-See [plugins/00-test/](./plugins/00-test/) for plugin structure and examples.
+See [plugins/02-common-engineering/README.md](./plugins/02-common-engineering/README.md) for installation and usage instructions.
 
 ## Getting Started
 
@@ -193,7 +198,8 @@ my-claude-code-marketplace/
 │   └── marketplace.json     # Marketplace manifest
 ├── plugins/
 │   ├── 00-test/            # Test plugin
-│   └── 01-personal-assistant/  # Personal assistant plugin
+│   ├── 01-personal-assistant/  # Personal assistant plugin
+│   └── 02-common-engineering/  # Common engineering tools plugin
 ├── CLAUDE.md               # Instructions for Claude Code
 └── README.md               # This file
 ```
