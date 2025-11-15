@@ -18,6 +18,11 @@
 			"name": "common-engineering",
 			"source": "./plugins/02-common-engineering",
 			"description": "Foundational engineering tools for diagram generation and documentation"
+		},
+		{
+			"name": "sys-maint",
+			"source": "./plugins/03-sys-maint",
+			"description": "System maintenance and cleanup utilities for Docker and disk space"
 		}
 	]
 }

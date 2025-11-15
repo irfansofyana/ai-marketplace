@@ -1,0 +1,8 @@
+{
+  "name": "sys-maint",
+  "description": "System maintenance and cleanup utilities for Docker, disk space, and developer environments",
+  "version": "1.0.0",
+  "author": {
+    "name": "irfansofyana"
+  }
+}

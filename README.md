@@ -21,6 +21,12 @@ common engineering utilities.
 See [plugins/02-common-engineering/README.md](./plugins/02-common-engineering/README.md) for installation prerequisites and
 full feature documentation.
 
+### [sys-maint](./plugins/03-sys-maint/)
+System maintenance and cleanup utilities for Docker and disk space management. Provides interactive commands with preview
+and confirmation workflows for safely cleaning up Docker resources and analyzing disk usage.
+
+See [plugins/03-sys-maint/README.md](./plugins/03-sys-maint/README.md) for usage instructions and safety features.
+
 ### [test-plugin](./plugins/00-test/)
 A test plugin for learning and experimenting with the plugin system.
 
@@ -201,7 +207,9 @@ my-claude-code-marketplace/
 │   └── marketplace.json     # Marketplace manifest
 ├── plugins/
 │   ├── 00-test/            # Test plugin
-│   └── 01-p-assist/        # Productivity assistant plugin
+│   ├── 01-p-assist/        # Productivity assistant plugin
+│   ├── 02-common-engineering/ # Engineering tools and diagram generation
+│   └── 03-sys-maint/       # System maintenance and cleanup
 ├── CLAUDE.md               # Instructions for Claude Code
 └── README.md               # This file
 ```
