@@ -10,8 +10,8 @@
 			"description": "My TEST ONLY plugin"
 		},
 		{
-			"name": "personal-assistant",
-			"source": "./plugins/01-personal-assistant",
+			"name": "p-assist",
+			"source": "./plugins/01-p-assist",
 			"description": "Productivity plugin for article summarization, journal management, and bookmark organization"
 		},
 		{

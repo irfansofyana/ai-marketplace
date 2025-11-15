@@ -8,10 +8,10 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 
 ## Available Plugins
 
-### [personal-assistant](./plugins/01-personal-assistant/)
+### [p-assist](./plugins/01-p-assist/)
 Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden).
 
-See [plugins/01-personal-assistant/README.md](./plugins/01-personal-assistant/README.md) for detailed setup and usage instructions.
+See [plugins/01-p-assist/README.md](./plugins/01-p-assist/README.md) for detailed setup and usage instructions.
 
 ### [test-plugin](./plugins/00-test/)
 A test plugin for learning and experimenting with the plugin system.
@@ -37,7 +37,7 @@ This opens an interactive browser to explore and install plugins from this marke
 ### 3. Install a Plugin
 
 ```bash
-/plugin install personal-assistant@my-claude-code-marketplace
+/plugin install p-assist@my-claude-code-marketplace
 ```
 
 ### 4. Use Plugin Commands
@@ -45,7 +45,7 @@ This opens an interactive browser to explore and install plugins from this marke
 After installation, use the slash commands provided by the plugin:
 
 ```bash
-/personal-assistant:summarize-article https://example.com/article
+/p-assist:summarize-article https://example.com/article
 ```
 
 ## Plugin Management
@@ -53,14 +53,14 @@ After installation, use the slash commands provided by the plugin:
 ### Enable/Disable Plugins
 
 ```bash
-/plugin enable personal-assistant@my-claude-code-marketplace
-/plugin disable personal-assistant@my-claude-code-marketplace
+/plugin enable p-assist@my-claude-code-marketplace
+/plugin disable p-assist@my-claude-code-marketplace
 ```
 
 ### Uninstall Plugins
 
 ```bash
-/plugin uninstall personal-assistant@my-claude-code-marketplace
+/plugin uninstall p-assist@my-claude-code-marketplace
 ```
 
 ### View Available Commands
@@ -193,7 +193,7 @@ my-claude-code-marketplace/
 │   └── marketplace.json     # Marketplace manifest
 ├── plugins/
 │   ├── 00-test/            # Test plugin
-│   └── 01-personal-assistant/  # Personal assistant plugin
+│   └── 01-p-assist/        # Productivity assistant plugin
 ├── CLAUDE.md               # Instructions for Claude Code
 └── README.md               # This file
 ```

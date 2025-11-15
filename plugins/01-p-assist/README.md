@@ -1,13 +1,13 @@
-# Personal Assistant Plugin
+# P-Assist Plugin
 
 A comprehensive productivity plugin for Claude Code that provides article summarization, journal management (Logseq), and bookmark organization (Linkwarden) capabilities.
 
 ## Features
 
-- **Article Summarization**: Summarize web articles and optionally save them to Linkwarden
+- **Article Summarization**: Extract and summarize web articles using Tavily, optionally save to Linkwarden
 - **Journal Management**: Create and search Logseq journal entries
 - **Bookmark Management**: Save and organize bookmarks in Linkwarden
-- **Web Search**: AI-powered web search using Exa
+- **Web Research**: AI-powered web search and content extraction using Tavily and Jina
 
 ## MCP Server Configuration
 
@@ -15,16 +15,24 @@ This plugin uses MCP (Model Context Protocol) servers to integrate with external
 
 ### Required Environment Variables
 
-#### Logseq Integration (`mcp-logseq`)
+#### Logseq Integration (`logseq`)
 - `LOGSEQ_API_TOKEN`: Your Logseq API token
   - Get this from your Logseq instance (Settings → Features → Enable API)
 - `LOGSEQ_API_URL`: Your Logseq API URL (default: `http://localhost:12315`)
 
-#### Linkwarden Integration (`linkwarden`)
+#### Linkwarden Integration (`linkwd`)
 - `LINKWARDEN_BASE_URL`: Your Linkwarden instance URL
   - Example: `https://your-linkwarden-instance.com`
 - `LINKWARDEN_TOKEN`: Your Linkwarden API token
   - Get this from your Linkwarden account settings
+
+#### Tavily Integration (`tavily`)
+- `TAVILY_API_KEY`: Your Tavily API key
+  - Get this from [Tavily API](https://tavily.com/)
+
+#### Jina Integration (`jina`)
+- `JINA_API_KEY`: Your Jina API key
+  - Get this from [Jina AI](https://jina.ai/)
 
 ### Setup Instructions
 
@@ -40,7 +48,17 @@ This plugin uses MCP (Model Context Protocol) servers to integrate with external
    export LINKWARDEN_TOKEN="your_linkwarden_api_token_here"
    ```
 
-3. **For persistent configuration**, add these to your shell profile (`~/.zshrc`, `~/.bashrc`, etc.):
+3. **Set up Tavily:**
+   ```bash
+   export TAVILY_API_KEY="your_tavily_api_key_here"
+   ```
+
+4. **Set up Jina:**
+   ```bash
+   export JINA_API_KEY="your_jina_api_key_here"
+   ```
+
+5. **For persistent configuration**, add these to your shell profile (`~/.zshrc`, `~/.bashrc`, etc.):
    ```bash
    # Logseq
    export LOGSEQ_API_TOKEN="your_logseq_api_token_here"
@@ -49,54 +67,60 @@ This plugin uses MCP (Model Context Protocol) servers to integrate with external
    # Linkwarden
    export LINKWARDEN_BASE_URL="https://your-linkwarden-instance.com"
    export LINKWARDEN_TOKEN="your_linkwarden_api_token_here"
+
+   # Tavily
+   export TAVILY_API_KEY="your_tavily_api_key_here"
+
+   # Jina
+   export JINA_API_KEY="your_jina_api_key_here"
    ```
 
 ## Available Commands
 
 ### Journal Management
 
-#### `/personal-assistant:journal-entry [entry content]`
+#### `/p-assist:journal-entry [entry content]`
 Create a new journal entry in Logseq.
 
 **Example:**
 ```bash
-/personal-assistant:journal-entry Today I worked on the new feature launch and had a productive meeting with the team.
+/p-assist:journal-entry Today I worked on the new feature launch and had a productive meeting with the team.
 ```
 
-#### `/personal-assistant:search-journal [search query]`
+#### `/p-assist:search-journal [search query]`
 Search through your Logseq journal entries.
 
 **Example:**
 ```bash
-/personal-assistant:search-journal project updates
+/p-assist:search-journal project updates
 ```
 
 ### Bookmark Management
 
-#### `/personal-assistant:save-bookmark [url] [description] [collection]`
+#### `/p-assist:save-bookmark [url] [description] [collection]`
 Save a bookmark to Linkwarden.
 
 **Example:**
 ```bash
-/personal-assistant:save-bookmark https://example.com/article "Interesting article about AI" "AI Research"
+/p-assist:save-bookmark https://example.com/article "Interesting article about AI" "AI Research"
 ```
 
-#### `/personal-assistant:list-bookmarks [collection] [search query]`
+#### `/p-assist:list-bookmarks [collection] [search query]`
 List bookmarks from Linkwarden with optional filtering.
 
 **Example:**
 ```bash
-/personal-assistant:list-bookmarks "AI Research" machine learning
+/p-assist:list-bookmarks "AI Research" machine learning
 ```
 
 ### Article Management
 
-#### `/personal-assistant:summarize-article [url] [save]`
+#### `/p-assist:summarize-article [url] [save]`
 Summarize a web article and optionally save it to Linkwarden.
 
 **Example:**
 ```bash
-/personal-assistant:summarize-article https://example.com/article save
+/p-assist:summarize-article https://example.com/article save
 ```
 
 ## Agents
@@ -117,9 +141,10 @@ The orchestrator agent automatically handles complex tasks that involve multiple
 - **Internet connection**: For web search and article fetching
 
 ### MCP Servers Used
-- **mcp-logseq**: Logseq integration server
-- **exa**: AI-powered web search
-- **linkwarden-mcp-server**: Linkwarden bookmark management
+- **logseq**: Logseq integration server
+- **tavily**: AI-powered web search and content extraction
+- **jina**: Advanced web reading, screenshots, and image search
+- **linkwd**: Linkwarden bookmark management
 
 ## Troubleshooting
 
@@ -145,10 +170,10 @@ The orchestrator agent automatically handles complex tasks that involve multiple
 Test your configuration by running:
 ```bash
 # Test Logseq integration
-/personal-assistant:journal-entry "Test entry - please delete me"
+/p-assist:journal-entry "Test entry - please delete me"
 
 # Test Linkwarden integration
-/personal-assistant:list-bookmarks
+/p-assist:list-bookmarks
 ```
 
 ## Development
@@ -159,8 +184,8 @@ To modify or extend this plugin:
 2. Update MCP configuration in `.claude-plugin/plugin.json`
 3. Test changes by reinstalling the plugin:
    ```bash
-   /plugin uninstall personal-assistant@my-claude-code-marketplace
-   /plugin install personal-assistant@my-claude-code-marketplace
+   /plugin uninstall p-assist@my-claude-code-marketplace
+   /plugin install p-assist@my-claude-code-marketplace
    ```
 
 ## License
