@@ -230,7 +230,29 @@ sudo rm -rf /tmp/*
 
 ### Option 2: Quick Clean (Safe Items Only)
 
-Execute automatically:
+First, show the user what will be cleaned:
+
+```
+Quick Clean Summary
+===================
+The following items will be deleted:
+
+1. Trash (~/.Trash)
+   - Size: X.XX GB
+
+2. Temporary files (/tmp)
+   - Size: X.XX MB
+
+Total Space to be Freed: X.XX GB
+```
+
+**Ask for final confirmation**: "Proceed with quick clean? This will permanently delete the items listed above. (y/n)"
+
+Wait for user response.
+
+**If user confirms (y):**
+
+Execute these commands in sequence:
 
 1. **Empty Trash**:
    ```bash
@@ -245,6 +267,10 @@ Execute automatically:
    Report: "✓ Cleared temporary files"
 
 Report total space freed.
+
+**If user declines (n):**
+
+Respond: "Quick clean cancelled. No changes were made."
 
 ### Option 3: Generate Detailed Report
 
