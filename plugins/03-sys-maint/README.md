@@ -28,7 +28,7 @@ Analyze Docker resource usage and clean up containers, images, volumes, and buil
 ```
 
 **Requirements:**
-- Docker Desktop installed and running
+- Docker installed and running
 - Docker CLI available in PATH
 
 **Safety features:**
@@ -166,7 +166,7 @@ You should see:
 ### When to Use Each Command
 
 **Use `docker-cleanup` when:**
-- Docker Desktop is taking up significant disk space
+- Docker is taking up significant disk space
 - You've been building/testing many container images
 - Docker warns about low disk space
 - You want to maintain Docker performance
@@ -250,7 +250,7 @@ You'll be prompted for your password if needed.
 ## Troubleshooting
 
 ### "Docker does not appear to be running"
-- Start Docker Desktop
+- Start Docker
 - Verify Docker is running: `docker ps`
 
 ### "Permission denied" errors

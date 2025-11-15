@@ -5,7 +5,7 @@ allowed-tools: Bash(docker:*)
 
 # Docker Cleanup Command
 
-**IMPORTANT**: This command is designed and tested for macOS only. It requires Docker Desktop to be installed and running.
+**IMPORTANT**: This command is designed and tested for macOS only. It requires Docker to be installed and running.
 
 Your task is to help the user clean up Docker resources safely by analyzing current usage, showing a preview of what will be removed, getting explicit confirmation, and then executing the cleanup operations.
 
@@ -186,7 +186,7 @@ If any command fails:
 
 If Docker is not installed or not running:
 - "Docker does not appear to be installed or running on your system"
-- "Please start Docker Desktop or install Docker to use this command"
+- "Please start Docker or install it to use this command"
 
 ## Validation Criteria
 
