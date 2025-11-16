@@ -8,7 +8,7 @@ The `common-engineering` plugin is designed as an extensible toolkit for softwar
 
 ## Features
 
-### Mermaid Diagram Generation (Available Now)
+### Mermaid Diagram Generation
 
 Professional Mermaid diagram creation with automatic validation and self-healing capabilities.
 
@@ -24,6 +24,22 @@ Professional Mermaid diagram creation with automatic validation and self-healing
 - ✅ **200,000+ icons**: Support for iconify.design icons in architecture diagrams
 - ✅ **Professional quality**: Built-in size guidelines and best practices
 
+### Web Research Specialist
+
+Expert internet researcher with intelligent tool selection for technical problem-solving and comprehensive topic research.
+
+**Research Capabilities:**
+- **Debugging Assistance**: Find solutions to library errors, framework issues, and technical problems
+- **Code Research**: Specialized Exa integration for API documentation, SDK usage, and implementation examples
+- **Comparative Analysis**: Research and compare technologies, libraries, and approaches
+- **Community Intelligence**: Search across GitHub issues, Stack Overflow, Reddit, forums, and documentation
+
+**Key Features:**
+- ✅ **Smart tool selection**: Automatically uses best research tool based on task and model type
+- ✅ **Code-optimized search**: Leverages Exa's `get_code_context_exa` for programming research
+- ✅ **Multi-source synthesis**: Compiles findings from diverse sources with quality assessment
+- ✅ **Structured output**: Executive summary, detailed findings, sources, and recommendations
+
 ### Future Additions
 
 This plugin will be expanded with additional engineering tools including:
@@ -37,7 +53,7 @@ This plugin will be expanded with additional engineering tools including:
 
 ### Prerequisites
 
-#### Required: Mermaid CLI
+#### Required for Mermaid Diagrams: Mermaid CLI
 The diagram generation feature requires `mermaid-cli` to be installed globally:
 
 ```bash
@@ -50,6 +66,27 @@ mmdc --version
 ```
 
 You should see output like: `10.6.1` or similar.
+
+#### Required for Web Research: Exa API Key
+
+The web research specialist uses Exa's powerful search capabilities for code research and general web search. You'll need an API key:
+
+1. **Get your API key**: Visit [https://exa.ai](https://exa.ai) and sign up for an account
+2. **Set the environment variable**:
+   ```bash
+   # Add to your shell profile (~/.zshrc, ~/.bashrc, or ~/.bash_profile)
+   export EXA_API_KEY="your-api-key-here"
+
+   # Reload your shell configuration
+   source ~/.zshrc  # or ~/.bashrc
+   ```
+
+3. **Verify the variable is set**:
+   ```bash
+   echo $EXA_API_KEY
+   ```
+
+**Note**: Without the `EXA_API_KEY`, the web research specialist will fall back to using Claude's built-in WebSearch tool, which is less optimized for code research.
 
 ### Install the Plugin
 
@@ -76,12 +113,37 @@ The `mermaid-expert` agent is automatically available to Claude Code. Simply ask
 "Draw a flowchart for the user registration process"
 ```
 
+### Web Research Specialist Agent
+
+The `web-research-specialist` agent is automatically invoked when you need to research technical problems, debug issues, or gather information from multiple online sources.
+
+**Example requests:**
+```
+"I'm getting a 'Module not found' error with webpack 5, can you research solutions?"
+"Research the best practices for implementing infinite scrolling with React"
+"Compare state management solutions for Vue.js - Pinia vs Vuex"
+"Find examples of how to configure Next.js partial prerendering"
+```
+
+**When the agent is invoked:**
+- For **code/API research**: Uses Exa's specialized `get_code_context_exa` tool for highest quality results
+- For **non-Anthropic models**: Always uses Exa's `web_search_exa` tool
+- For **Anthropic models** (Claude) on non-code tasks: Falls back to built-in WebSearch
+
+**Output format**: The agent provides structured findings with:
+1. Executive Summary (2-3 sentence overview)
+2. Detailed Findings (organized by relevance)
+3. Sources and References (direct links)
+4. Recommendations (best approaches)
+5. Additional Notes (caveats, warnings)
+
 ### Direct Agent Invocation
 
-You can also explicitly request the mermaid-expert agent in your prompts:
+You can also explicitly request agents in your prompts:
 
 ```
 "Use the mermaid-expert agent to create a sequence diagram for..."
+"Use the web-research-specialist agent to find solutions for..."
 ```
 
 ## Diagram Examples
@@ -143,6 +205,7 @@ Every diagram goes through a rigorous validation process:
 ### System Requirements
 - **Node.js**: Required for `mermaid-cli` (npm package)
 - **mermaid-cli**: The Mermaid command-line renderer
+- **EXA_API_KEY**: Environment variable for Exa search capabilities (optional but recommended)
 - **/tmp directory**: Used for validation temporary files
 
 ### Installation Verification
@@ -153,11 +216,17 @@ Test that everything is working:
 # 1. Check mermaid-cli installation
 mmdc --version
 
-# 2. Test the plugin by asking Claude:
+# 2. Check Exa API key is set
+echo $EXA_API_KEY
+
+# 3. Test the Mermaid agent by asking Claude:
 "Create a simple flowchart with Start and End nodes"
+
+# 4. Test the Web Research agent by asking Claude:
+"Research how to implement dark mode in React"
 ```
 
-If Claude successfully generates and validates a diagram, your setup is complete!
+If Claude successfully generates diagrams and performs research, your setup is complete!
 
 ## Troubleshooting
 
@@ -212,13 +281,46 @@ npm install -g @mermaid-js/mermaid-cli
 - Provide more specific requirements in your request
 - Reference the Mermaid documentation: https://mermaid.js.org/
 
+#### 5. Web research specialist not using Exa tools
+
+**Problem:** Agent falls back to WebSearch instead of using Exa.
+
+**Solution:**
+```bash
+# Check if EXA_API_KEY is set
+echo $EXA_API_KEY
+
+# If not set, add it to your shell profile
+export EXA_API_KEY="your-api-key-here"
+source ~/.zshrc  # or ~/.bashrc
+
+# Restart Claude Code to pick up the new environment variable
+```
+
+#### 6. Exa API errors
+
+**Problem:** "Invalid API key" or Exa-related errors.
+
+**Solution:**
+- Verify your API key is correct: https://exa.ai
+- Check your API usage limits haven't been exceeded
+- Ensure the key is properly set in your environment (no extra quotes or spaces)
+
 ### Getting Help
 
 If you encounter issues:
-1. Check that `mmdc --version` works in your terminal
-2. Verify you can run: `echo 'graph TD; A-->B' | mmdc -i - -o /tmp/test.svg`
-3. Check Claude Code plugin status: `/plugin`
-4. Review the skill documentation in `plugins/02-common-engineering/skills/mermaid/`
+1. **For Mermaid issues**:
+   - Check that `mmdc --version` works in your terminal
+   - Verify you can run: `echo 'graph TD; A-->B' | mmdc -i - -o /tmp/test.svg`
+   - Review the skill documentation in `plugins/02-common-engineering/skills/mermaid/`
+2. **For Web Research issues**:
+   - Verify `EXA_API_KEY` is set: `echo $EXA_API_KEY`
+   - Check your Exa account status at https://exa.ai
+   - Try explicitly requesting code research: "Use get_code_context_exa to find..."
+3. **General plugin issues**:
+   - Check Claude Code plugin status: `/plugin`
+   - Reload the plugin to pick up changes
+   - Review agent logs if available
 
 ## Development
 
@@ -227,18 +329,19 @@ If you encounter issues:
 ```
 plugins/02-common-engineering/
 ├── .claude-plugin/
-│   └── plugin.json              # Plugin metadata
+│   └── plugin.json                     # Plugin metadata + MCP config
 ├── agents/
-│   └── mermaid-expert.md        # Mermaid diagram specialist agent
+│   ├── mermaid-expert.md               # Mermaid diagram specialist
+│   └── web-research-specialist.md      # Web research specialist
 ├── skills/
 │   ├── .claude/
-│   │   └── settings.local.json  # Permissions configuration
+│   │   └── settings.local.json         # Permissions configuration
 │   └── mermaid/
-│       ├── SKILL.md             # Main skill definition
+│       ├── SKILL.md                    # Main skill definition
 │       ├── flowchart-diagram-reference.md
 │       ├── sequence-diagrams-reference.md
 │       └── architecture-diagram-reference.md
-└── README.md                    # This file
+└── README.md                           # This file
 ```
 
 ### Adding New Features
@@ -264,8 +367,11 @@ Comprehensive syntax guides are available in the `skills/mermaid/` directory:
 
 ## Roadmap
 
+Completed features:
+- [x] Mermaid diagram generation with validation
+- [x] Web research specialist agent
+
 Planned additions to this plugin:
-- [ ] Web research specialist agent
 - [ ] Code review agent
 - [ ] Shell script expert agent
 - [ ] Documentation specialist agent
