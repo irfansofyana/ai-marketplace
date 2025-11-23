@@ -19,12 +19,12 @@ List recent bookmarks from Linkwarden with intelligent filtering to prevent info
    - If neither: Show 8 most recent bookmarks across all collections
 
 2. **Handle collection filtering (if $1 provided):**
-   - Use `mcp__linkwd__get_all_collections` to list collections
+   - Use `mcp__plugin_p-assist_linkwd__get_all_collections` to list collections
    - Find collection ID matching "$1" (case-insensitive)
    - If collection doesn't exist, show available collections and suggest correct names
 
 3. **Fetch bookmarks with proper parameter defaults:**
-   - Use `mcp__linkwd__get_all_links` with these parameters:
+   - Use `mcp__plugin_p-assist_linkwd__get_all_links` with these parameters:
      - `collectionId`: Collection ID if filtering by collection, otherwise 0
      - `cursor: 0` - First page only (limits results to manageable amount)
      - `pinnedOnly: false` - Include all bookmarks

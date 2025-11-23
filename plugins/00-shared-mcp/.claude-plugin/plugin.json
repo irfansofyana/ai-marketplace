@@ -1,0 +1,48 @@
+{
+	"name": "shared-mcp",
+	"description": "Shared MCP infrastructure providing common web search, content extraction, and research tools for other plugins",
+	"version": "1.0.0",
+	"author": {
+		"name": "irfansofyana"
+	},
+	"mcpServers": {
+		"tavily": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote",
+				"https://mcp.tavily.com/mcp/?tavilyApiKey=${TAVILY_API_KEY}"
+			],
+			"env": {
+				"TAVILY_API_KEY": "${TAVILY_API_KEY}"
+			}
+		},
+		"jina": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote",
+				"https://mcp.jina.ai/sse",
+				"--header",
+				"Authorization: Bearer ${JINA_API_KEY}"
+			],
+			"env": {
+				"JINA_API_KEY": "${JINA_API_KEY}"
+			}
+		},
+		"exa": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote",
+				"https://mcp.exa.ai/mcp?exaApiKey=${EXA_API_KEY}&tools=web_search_exa,get_code_context_exa,crawling_exa,company_research_exa,linkedin_search_exa,deep_researcher_start,deep_researcher_check"
+			],
+			"env": {
+				"EXA_API_KEY": "${EXA_API_KEY}"
+			}
+		}
+	}
+}

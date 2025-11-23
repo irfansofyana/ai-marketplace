@@ -9,7 +9,7 @@ Search your Logseq journals for: "$ARGUMENTS"
 
 **Instructions:**
 
-1. Use `mcp__logseq__search` with the query: $ARGUMENTS
+1. Use `mcp__plugin_p-assist_logseq__search` with the query: $ARGUMENTS
 2. Set search parameters:
    - `include_pages: true` - to search page names
    - `include_blocks: true` - to search block content

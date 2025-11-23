@@ -2,6 +2,18 @@
 
 A foundational plugin for Claude Code containing essential agents and skills for software engineers. This plugin provides common development utilities, diagram generation, documentation helpers, and other engineering tools to streamline your development workflow.
 
+## Prerequisites
+
+**Important**: This plugin requires the `shared-mcp` plugin to be installed first. The shared-mcp plugin provides the Exa MCP server used for web research and code context lookups.
+
+```bash
+# Install shared-mcp first
+/plugin install shared-mcp@my-claude-code-marketplace
+
+# Then install common-engineering
+/plugin install common-engineering@my-claude-code-marketplace
+```
+
 ## Overview
 
 The `common-engineering` plugin is designed as an extensible toolkit for software engineers, providing frequently-used capabilities as reusable agents and skills. Currently focused on professional diagram generation, this plugin will expand to include more engineering tools over time.
@@ -67,26 +79,18 @@ mmdc --version
 
 You should see output like: `10.6.1` or similar.
 
-#### Required for Web Research: Exa API Key
+#### Required for Web Research: shared-mcp Plugin
 
-The web research specialist uses Exa's powerful search capabilities for code research and general web search. You'll need an API key:
+The web research specialist uses Exa's powerful search capabilities from the `shared-mcp` plugin. Make sure you have:
 
-1. **Get your API key**: Visit [https://exa.ai](https://exa.ai) and sign up for an account
-2. **Set the environment variable**:
+1. **Installed the shared-mcp plugin**:
    ```bash
-   # Add to your shell profile (~/.zshrc, ~/.bashrc, or ~/.bash_profile)
-   export EXA_API_KEY="your-api-key-here"
-
-   # Reload your shell configuration
-   source ~/.zshrc  # or ~/.bashrc
+   /plugin install shared-mcp@my-claude-code-marketplace
    ```
 
-3. **Verify the variable is set**:
-   ```bash
-   echo $EXA_API_KEY
-   ```
+2. **Configured the EXA_API_KEY** as described in the [shared-mcp README](../00-shared-mcp/README.md)
 
-**Note**: Without the `EXA_API_KEY`, the web research specialist will fall back to using Claude's built-in WebSearch tool, which is less optimized for code research.
+**Note**: Without the `EXA_API_KEY` configured in shared-mcp, the web research specialist will fall back to using Claude's built-in WebSearch tool, which is less optimized for code research.
 
 ### Install the Plugin
 
@@ -205,7 +209,7 @@ Every diagram goes through a rigorous validation process:
 ### System Requirements
 - **Node.js**: Required for `mermaid-cli` (npm package)
 - **mermaid-cli**: The Mermaid command-line renderer
-- **EXA_API_KEY**: Environment variable for Exa search capabilities (optional but recommended)
+- **shared-mcp plugin**: Provides Exa MCP server for web research (optional but recommended)
 - **/tmp directory**: Used for validation temporary files
 
 ### Installation Verification
@@ -216,7 +220,7 @@ Test that everything is working:
 # 1. Check mermaid-cli installation
 mmdc --version
 
-# 2. Check Exa API key is set
+# 2. Check Exa API key is set (configured via shared-mcp plugin)
 echo $EXA_API_KEY
 
 # 3. Test the Mermaid agent by asking Claude:
@@ -287,14 +291,14 @@ npm install -g @mermaid-js/mermaid-cli
 
 **Solution:**
 ```bash
-# Check if EXA_API_KEY is set
+# 1. Ensure shared-mcp plugin is installed
+/plugin install shared-mcp@my-claude-code-marketplace
+
+# 2. Check if EXA_API_KEY is set
 echo $EXA_API_KEY
 
-# If not set, add it to your shell profile
-export EXA_API_KEY="your-api-key-here"
-source ~/.zshrc  # or ~/.bashrc
-
-# Restart Claude Code to pick up the new environment variable
+# 3. If not set, see shared-mcp README for configuration
+# Restart Claude Code after setting the environment variable
 ```
 
 #### 6. Exa API errors

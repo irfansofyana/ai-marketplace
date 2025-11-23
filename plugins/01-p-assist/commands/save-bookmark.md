@@ -14,13 +14,13 @@ Save the following bookmark to Linkwarden:
 **Instructions:**
 
 1. First, check if the collection exists:
-   - Use `mcp__linkwd__get_all_collections` to list collections
+   - Use `mcp__plugin_p-assist_linkwd__get_all_collections` to list collections
    - Find the collection ID matching "$3" (case-insensitive)
    - If collection doesn't exist, list available collections and ask user to choose
 
 2. Fetch the URL content briefly to generate a better name:
-   - **Primary**: Try `mcp__tavily__tavily_extract` to get page title and content
-   - **Fallback**: If Tavily fails with token limit error, use `mcp__jina__read_url`
+   - **Primary**: Try `mcp__plugin_shared-mcp_tavily__tavily_extract` to get page title and content
+   - **Fallback**: If Tavily fails with token limit error, use `mcp__plugin_shared-mcp_jina__read_url`
    - **Last resort**: If both fail, use the domain name as the bookmark name
    - Extract the page title from the content for the bookmark name
 
@@ -29,7 +29,7 @@ Save the following bookmark to Linkwarden:
    - Based on the URL domain or content type
    - Keep tags concise and relevant (2-4 tags)
 
-4. Save the bookmark using `mcp__linkwd__create_link`:
+4. Save the bookmark using `mcp__plugin_p-assist_linkwd__create_link`:
    - `url`: $1
    - `name`: Generated from page title
    - `description`: $2

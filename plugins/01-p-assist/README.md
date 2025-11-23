@@ -2,18 +2,40 @@
 
 A comprehensive productivity plugin for Claude Code that provides article summarization, journal management (Logseq), and bookmark organization (Linkwarden) capabilities.
 
+## Prerequisites
+
+**Important**: This plugin requires the `shared-mcp` plugin to be installed first. The shared-mcp plugin provides common MCP servers (Tavily, Jina) used for web search and content extraction.
+
+```bash
+# Install shared-mcp first
+/plugin install shared-mcp@my-claude-code-marketplace
+
+# Then install p-assist
+/plugin install p-assist@my-claude-code-marketplace
+```
+
 ## Features
 
-- **Article Summarization**: Extract and summarize web articles using Tavily, optionally save to Linkwarden
+- **Article Summarization**: Extract and summarize web articles using Tavily (from shared-mcp), optionally save to Linkwarden
 - **Journal Management**: Create and search Logseq journal entries
 - **Bookmark Management**: Save and organize bookmarks in Linkwarden
-- **Web Research**: AI-powered web search and content extraction using Tavily and Jina
+- **Web Research**: AI-powered web search and content extraction using shared-mcp tools
 
 ## MCP Server Configuration
 
-This plugin uses MCP (Model Context Protocol) servers to integrate with external services. You'll need to configure the following environment variables:
+This plugin uses MCP (Model Context Protocol) servers to integrate with external services.
 
-### Required Environment Variables
+### Dependency: shared-mcp Plugin
+
+The following services are provided by the `shared-mcp` plugin (install it first):
+- **Tavily**: Web search and content extraction
+- **Jina**: Advanced web reading and content processing
+
+See the [shared-mcp README](../00-shared-mcp/README.md) for API key configuration.
+
+### Plugin-Specific Environment Variables
+
+These environment variables are specific to p-assist:
 
 #### Logseq Integration (`logseq`)
 - `LOGSEQ_API_TOKEN`: Your Logseq API token
@@ -26,39 +48,27 @@ This plugin uses MCP (Model Context Protocol) servers to integrate with external
 - `LINKWARDEN_TOKEN`: Your Linkwarden API token
   - Get this from your Linkwarden account settings
 
-#### Tavily Integration (`tavily`)
-- `TAVILY_API_KEY`: Your Tavily API key
-  - Get this from [Tavily API](https://tavily.com/)
-
-#### Jina Integration (`jina`)
-- `JINA_API_KEY`: Your Jina API key
-  - Get this from [Jina AI](https://jina.ai/)
-
 ### Setup Instructions
 
-1. **Set up Logseq:**
+1. **Install and configure shared-mcp first** (for Tavily and Jina):
+   ```bash
+   /plugin install shared-mcp@my-claude-code-marketplace
+   ```
+   See [shared-mcp README](../00-shared-mcp/README.md) for API key setup.
+
+2. **Set up Logseq:**
    ```bash
    export LOGSEQ_API_TOKEN="your_logseq_api_token_here"
    export LOGSEQ_API_URL="http://localhost:12315"  # or your Logseq instance URL
    ```
 
-2. **Set up Linkwarden:**
+3. **Set up Linkwarden:**
    ```bash
    export LINKWARDEN_BASE_URL="https://your-linkwarden-instance.com"
    export LINKWARDEN_TOKEN="your_linkwarden_api_token_here"
    ```
 
-3. **Set up Tavily:**
-   ```bash
-   export TAVILY_API_KEY="your_tavily_api_key_here"
-   ```
-
-4. **Set up Jina:**
-   ```bash
-   export JINA_API_KEY="your_jina_api_key_here"
-   ```
-
-5. **For persistent configuration**, add these to your shell profile (`~/.zshrc`, `~/.bashrc`, etc.):
+4. **For persistent configuration**, add these to your shell profile (`~/.zshrc`, `~/.bashrc`, etc.):
    ```bash
    # Logseq
    export LOGSEQ_API_TOKEN="your_logseq_api_token_here"
@@ -67,12 +77,6 @@ This plugin uses MCP (Model Context Protocol) servers to integrate with external
    # Linkwarden
    export LINKWARDEN_BASE_URL="https://your-linkwarden-instance.com"
    export LINKWARDEN_TOKEN="your_linkwarden_api_token_here"
-
-   # Tavily
-   export TAVILY_API_KEY="your_tavily_api_key_here"
-
-   # Jina
-   export JINA_API_KEY="your_jina_api_key_here"
    ```
 
 ## Available Commands
@@ -141,10 +145,10 @@ The orchestrator agent automatically handles complex tasks that involve multiple
 - **Internet connection**: For web search and article fetching
 
 ### MCP Servers Used
-- **logseq**: Logseq integration server
-- **tavily**: AI-powered web search and content extraction
-- **jina**: Advanced web reading, screenshots, and image search
-- **linkwd**: Linkwarden bookmark management
+- **logseq** (p-assist): Logseq integration server
+- **linkwd** (p-assist): Linkwarden bookmark management
+- **tavily** (shared-mcp): AI-powered web search and content extraction
+- **jina** (shared-mcp): Advanced web reading, screenshots, and image search
 
 ## Troubleshooting
 

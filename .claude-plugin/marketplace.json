@@ -5,6 +5,11 @@
 	},
 	"plugins": [
 		{
+			"name": "shared-mcp",
+			"source": "./plugins/00-shared-mcp",
+			"description": "Shared MCP infrastructure (Tavily, Jina, Exa) - install first as dependency for other plugins"
+		},
+		{
 			"name": "test-plugin",
 			"source": "./plugins/00-test",
 			"description": "My TEST ONLY plugin"
