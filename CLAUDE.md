@@ -137,7 +137,6 @@ Commands are invoked as: `/plugin-name:command-name`
 ## Current Plugins
 
 - **00-shared-mcp** (`./plugins/00-shared-mcp`): **INSTALL FIRST** - Shared MCP infrastructure providing common web search (Tavily, Exa) and content extraction (Jina) tools. Required by p-assist and common-engineering plugins.
-- **00-test** (`./plugins/00-test`): Test plugin for learning the basics
 - **01-p-assist** (`./plugins/01-p-assist`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden). **Requires shared-mcp plugin** - see `plugins/01-p-assist/README.md` for setup instructions.
 - **02-common-engineering** (`./plugins/02-common-engineering`): Essential toolkit for software engineers with Mermaid diagram generation, automatic validation, and self-healing capabilities. **Requires shared-mcp plugin** for web research features.
 - **03-sys-maint** (`./plugins/03-sys-maint`): System maintenance and cleanup utilities for Docker and disk space management with interactive preview and confirmation workflows.

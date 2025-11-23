@@ -8,6 +8,13 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 
 ## Available Plugins
 
+### [shared-mcp](./plugins/00-shared-mcp/)
+**INSTALL FIRST** - Shared MCP infrastructure providing common web search, content extraction, and research tools. This plugin provides Tavily (web search), Jina (content extraction), and Exa (AI-powered search) tools that are used by other plugins in this marketplace.
+
+**Required dependency** for p-assist and common-engineering plugins.
+
+See [plugins/00-shared-mcp/README.md](./plugins/00-shared-mcp/README.md) for detailed setup instructions and API key configuration.
+
 ### [p-assist](./plugins/01-p-assist/)
 Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden).
 
@@ -27,10 +34,6 @@ and confirmation workflows for safely cleaning up Docker resources and analyzing
 
 See [plugins/03-sys-maint/README.md](./plugins/03-sys-maint/README.md) for usage instructions and safety features.
 
-### [test-plugin](./plugins/00-test/)
-A test plugin for learning and experimenting with the plugin system.
-
-See [plugins/00-test/](./plugins/00-test/) for plugin structure and examples.
 
 ## Getting Started
 
@@ -219,7 +222,7 @@ my-claude-code-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json     # Marketplace manifest
 ├── plugins/
-│   ├── 00-test/            # Test plugin
+│   ├── 00-shared-mcp/      # Shared MCP infrastructure (Tavily, Jina, Exa)
 │   ├── 01-p-assist/        # Productivity assistant plugin
 │   ├── 02-common-engineering/ # Engineering tools and diagram generation
 │   └── 03-sys-maint/       # System maintenance and cleanup
