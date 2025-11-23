@@ -1,8 +1,0 @@
-{
-	"name": "test-plugin",
-	"description": "A simple test plugin to learn the basics",
-	"version": "1.0.0",
-	"author": {
-		"name": "irfansofyana"
-	}
-}

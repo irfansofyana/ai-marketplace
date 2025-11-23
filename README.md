@@ -27,10 +27,6 @@ and confirmation workflows for safely cleaning up Docker resources and analyzing
 
 See [plugins/03-sys-maint/README.md](./plugins/03-sys-maint/README.md) for usage instructions and safety features.
 
-### [test-plugin](./plugins/00-test/)
-A test plugin for learning and experimenting with the plugin system.
-
-See [plugins/00-test/](./plugins/00-test/) for plugin structure and examples.
 
 ## Getting Started
 
@@ -219,7 +215,6 @@ my-claude-code-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json     # Marketplace manifest
 ├── plugins/
-│   ├── 00-test/            # Test plugin
 │   ├── 01-p-assist/        # Productivity assistant plugin
 │   ├── 02-common-engineering/ # Engineering tools and diagram generation
 │   └── 03-sys-maint/       # System maintenance and cleanup
