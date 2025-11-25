@@ -12,16 +12,15 @@ This plugin consolidates commonly-used MCP servers to:
 
 ## Prerequisites
 
-- Node.js (for npx)
-- npm
+- Node.js (for npx - required by Tavily and Exa MCP servers)
 
 ## MCP Servers Included
 
-| Server | Purpose | Tools Provided |
-|--------|---------|----------------|
-| **Tavily** | Web search and content extraction | `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map` |
-| **Jina** | Content reading and URL processing | `read_url`, `search_web`, `search_images`, `search_arxiv`, and more |
-| **Exa** | AI-powered web search and code context | `web_search_exa`, `get_code_context_exa`, `crawling_exa`, `deep_researcher_start/check` |
+| Server | Purpose | Tools Provided | Connection Type |
+|--------|---------|----------------|-----------------|
+| **Tavily** | Web search and content extraction | `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map` | stdio/npx |
+| **Jina** | Content reading and URL processing | `read_url`, `search_web`, `search_images`, `search_arxiv`, and more | SSE (Server-Sent Events) |
+| **Exa** | AI-powered web search and code context | `web_search_exa`, `get_code_context_exa`, `crawling_exa`, `deep_researcher_start/check` | stdio/npx |
 
 ## Installation
 
@@ -75,7 +74,7 @@ The following plugins require `shared-mcp` to be installed:
 ### MCP server not starting
 
 1. Ensure environment variables are set correctly
-2. Check that `npx` is available in your PATH
+2. Check that `npx` is available in your PATH (required for Tavily and Exa)
 3. Verify API keys are valid
 
 ### Tool not found
@@ -86,6 +85,47 @@ Ensure the plugin is installed and enabled:
 /plugin enable shared-mcp@my-claude-code-marketplace
 ```
 
+## Recent Updates
+
+### November 2025: Jina MCP Configuration Updated
+
+The Jina MCP server configuration has been updated to use a direct SSE (Server-Sent Events) connection instead of the previous stdio/npx approach. This change:
+- Removes the dependency on `mcp-remote` npm package for Jina tools
+- Improves connection reliability for Jina tools
+- Reduces startup time for Jina tools
+- Maintains all existing functionality
+- Still requires Node.js/npx for Tavily and Exa tools
+
+Previous configuration required npx and mcp-remote:
+```json
+"jina": {
+  "type": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "mcp-remote",
+    "https://mcp.jina.ai/sse",
+    "--header",
+    "Authorization: Bearer ${JINA_API_KEY}"
+  ],
+  "env": {
+    "JINA_API_KEY": "${JINA_API_KEY}"
+  }
+}
+```
+
+Updated configuration uses direct SSE:
+```json
+"jina": {
+  "type": "sse",
+  "url": "https://mcp.jina.ai/sse",
+  "headers": {
+    "Authorization": "Bearer ${JINA_API_KEY}"
+  }
+}
+```
+
 ## Version History
 
 - **1.0.0**: Initial release with Tavily, Jina, and Exa MCP servers
+- **1.1.0**: Updated Jina MCP to use direct SSE connection instead of stdio/npx (November 2025)
