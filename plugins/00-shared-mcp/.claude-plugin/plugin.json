@@ -1,7 +1,7 @@
 {
 	"name": "shared-mcp",
 	"description": "Shared MCP infrastructure providing common web search, content extraction, and research tools for other plugins",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"author": {
 		"name": "irfansofyana"
 	},
@@ -19,17 +19,10 @@
 			}
 		},
 		"jina": {
-			"type": "stdio",
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote",
-				"https://mcp.jina.ai/sse",
-				"--header",
-				"Authorization: Bearer ${JINA_API_KEY}"
-			],
-			"env": {
-				"JINA_API_KEY": "${JINA_API_KEY}"
+			"type": "sse",
+			"url": "https://mcp.jina.ai/sse",
+			"headers": {
+				"Authorization": "Bearer ${JINA_API_KEY}"
 			}
 		},
 		"exa": {
