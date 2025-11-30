@@ -50,34 +50,46 @@ These environment variables are specific to p-assist:
 
 ### Setup Instructions
 
-1. **Install and configure shared-mcp first** (for Tavily and Jina):
+**IMPORTANT**: All environment variables must be added to your shell configuration file to persist across sessions.
+
+**Shell Config File Location:**
+- macOS (Zsh): `~/.zshrc`
+- Linux (Bash): `~/.bashrc` or `~/.bash_profile`
+
+1. **Install and configure shared-mcp first** (provides Tavily and Jina):
    ```bash
    /plugin install shared-mcp@my-claude-code-marketplace
    ```
    See [shared-mcp README](../00-shared-mcp/README.md) for API key setup.
 
-2. **Set up Logseq:**
+2. **Optional: Set up Logseq** (add to shell config file):
    ```bash
    export LOGSEQ_API_TOKEN="your_logseq_api_token_here"
    export LOGSEQ_API_URL="http://localhost:12315"  # or your Logseq instance URL
    ```
 
-3. **Set up Linkwarden:**
+3. **Optional: Set up Linkwarden** (add to shell config file):
    ```bash
    export LINKWARDEN_BASE_URL="https://your-linkwarden-instance.com"
    export LINKWARDEN_TOKEN="your_linkwarden_api_token_here"
    ```
 
-4. **For persistent configuration**, add these to your shell profile (`~/.zshrc`, `~/.bashrc`, etc.):
+4. **Reload your shell configuration:**
    ```bash
-   # Logseq
-   export LOGSEQ_API_TOKEN="your_logseq_api_token_here"
-   export LOGSEQ_API_URL="http://localhost:12315"
+   # For Zsh (macOS)
+   source ~/.zshrc
 
-   # Linkwarden
-   export LINKWARDEN_BASE_URL="https://your-linkwarden-instance.com"
-   export LINKWARDEN_TOKEN="your_linkwarden_api_token_here"
+   # For Bash (Linux)
+   source ~/.bashrc
    ```
+
+5. **Verify variables are loaded:**
+   ```bash
+   echo $LOGSEQ_API_TOKEN     # Should show your token (if configured)
+   echo $LINKWARDEN_TOKEN     # Should show your token (if configured)
+   ```
+
+6. **Restart Claude Code** to ensure it picks up the new environment variables.
 
 ## Available Commands
 
