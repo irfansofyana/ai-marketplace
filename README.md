@@ -35,48 +35,138 @@ and confirmation workflows for safely cleaning up Docker resources and analyzing
 See [plugins/03-sys-maint/README.md](./plugins/03-sys-maint/README.md) for usage instructions and safety features.
 
 
-## Getting Started
+## Prerequisites
+
+### System Dependencies
+
+Different plugins require different system dependencies. Install what you need:
+
+**For all plugins:**
+- Node.js (required for Tavily and Exa MCP servers in shared-mcp)
+  - Check: `node --version`
+  - Install: https://nodejs.org
+
+**For common-engineering plugin:**
+- mermaid-cli (for diagram generation)
+  - Install: `npm install -g @mermaid-js/mermaid-cli`
+  - Verify: `mmdc --version`
+
+**For p-assist plugin:**
+- Docker (for Linkwarden integration)
+  - Check: `docker --version`
+  - Install: https://www.docker.com/get-started
+- uv (Python package manager, for Logseq integration)
+  - Install: `pip install uv` or use system package manager
+
+**For sys-maint plugin:**
+- macOS only (uses platform-specific tools)
+- Docker (optional, for docker-cleanup command)
+
+### API Keys
+
+The following API keys are required for shared-mcp (used by multiple plugins):
+
+| Service | Free Tier | Sign Up URL | Required For |
+|---------|-----------|-------------|--------------|
+| Tavily | ✓ Yes | https://tavily.com | Web search, article extraction |
+| Jina | ✓ Yes | https://jina.ai | Content reading, screenshots |
+| Exa | ✓ Yes | https://exa.ai | AI-powered search, code context |
+| Logseq | N/A (local) | - | Journal management (p-assist) |
+| Linkwarden | Self-hosted | - | Bookmark management (p-assist) |
+
+See the "Environment Setup" section in Quick Start for configuration details.
+
+## Quick Start (Automated)
+
+### 1. Add Marketplace via GitHub
+
+```bash
+/plugin marketplace add https://github.com/irfansofyana/my-claude-code-marketplace
+```
+
+This automatically clones the marketplace and makes all plugins available for installation.
+
+### 2. Configure Environment Variables (Required)
+
+The plugins in this marketplace require API keys for MCP servers. Add these to your shell configuration file:
+
+**For Zsh (macOS default):** `~/.zshrc`
+**For Bash:** `~/.bashrc` or `~/.bash_profile`
+
+```bash
+# Required for shared-mcp plugin (install this first)
+export TAVILY_API_KEY="your-tavily-api-key"     # Get from https://tavily.com
+export JINA_API_KEY="your-jina-api-key"         # Get from https://jina.ai
+export EXA_API_KEY="your-exa-api-key"           # Get from https://exa.ai
+
+# Optional: For p-assist plugin features
+export LOGSEQ_API_TOKEN="your-logseq-token"     # Logseq Settings → Features → Enable API
+export LOGSEQ_API_URL="http://localhost:12315" # Default Logseq API URL
+export LINKWARDEN_BASE_URL="https://your-linkwarden.com"
+export LINKWARDEN_TOKEN="your-linkwarden-token"
+```
+
+**After adding these variables**, reload your shell configuration:
+```bash
+# For Zsh
+source ~/.zshrc
+
+# For Bash
+source ~/.bashrc
+```
+
+### 3. Verify Environment Variables
+
+Check that variables are loaded correctly:
+```bash
+echo $TAVILY_API_KEY  # Should show your API key
+echo $JINA_API_KEY    # Should show your API key
+echo $EXA_API_KEY     # Should show your API key
+```
+
+### 4. Install Plugins
+
+Browse and install plugins interactively:
+```bash
+/plugin
+```
+
+Or install directly in dependency order:
+```bash
+# Install in this order (respects dependencies)
+/plugin install shared-mcp@my-claude-code-marketplace     # REQUIRED: Install first
+/plugin install p-assist@my-claude-code-marketplace       # Optional
+/plugin install common-engineering@my-claude-code-marketplace  # Optional
+/plugin install sys-maint@my-claude-code-marketplace      # Optional (macOS only)
+```
+
+## Manual Installation (Alternative)
+
+If you prefer to manage the repository yourself or need offline access:
 
 ### 1. Clone This Repository
-
 ```bash
 git clone https://github.com/irfansofyana/my-claude-code-marketplace.git
 cd my-claude-code-marketplace
 ```
 
-### 2. Add This Marketplace to Claude Code
-
+### 2. Add Local Marketplace to Claude Code
 ```bash
 /plugin marketplace add $(pwd)
 ```
 
 Or use an absolute path:
-
 ```bash
 /plugin marketplace add /path/to/my-claude-code-marketplace
 ```
 
-### 3. Browse Available Plugins
+### 3. Configure Environment Variables
 
-```bash
-/plugin
-```
+Follow the same environment setup steps from "Quick Start" section above.
 
-This opens an interactive browser to explore and install plugins from this marketplace.
+### 4. Install Plugins
 
-### 4. Install a Plugin
-
-```bash
-/plugin install p-assist@my-claude-code-marketplace
-```
-
-### 5. Use Plugin Commands
-
-After installation, use the slash commands provided by the plugin:
-
-```bash
-/p-assist:summarize-article https://example.com/article
-```
+Follow the same plugin installation steps from "Quick Start" section above.
 
 ## Plugin Management
 
@@ -238,6 +328,51 @@ my-claude-code-marketplace/
 
 - [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code)
 - [Plugin Development Guide](https://docs.claude.com/en/docs/claude-code)
+
+## Troubleshooting
+
+### Environment Variables Not Loaded
+
+**Problem**: MCP servers fail to start with "API key not found" errors.
+
+**Solution**:
+1. Verify variables are in your shell config file (`~/.zshrc` or `~/.bashrc`)
+2. Reload the config: `source ~/.zshrc` (or `source ~/.bashrc`)
+3. Restart Claude Code completely
+4. Check variables are loaded: `echo $TAVILY_API_KEY`
+
+### MCP Server Connection Failed
+
+**Problem**: Plugin shows "MCP server not responding" errors.
+
+**Solution**:
+1. Check Node.js is installed: `node --version`
+2. For Tavily/Exa: Verify `npx` works: `npx --version`
+3. For p-assist: Verify Docker is running: `docker ps`
+4. Check API keys are valid by testing the service websites
+
+### Plugin Installation Failed
+
+**Problem**: `/plugin install` command fails.
+
+**Solution**:
+1. Ensure marketplace is added first: `/plugin marketplace list`
+2. Check internet connection (for GitHub-based installation)
+3. Install shared-mcp before other plugins (dependency requirement)
+
+### Shell Config File Not Loading
+
+**Problem**: Variables disappear after closing terminal.
+
+**Solution**:
+1. macOS: Add to `~/.zshrc` (default shell is Zsh)
+2. Linux: Add to `~/.bashrc` or `~/.bash_profile`
+3. Ensure file is being sourced automatically (add if missing):
+   ```bash
+   # In ~/.zshrc or ~/.bashrc
+   export TAVILY_API_KEY="..."
+   # ... other exports
+   ```
 
 ## License
 

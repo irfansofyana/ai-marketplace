@@ -53,9 +53,20 @@ The content here becomes the prompt that Claude receives.
 
 Commands are invoked as: `/plugin-name:command-name`
 
-## Development Commands
+## Installation Methods
 
-### Testing Plugins Locally
+### Automated Installation (Recommended)
+
+**Add marketplace directly from GitHub:**
+```bash
+/plugin marketplace add https://github.com/irfansofyana/my-claude-code-marketplace
+```
+
+This automatically clones the repository and makes all plugins available.
+
+### Manual Installation (For Development)
+
+Useful when developing plugins or working offline:
 
 1. **Clone this repository:**
    ```bash
@@ -73,14 +84,14 @@ Commands are invoked as: `/plugin-name:command-name`
    /plugin marketplace add /path/to/my-claude-code-marketplace
    ```
 
-3. **Install a plugin from this marketplace:**
-   ```bash
-   /plugin install plugin-name@my-claude-code-marketplace
-   ```
-
-4. **Browse available plugins interactively:**
+3. **Browse available plugins interactively:**
    ```bash
    /plugin
+   ```
+
+4. **Install a plugin from this marketplace:**
+   ```bash
+   /plugin install plugin-name@my-claude-code-marketplace
    ```
 
 5. **After making changes, reload the plugin:**
@@ -94,6 +105,49 @@ Commands are invoked as: `/plugin-name:command-name`
 - **Enable a plugin:** `/plugin enable plugin-name@my-claude-code-marketplace`
 - **Disable a plugin:** `/plugin disable plugin-name@my-claude-code-marketplace`
 - **Check installed commands:** `/help` (shows all available slash commands)
+
+## Environment Configuration
+
+### Required Environment Variables
+
+Many plugins use MCP servers that require API keys. These MUST be configured in your shell configuration file for Claude Code to access them.
+
+**Shell Configuration Files:**
+- macOS (Zsh): `~/.zshrc`
+- Linux (Bash): `~/.bashrc` or `~/.bash_profile`
+
+**Required for shared-mcp plugin** (dependency for p-assist and common-engineering):
+```bash
+export TAVILY_API_KEY="your-tavily-api-key"     # https://tavily.com (free tier)
+export JINA_API_KEY="your-jina-api-key"         # https://jina.ai (free tier)
+export EXA_API_KEY="your-exa-api-key"           # https://exa.ai (free tier)
+```
+
+**Optional for p-assist plugin features**:
+```bash
+export LOGSEQ_API_TOKEN="your-logseq-token"
+export LOGSEQ_API_URL="http://localhost:12315"
+export LINKWARDEN_BASE_URL="https://your-linkwarden.com"
+export LINKWARDEN_TOKEN="your-linkwarden-token"
+```
+
+**After adding variables**, reload your shell config:
+```bash
+source ~/.zshrc  # or source ~/.bashrc
+```
+
+**IMPORTANT**: Environment variables must be set in your shell config file (not just in terminal session) for Claude Code to access them. Claude Code reads environment variables from your shell at startup.
+
+### Verifying Configuration
+
+After configuring, verify variables are loaded:
+```bash
+echo $TAVILY_API_KEY  # Should display your API key
+echo $JINA_API_KEY
+echo $EXA_API_KEY
+```
+
+If empty, reload your shell config or restart Claude Code.
 
 ## Adding a New Plugin
 
@@ -136,10 +190,21 @@ Commands are invoked as: `/plugin-name:command-name`
 
 ## Current Plugins
 
-- **00-shared-mcp** (`./plugins/00-shared-mcp`): **INSTALL FIRST** - Shared MCP infrastructure providing common web search (Tavily, Exa) and content extraction (Jina) tools. Required by p-assist and common-engineering plugins. Note: Requires Node.js for Tavily and Exa tools (npx dependency).
-- **01-p-assist** (`./plugins/01-p-assist`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden). **Requires shared-mcp plugin** - see `plugins/01-p-assist/README.md` for setup instructions.
-- **02-common-engineering** (`./plugins/02-common-engineering`): Essential toolkit for software engineers with Mermaid diagram generation, automatic validation, and self-healing capabilities. **Requires shared-mcp plugin** for web research features.
+- **00-shared-mcp** (`./plugins/00-shared-mcp`): **INSTALL FIRST** - Shared MCP infrastructure providing common web search (Tavily, Exa) and content extraction (Jina) tools. Required by p-assist and common-engineering plugins.
+  - **Requirements**: Node.js, API keys (TAVILY_API_KEY, JINA_API_KEY, EXA_API_KEY)
+  - See environment configuration section above
+
+- **01-p-assist** (`./plugins/01-p-assist`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden).
+  - **Requires**: shared-mcp plugin
+  - **Optional**: LOGSEQ_API_TOKEN, LINKWARDEN_TOKEN (for those features)
+  - See `plugins/01-p-assist/README.md` for setup instructions
+
+- **02-common-engineering** (`./plugins/02-common-engineering`): Essential toolkit for software engineers with Mermaid diagram generation, automatic validation, and self-healing capabilities.
+  - **Requires**: shared-mcp plugin, mermaid-cli (`npm install -g @mermaid-js/mermaid-cli`)
+  - See `plugins/02-common-engineering/README.md` for setup
+
 - **03-sys-maint** (`./plugins/03-sys-maint`): System maintenance and cleanup utilities for Docker and disk space management with interactive preview and confirmation workflows.
+  - **Requirements**: macOS, Docker (optional for docker-cleanup)
 
 ## Plugin Dependencies
 

@@ -32,17 +32,38 @@ This plugin consolidates commonly-used MCP servers to:
 
 ### 2. Configure Environment Variables
 
-Add the following to your environment or Claude Code settings:
+**IMPORTANT**: Add these to your shell configuration file so they persist across sessions and are available to Claude Code.
 
+**Shell Config File Location:**
+- macOS (Zsh): `~/.zshrc`
+- Linux (Bash): `~/.bashrc` or `~/.bash_profile`
+
+**Add these lines to your shell config file:**
 ```bash
-# Tavily API Key (https://tavily.com)
+# Tavily API Key (https://tavily.com - free tier available)
 export TAVILY_API_KEY="your-tavily-api-key"
 
-# Jina API Key (https://jina.ai)
+# Jina API Key (https://jina.ai - free tier available)
 export JINA_API_KEY="your-jina-api-key"
 
-# Exa API Key (https://exa.ai)
+# Exa API Key (https://exa.ai - free tier available)
 export EXA_API_KEY="your-exa-api-key"
+```
+
+**After adding**, reload your shell configuration:
+```bash
+# For Zsh (macOS)
+source ~/.zshrc
+
+# For Bash (Linux)
+source ~/.bashrc
+```
+
+**Verify variables are loaded:**
+```bash
+echo $TAVILY_API_KEY  # Should display your API key
+echo $JINA_API_KEY
+echo $EXA_API_KEY
 ```
 
 **Getting API Keys:**
@@ -71,11 +92,22 @@ The following plugins require `shared-mcp` to be installed:
 
 ## Troubleshooting
 
+### Environment variables not found
+
+**Problem**: MCP servers fail with "API key not set" errors.
+
+**Solution**:
+1. Verify variables are in your shell config file (`~/.zshrc` or `~/.bashrc`)
+2. Reload config: `source ~/.zshrc` (or `source ~/.bashrc`)
+3. Restart Claude Code completely
+4. Test: `echo $TAVILY_API_KEY` should show your key
+
 ### MCP server not starting
 
-1. Ensure environment variables are set correctly
-2. Check that `npx` is available in your PATH (required for Tavily and Exa)
-3. Verify API keys are valid
+1. Ensure environment variables are set correctly (see above)
+2. Check that Node.js is installed: `node --version`
+3. Check that `npx` is available: `npx --version` (required for Tavily and Exa)
+4. Verify API keys are valid by testing at the provider's website
 
 ### Tool not found
 
