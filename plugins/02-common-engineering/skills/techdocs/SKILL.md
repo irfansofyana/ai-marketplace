@@ -86,11 +86,35 @@ If user needs research assistance, invoke `agent:web-research-specialist` for:
 
 ### Phase 3: Content Generation
 
+**CRITICAL: Output Rules**
+
+⚠️ **What to INCLUDE in user-facing documents:**
+- ✅ Section headings from template.md (e.g., ## Problem, ## High level goal)
+- ✅ User-provided content and information
+- ✅ Diagrams (if requested and generated via mermaid skill)
+- ✅ Placeholder text in italics (e.g., *Describe the problem*)
+- ✅ Tables, lists, and formatting for user content
+
+⚠️ **What to EXCLUDE from user-facing documents:**
+- ❌ Checkboxes (✅ or - [ ]) of any kind
+- ❌ HTML comments (<!--- ... --->)
+- ❌ Quality criteria statements
+- ❌ "GUIDANCE QUESTIONS" sections
+- ❌ References to quality-checklist.md
+- ❌ Any validation or assessment language
+
+**Template Files Purpose:**
+- `template.md` - Clean structure with section headings (use for document structure)
+- `guidance.md` - Section-specific guidance with questions and quality criteria (read for context, never copy to output)
+- `quality-checklist.md` - Validation criteria (use in Phase 5 only, never show to user)
+
+**Content Generation Process:**
+
 1. **Load template guidance**: Read the appropriate `templates/{type}/guidance.md`
 2. **Work section-by-section**: For each template section:
    - Explain what the section needs
-   - Ask targeted questions (use choices where possible)
-   - Generate draft content
+   - Ask targeted questions from guidance.md (use choices where possible)
+   - Generate draft content WITHOUT any checkboxes or quality criteria
    - Get feedback before moving on
 3. **Reference examples**: Use `templates/{type}/examples.md` for quality benchmarks
 
@@ -105,10 +129,46 @@ Do NOT proactively suggest diagrams unless user requested them.
 
 ### Phase 5: Review & Output
 
-1. Present complete draft
-2. Run quality validation (see below)
-3. Ask for refinements
-4. Save using `document-skills:docx` or `document-skills:pdf`
+**MANDATORY: Pre-Output Self-Check**
+
+Before presenting ANY draft to the user, you MUST verify:
+
+- [ ] ❌ NO checkboxes (✅ or - [ ]) anywhere in the document
+- [ ] ❌ NO HTML comments in the document
+- [ ] ❌ NO quality criteria text in the document
+- [ ] ❌ NO "GUIDANCE QUESTIONS" sections in the document
+- [ ] ❌ NO references to quality-checklist.md in the document
+- [ ] ✅ ONLY section headings and user-provided content included
+
+**If ANY prohibited content found**: Remove it immediately before presenting to user.
+
+**Phase 5 Workflow:**
+
+1. **Present Draft** (WITHOUT validation criteria):
+   - Show the complete document to the user
+   - Do NOT include any checkboxes, quality criteria, or validation language
+   - The draft should contain ONLY section headings and user content
+
+2. **Internal Validation** (Using quality-checklist.md):
+   - Read `templates/{type}/quality-checklist.md`
+   - INTERNALLY validate the document against quality criteria
+   - Do NOT show the checklist to the user
+   - Do NOT include checkboxes in any response
+
+3. **Offer Improvements** (Without showing checklist):
+   - If gaps identified during validation, ask targeted questions
+   - Suggest enhancements based on quality criteria (but don't show the criteria)
+   - Example: "Would you like to add more specific metrics to the goal section?" (NOT "The checklist says...")
+
+4. **User Refinements**:
+   - Let user request changes
+   - Make updates as requested
+   - Continue to ensure no prohibited content appears
+
+5. **Final Output**:
+   - Run Pre-Output Self-Check one more time
+   - Save using `document-skills:docx` or `document-skills:pdf`
+   - Confirm no prohibited content in final document
 
 ## How to Invoke This Skill
 
@@ -141,27 +201,54 @@ When user requests diagrams:
 
 ## Quality Validation
 
-Before presenting the final document, validate against these criteria:
+⚠️ **CRITICAL**: Quality validation is for INTERNAL use only. Never show checkboxes or validation criteria to users.
 
-### Universal Checklist
-- [ ] All required sections complete
-- [ ] Metadata filled (authors, date, status)
-- [ ] Problem clearly stated with impact
-- [ ] Clear recommendation made
-- [ ] Risks identified with mitigations
+**How to validate:**
 
-### Document-Specific Checklists
-Each document type has additional criteria in its `guidance.md` file.
+1. **Read the validation file**: `templates/{type}/quality-checklist.md`
+2. **Validate internally**: Check the document against criteria WITHOUT showing the checklist
+3. **Address gaps**: If issues found, ask targeted questions to improve content
+4. **Never show criteria**: Offer improvements without mentioning the validation checklist
+
+**Example - CORRECT approach:**
+- ✅ "Would you like to add specific metrics to measure success?"
+- ✅ "I notice the risks section could use mitigation strategies. Shall I help with that?"
+
+**Example - WRONG approach:**
+- ❌ "The quality checklist says we need metrics"
+- ❌ "Let me check if this passes validation: - [ ] Metrics included"
+
+### Universal Validation Criteria (Internal Use Only)
+
+These criteria are checked internally during Phase 5:
+
+- All required sections complete
+- Metadata filled (authors, date, status)
+- Problem clearly stated with impact
+- Clear recommendation made
+- Risks identified with mitigations
+
+### Document-Specific Validation
+
+Each document type has detailed validation criteria in `templates/{type}/quality-checklist.md`. Read this file during Phase 5 but NEVER show it to users.
 
 ## Reference Files
 
-| File | Purpose |
-|------|---------||
-| [writing-guidelines.md](writing-guidelines.md) | Technical writing best practices |
-| [question-bank.md](question-bank.md) | Reusable `AskUserQuestion` patterns |
-| templates/{type}/template.md | Document structure |
-| templates/{type}/guidance.md | Section-specific guidance |
-| templates/{type}/examples.md | Completed examples |
+| File | Purpose | Use In |
+|------|---------|--------|
+| [writing-guidelines.md](writing-guidelines.md) | Technical writing best practices | All phases |
+| [question-bank.md](question-bank.md) | Reusable `AskUserQuestion` patterns | Phase 1, 3 |
+| templates/{type}/template.md | Clean document structure (headings only) | Phase 3 (structure) |
+| templates/{type}/guidance.md | Section-specific guidance with questions and quality criteria (DO NOT copy to output) | Phase 3 (read for context) |
+| templates/{type}/quality-checklist.md | Validation criteria (DO NOT show to user) | Phase 5 (internal validation) |
+| templates/{type}/examples.md | Completed example documents | Phase 3 (quality reference) |
+
+**File Usage Rules:**
+- ✅ USE template.md for document structure
+- ✅ READ guidance.md for understanding
+- ✅ READ quality-checklist.md for internal validation
+- ❌ DO NOT copy content from guidance files to user output
+- ❌ DO NOT show checkboxes or quality criteria to users
 
 ## Integration Points
 

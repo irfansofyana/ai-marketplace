@@ -13,6 +13,22 @@ A one-pager is a concise proposal document (1-3 pages) used to get stakeholder s
 - Requesting resources or budget
 - Quick decisions needing stakeholder buy-in
 
+## Quick Reference: Essential Questions by Section
+
+For quick access during document creation:
+
+- **About This Doc**: When do you need approval by? Who wrote this? What's the current status?
+- **Sign Offs**: Who has authority to approve this? Are there cross-functional stakeholders?
+- **Problem**: What's broken? Who's affected? What's the current workaround? What's the cost?
+- **High Level Goal**: What does done look like? How will you measure success? What business metric will improve?
+- **What Happens If We Don't Solve This**: What's the cost of maintaining status quo? What opportunities will we miss?
+- **Proposed Solution**: What do you recommend? Why this approach over alternatives? What are the key benefits?
+- **Alternatives**: What other approaches did you consider? What are the trade-offs? Why is the proposed solution better?
+- **Risks**: What could go wrong? What are the technical/business risks? How will you mitigate each risk?
+- **Open Questions** (optional): What aspects are you uncertain about? Where do you need input from others?
+
+---
+
 ## Section-by-Section Guidance
 
 ### About This Doc
@@ -311,26 +327,12 @@ of avoiding vendor dependency.
 3. Do we need to maintain backward compatibility for mobile app v2.x?
 ```
 
-## Quality Checklist
+---
 
-Before finalizing, verify:
+## Quality Validation
 
-### Completeness
-- [ ] All required sections present
-- [ ] Metadata filled out (authors, deadline, status)
-- [ ] Sign-off list includes all stakeholders
+⚠️ **For internal validation only**: Quality criteria and checklists are used internally to validate document quality. They should NEVER appear in the user-facing document.
 
-### Clarity
-- [ ] Problem stated in first paragraph
-- [ ] Non-expert could understand the summary
-- [ ] Technical terms defined
+**See**: [quality-checklist.md](quality-checklist.md) for the complete validation checklist to use during Phase 5 (Review & Output).
 
-### Persuasiveness
-- [ ] Clear recommendation made
-- [ ] At least 2 alternatives considered
-- [ ] Risks acknowledged with mitigations
-
-### Format
-- [ ] Follows template structure exactly
-- [ ] Appropriate length (1-3 pages)
-- [ ] Diagrams enhance (not clutter) if included
+**Important**: The quality checklist is for AI validation only. Do not include checkboxes or quality criteria in the document you present to users.
