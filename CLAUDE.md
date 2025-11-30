@@ -199,8 +199,9 @@ If empty, reload your shell config or restart Claude Code.
   - **Optional**: LOGSEQ_API_TOKEN, LINKWARDEN_TOKEN (for those features)
   - See `plugins/01-p-assist/README.md` for setup instructions
 
-- **02-common-engineering** (`./plugins/02-common-engineering`): Essential toolkit for software engineers with Mermaid diagram generation, automatic validation, and self-healing capabilities.
+- **02-common-engineering** (`./plugins/02-common-engineering`): Essential toolkit for software engineers with Mermaid diagram generation, technical documentation writer (one-pagers, RFCs, proposals), automatic validation, and self-healing capabilities.
   - **Requires**: shared-mcp plugin, mermaid-cli (`npm install -g @mermaid-js/mermaid-cli`)
+  - **Optional**: document-skills plugin (for Word/PDF export from techdocs-writer)
   - See `plugins/02-common-engineering/README.md` for setup
 
 - **03-sys-maint** (`./plugins/03-sys-maint`): System maintenance and cleanup utilities for Docker and disk space management with interactive preview and confirmation workflows.

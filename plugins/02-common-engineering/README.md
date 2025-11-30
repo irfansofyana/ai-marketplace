@@ -52,12 +52,28 @@ Expert internet researcher with intelligent tool selection for technical problem
 - ✅ **Multi-source synthesis**: Compiles findings from diverse sources with quality assessment
 - ✅ **Structured output**: Executive summary, detailed findings, sources, and recommendations
 
+### Technical Documentation Writer
+
+Professional technical documentation creation with interactive guided templates.
+
+**Supported Document Types:**
+- **One-Pager** (Active): Concise proposals for features, changes, or decisions (1-3 pages)
+- **RFC** (Coming Soon): Request for Comments - detailed design proposals for cross-team review
+- **TSD** (Coming Soon): Technical Specification Documents
+- **ADR** (Coming Soon): Architecture Decision Records
+
+**Key Capabilities:**
+- ✅ **Interactive guided creation**: Step-by-step prompts help you articulate your ideas
+- ✅ **Template-based structure**: Professional formats for one-pagers, proposals, and feature briefs
+- ✅ **Research integration**: Seamlessly gather context via web-research-specialist agent
+- ✅ **Diagram generation**: Optional Mermaid diagrams via mermaid skill
+- ✅ **Multiple output formats**: Export to Word, PDF, or Markdown
+
+**Adaptive Workflow**: The agent adapts to your preparation level - whether you have everything ready, just the basics, or are starting from an idea.
+
 ### Future Additions
 
 This plugin will be expanded with additional engineering tools including:
-- Code documentation generators
-- API documentation helpers
-- Architecture decision records (ADR) templates
 - Common development workflows
 - And more...
 
@@ -91,6 +107,17 @@ The web research specialist uses Exa's powerful search capabilities from the `sh
 2. **Configured the EXA_API_KEY** as described in the [shared-mcp README](../00-shared-mcp/README.md)
 
 **Note**: Without the `EXA_API_KEY` configured in shared-mcp, the web research specialist will fall back to using Claude's built-in WebSearch tool, which is less optimized for code research.
+
+#### Optional for Technical Documentation: document-skills Plugin
+
+The techdocs-writer agent can export documents to Word (.docx) or PDF formats using the `document-skills` plugin (Anthropic's official document manipulation plugin). This is optional - you can still create and export markdown documents without it.
+
+**To enable Word/PDF export:**
+```bash
+/plugin install document-skills
+```
+
+**Note**: Markdown output works without document-skills. The plugin is only needed for .docx and .pdf formats.
 
 ### Install the Plugin
 
@@ -140,6 +167,30 @@ The `web-research-specialist` agent is automatically invoked when you need to re
 3. Sources and References (direct links)
 4. Recommendations (best approaches)
 5. Additional Notes (caveats, warnings)
+
+### TechDocs Writer Agent
+
+The `techdocs-writer` agent is automatically invoked when you request technical documentation. It guides you through creating professional documents using interactive prompts.
+
+**Example requests:**
+```
+"Create a one-pager for migrating to OAuth 2.0"
+"Write a proposal for implementing dark mode"
+"Help me document a decision about database selection"
+"Create a one-pager proposing a new feature"
+```
+
+**How it works:**
+- The agent adapts to your preparation level (whether you have all details ready or just an idea)
+- Provides interactive prompts to gather information section-by-section
+- Offers research assistance via web-research-specialist when needed
+- Can generate diagrams via mermaid skill if requested
+- Exports to Word, PDF, or Markdown format
+
+**Output formats:**
+- Markdown (default, no additional plugins required)
+- Word (.docx) via document-skills plugin
+- PDF via document-skills plugin
 
 ### Direct Agent Invocation
 
@@ -210,6 +261,7 @@ Every diagram goes through a rigorous validation process:
 - **Node.js**: Required for `mermaid-cli` (npm package)
 - **mermaid-cli**: The Mermaid command-line renderer
 - **shared-mcp plugin**: Provides Exa MCP server for web research (optional but recommended)
+- **document-skills plugin**: Optional - for Word/PDF export in techdocs-writer (Markdown works without it)
 - **/tmp directory**: Used for validation temporary files
 
 ### Installation Verification
@@ -336,15 +388,25 @@ plugins/02-common-engineering/
 │   └── plugin.json                     # Plugin metadata + MCP config
 ├── agents/
 │   ├── mermaid-expert.md               # Mermaid diagram specialist
+│   ├── techdocs-writer.md              # Technical documentation specialist
 │   └── web-research-specialist.md      # Web research specialist
 ├── skills/
 │   ├── .claude/
 │   │   └── settings.local.json         # Permissions configuration
-│   └── mermaid/
+│   ├── mermaid/
+│   │   ├── SKILL.md                    # Main skill definition
+│   │   ├── flowchart-diagram-reference.md
+│   │   ├── sequence-diagrams-reference.md
+│   │   └── architecture-diagram-reference.md
+│   └── techdocs/
 │       ├── SKILL.md                    # Main skill definition
-│       ├── flowchart-diagram-reference.md
-│       ├── sequence-diagrams-reference.md
-│       └── architecture-diagram-reference.md
+│       ├── writing-guidelines.md       # Technical writing best practices
+│       ├── question-bank.md            # Reusable question patterns
+│       └── templates/one-pager/
+│           ├── template.md             # Document structure
+│           ├── guidance.md             # Section-by-section guidance
+│           ├── quality-checklist.md    # Validation criteria
+│           └── examples.md             # Completed examples
 └── README.md                           # This file
 ```
 
@@ -374,11 +436,12 @@ Comprehensive syntax guides are available in the `skills/mermaid/` directory:
 Completed features:
 - [x] Mermaid diagram generation with validation
 - [x] Web research specialist agent
+- [x] Technical documentation writer (v1.1.0)
 
 Planned additions to this plugin:
 - [ ] Code review agent
 - [ ] Shell script expert agent
-- [ ] Documentation specialist agent
+- [ ] Additional documentation templates (RFC, TSD, ADR)
 
 ## Author
 
