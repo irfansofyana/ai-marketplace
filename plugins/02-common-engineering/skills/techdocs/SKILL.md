@@ -20,6 +20,17 @@ Create professional technical documentation using structured templates with inte
 
 ## Workflow Overview
 
+> **IMPORTANT**: You MUST follow the workflow gates below. Do NOT skip to content generation without completing mandatory steps.
+
+### Workflow Gates (Mandatory Checkpoints)
+
+| Gate | Checkpoint | Required? | Blocked Until |
+|------|------------|-----------|---------------|
+| 1 | Document type confirmed | ✅ Yes | Cannot proceed without selection |
+| 2 | User readiness assessed | ✅ Yes | Cannot generate content until assessed |
+| 3 | Research offered (if Exploratory/Research-first) | Conditional | Must offer before content if user is uncertain |
+| 4 | Quality validation | ✅ Yes | Cannot present final output without validation |
+
 ### Phase 1: Discovery
 
 **Goal**: Understand what the user needs before writing anything.
@@ -27,7 +38,10 @@ Create professional technical documentation using structured templates with inte
 #### Step 1: Select Document Type
 Ask user to choose document type. See [question-bank.md](question-bank.md) for the `AskUserQuestion` pattern.
 
-#### Step 2: Assess User Readiness
+#### Step 2: Assess User Readiness (MANDATORY)
+
+> **GATE 2**: You MUST ask this question before generating ANY content. Even if the user provides a topic, ask about their readiness level first.
+
 Determine how much help the user needs:
 
 | Readiness | Description | Workflow |
@@ -35,6 +49,9 @@ Determine how much help the user needs:
 | **Quick Start** | User has all details ready | 3 questions → draft |
 | **Guided** | User has basics, needs help | Section-by-section prompts |
 | **Exploratory** | Just an idea | Research + full discovery |
+| **Research-first** | Needs to gather information | Offer research → then discovery |
+
+**If user seems uncertain or provides vague input**: Default to asking "Would you like me to help research context first?" before proceeding.
 
 #### Step 3: Gather Core Information
 Based on readiness, collect:
@@ -46,7 +63,9 @@ Based on readiness, collect:
 
 See [question-bank.md](question-bank.md) for reusable question patterns.
 
-### Phase 2: Research (Optional)
+### Phase 2: Research (Conditional)
+
+> **GATE 3**: If user selected "Exploratory" or "Research-first" in Step 2, you MUST offer research assistance before proceeding to content generation.
 
 If user needs research assistance, invoke `agent:web-research-specialist` for:
 - Industry best practices
@@ -156,9 +175,11 @@ For users with "Just an idea":
 
 ## Best Practices
 
-1. **Ask before assuming**: Always confirm understanding before generating content
-2. **Use choices**: Prefer multiple-choice questions over open-ended when possible
-3. **Skip what's known**: Don't re-ask information user already provided
-4. **Show progress**: Let user know which section you're working on
-5. **Validate quality**: Use the checklist before presenting final output
-6. **Reference examples**: Point users to examples.md when they're unsure of format
+1. **Always assess readiness first**: Before generating ANY content, ask how much information the user has ready
+2. **Offer research proactively**: If user input is vague or they seem uncertain, offer research assistance
+3. **Ask before assuming**: Confirm understanding before generating content
+4. **Use choices**: Prefer multiple-choice questions over open-ended when possible
+5. **Skip what's known**: Don't re-ask information user already provided
+6. **Show progress**: Let user know which section you're working on
+7. **Validate quality**: Use the checklist before presenting final output
+8. **Reference examples**: Point users to examples.md when they're unsure of format

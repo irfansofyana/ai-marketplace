@@ -22,7 +22,9 @@ AskUserQuestion(
 )
 ```
 
-### User Readiness Assessment
+### User Readiness Assessment (MANDATORY - Gate 2)
+
+> **This question MUST be asked before generating any content.** Do not skip this step.
 
 ```python
 AskUserQuestion(
@@ -34,6 +36,25 @@ AskUserQuestion(
             {"label": "I have the basics", "description": "I know the problem and rough solution, need help with details"},
             {"label": "Just an idea", "description": "I have a concept but need help structuring and developing it"},
             {"label": "Need to research first", "description": "I need to gather more information before writing"}
+        ],
+        "multiSelect": false
+    }]
+)
+```
+
+### Proactive Research Offer (When User Seems Uncertain)
+
+> Use this when user's input is vague, or they selected "Just an idea" or "Need to research first".
+
+```python
+AskUserQuestion(
+    questions=[{
+        "question": "Before we start writing, would you like me to help research context?",
+        "header": "🔍 Research Assistance",
+        "options": [
+            {"label": "Yes, research first", "description": "Help me gather industry context, best practices, or technical information"},
+            {"label": "No, I'll provide the context", "description": "I have the information I need, let's proceed with questions"},
+            {"label": "Let me explain what I know", "description": "I'll share what I have, then we can decide if research is needed"}
         ],
         "multiSelect": false
     }]
@@ -373,7 +394,9 @@ AskUserQuestion(
 
 ## Usage Notes
 
-1. **Adaptive questioning**: Skip questions the user has already answered
-2. **Context-aware**: Adjust follow-up questions based on previous answers
-3. **Progressive disclosure**: Start with essential questions, ask details only when needed
-4. **Batch related questions**: Group related questions to reduce back-and-forth
+1. **Readiness assessment is mandatory**: ALWAYS ask the readiness question (Gate 2) before generating content
+2. **Proactively offer research**: If user selects "Just an idea" or "Need to research first", use the proactive research offer question
+3. **Adaptive questioning**: Skip questions the user has already answered
+4. **Context-aware**: Adjust follow-up questions based on previous answers
+5. **Progressive disclosure**: Start with essential questions, ask details only when needed
+6. **Batch related questions**: Group related questions to reduce back-and-forth
