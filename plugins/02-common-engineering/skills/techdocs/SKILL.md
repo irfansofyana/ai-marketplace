@@ -1,6 +1,6 @@
 ---
 name: techdocs
-description: Guide users through writing technical documentation using templates. Supports one-pager docs with interactive guidance. Extensible for RFC, TSD, ADR. Integrates with web research and mermaid diagrams.
+description: This skill should be used when creating technical documentation for software projects. Trigger phrases include "write technical documentation", "create a one-pager", "document a proposal", "write an RFC", "create design document", "document this decision", or "help me write a proposal". Guides users interactively through template-based document creation with structured questioning, research assistance, and diagram generation. Currently supports one-pager proposals with RFC, TSD, and ADR templates coming soon.
 ---
 
 # Technical Documentation Skill
@@ -8,6 +8,17 @@ description: Guide users through writing technical documentation using templates
 Create professional technical documentation using structured templates with interactive guidance. This skill helps users articulate their ideas clearly, producing well-organized documents.
 
 **Key principle**: All information comes from the user through interactive prompts. Do NOT read the user's codebase or files.
+
+## Skill Philosophy
+
+This skill follows a **guided discovery approach** rather than automatic generation:
+- Information comes from the user, not the codebase
+- Progressive questioning reveals user's thinking
+- Templates structure the thought process
+- Research assistance when needed, not automatic
+- Quality validation ensures completeness
+
+This approach produces better documentation because it forces users to think through their proposals systematically.
 
 ## Supported Document Types
 
@@ -99,6 +110,35 @@ Do NOT proactively suggest diagrams unless user requested them.
 3. Ask for refinements
 4. Save using `document-skills:docx` or `document-skills:pdf`
 
+## How to Invoke This Skill
+
+This skill activates automatically when users request technical documentation. It works through interactive prompts:
+
+1. **User trigger**: User says "write a one-pager" or similar phrase
+2. **Skill activation**: techdocs skill loads and begins workflow
+3. **Interactive prompting**: Skill asks questions using AskUserQuestion
+4. **Research integration**: If needed, invoke `agent:web-research-specialist` using Task tool
+5. **Diagram generation**: If needed, invoke `common-engineering:mermaid` skill
+
+### Integration Examples
+
+**Research assistance:**
+```
+When user selects "Research-first" or input is vague:
+1. Use Task tool with subagent_type="common-engineering:web-research-specialist"
+2. Pass research query (e.g., "industry best practices for OAuth implementation")
+3. Incorporate findings into document sections
+```
+
+**Diagram creation:**
+```
+When user requests diagrams:
+1. Invoke common-engineering:mermaid skill
+2. Provide diagram type and content requirements
+3. Mermaid skill validates and generates PNG
+4. Include diagram in document output
+```
+
 ## Quality Validation
 
 Before presenting the final document, validate against these criteria:
@@ -125,10 +165,33 @@ Each document type has additional criteria in its `guidance.md` file.
 
 ## Integration Points
 
-- **`agent:web-research-specialist`** - Research, context gathering, prior art
-- **`common-engineering:mermaid`** - Diagrams (only when user requests)
-- **`document-skills:docx`** - Word document output
-- **`document-skills:pdf`** - PDF output
+### Required Skills/Agents
+
+- **`agent:web-research-specialist`** (common-engineering plugin)
+  - Purpose: Research industry best practices, technical context, competitors
+  - When to use: User selects "Research-first" or "Exploratory" mode
+  - Invocation: `Task(subagent_type="common-engineering:web-research-specialist", ...)`
+
+- **`common-engineering:mermaid`** (common-engineering plugin)
+  - Purpose: Generate validated Mermaid diagrams with automatic syntax checking
+  - When to use: User requests diagrams or you recommend them for complex flows
+  - Invocation: Invoke skill via "create a [diagram-type] diagram showing [content]"
+
+### Optional Skills (Output)
+
+- **`document-skills:docx`** (document-skills plugin)
+  - Purpose: Export document to Microsoft Word format
+  - Invocation: Use when user selects "Word" output format
+
+- **`document-skills:pdf`** (document-skills plugin)
+  - Purpose: Export document to PDF format
+  - Invocation: Use when user selects "PDF" output format
+
+### Dependencies
+
+⚠️ **Required plugins:**
+- common-engineering (for web-research-specialist agent and mermaid skill)
+- document-skills (for docx/pdf export - optional, can output markdown without this)
 
 ## Adding New Document Types
 
