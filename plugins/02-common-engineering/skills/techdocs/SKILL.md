@@ -1,115 +1,164 @@
 ---
 name: techdocs
-description: Guide users through writing technical documentation using templates. Supports one-pager docs (proposals, feature briefs) with interactive section-by-section guidance. Extensible for RFC, TSD, API docs, and more. Integrates with web research for context gathering and mermaid diagrams for visualization.
+description: Guide users through writing technical documentation using templates. Supports one-pager docs with interactive guidance. Extensible for RFC, TSD, ADR. Integrates with web research and mermaid diagrams.
 ---
 
 # Technical Documentation Skill
 
-Create professional technical documentation using structured templates with interactive guidance. This skill helps users think through and articulate their ideas clearly, producing well-organized documents that follow established patterns.
+Create professional technical documentation using structured templates with interactive guidance. This skill helps users articulate their ideas clearly, producing well-organized documents.
+
+**Key principle**: All information comes from the user through interactive prompts. Do NOT read the user's codebase or files.
 
 ## Supported Document Types
 
 | Type | Template | Status | Use Case |
-|------|----------|--------|---------|
-| **One-Pager** | [one-page-template.md](templates/one-page-template.md) | ✅ Active | Proposals, feature briefs, quick decisions |
-| RFC | *Coming soon* | 🚧 Planned | Request for Comments, design proposals |
-| TSD | *Coming soon* | 🚧 Planned | Technical Specification Documents |
-| API Docs | *Coming soon* | 🚧 Planned | API reference documentation |
+|------|----------|--------|----------|
+| **One-Pager** | [templates/one-pager/](templates/one-pager/) | ✅ Active | Proposals, feature briefs, quick decisions |
+| RFC | *templates/rfc/* | 🚧 Coming | Request for Comments, cross-team design proposals |
+| TSD | *templates/tsd/* | 🚧 Coming | Technical Specification Documents |
+| ADR | *templates/adr/* | 🚧 Coming | Architecture Decision Records |
 
-## 🚀 Workflow Overview
+## Workflow Overview
 
-When helping users create documentation, follow this proactive workflow:
+### Phase 1: Discovery
 
-### Phase 1: Discovery & Context Gathering
+**Goal**: Understand what the user needs before writing anything.
 
-1. **Identify document type** - Determine which template to use
-2. **Read the template** - Load the appropriate template file for structure and guidance
-3. **Understand the topic** - Ask clarifying questions about what they're proposing
-4. **Conduct research** - Use `agent:web-research-specialist` to gather context (see Research Guidelines below)
-5. **Collect key information** - Gather essential details before writing
+#### Step 1: Select Document Type
+Ask user to choose document type. See [question-bank.md](question-bank.md) for the `AskUserQuestion` pattern.
 
-### Phase 2: Content Generation
+#### Step 2: Assess User Readiness
+Determine how much help the user needs:
 
-1. **Work section-by-section** - Follow the template's guidance questions for each section
-2. **Generate draft content** - Produce content that matches template structure exactly
-3. **Add visual aids** - Use `common-engineering:mermaid` skill for diagrams when helpful
+| Readiness | Description | Workflow |
+|-----------|-------------|----------|
+| **Quick Start** | User has all details ready | 3 questions → draft |
+| **Guided** | User has basics, needs help | Section-by-section prompts |
+| **Exploratory** | Just an idea | Research + full discovery |
 
-### Phase 3: Review & Output
+#### Step 3: Gather Core Information
+Based on readiness, collect:
+- Title/topic
+- Problem summary
+- Target audience
+- Stakeholders
+- Output preferences (format, diagrams)
 
-1. **Quality check** - Use the template's quality criteria to validate
-2. **Iterate on feedback** - Refine sections based on user input
-3. **Clean the document** - Remove all `<!--- ... --->` guidance comments from the output
-4. **Produce final document** - Use `document-skills:docx` or `document-skills:pdf` to save the output
+See [question-bank.md](question-bank.md) for reusable question patterns.
 
-**IMPORTANT:** The template contains HTML comments (`<!--- ... --->`) with guidance questions and quality criteria. These are for YOUR reference while writing. You MUST remove all these comments from the final document output. The user should only see the actual content, not the guidance.
+### Phase 2: Research (Optional)
 
-### Output Location
+If user needs research assistance, invoke `agent:web-research-specialist` for:
+- Industry best practices
+- Technical context
+- Competitor analysis
+- Cost/pricing information
 
-When saving the final document, ask the user where they want to save it. Suggest sensible defaults:
+### Phase 3: Content Generation
 
-- **Default location**: Current working directory or a `docs/` folder if it exists
-- **Filename format**: `[project-name]-one-pager.[ext]` (e.g., `auth-service-migration-one-pager.docx`)
-- **Always confirm** the full path with the user before saving
+1. **Load template guidance**: Read the appropriate `templates/{type}/guidance.md`
+2. **Work section-by-section**: For each template section:
+   - Explain what the section needs
+   - Ask targeted questions (use choices where possible)
+   - Generate draft content
+   - Get feedback before moving on
+3. **Reference examples**: Use `templates/{type}/examples.md` for quality benchmarks
 
----
+### Phase 4: Visual Aids (Optional)
 
-## Research Guidelines
+**Only if user requested diagrams**:
+1. Ask what the diagram should show
+2. Use `common-engineering:mermaid` skill to generate validated diagrams
+3. Integrate into document
 
-Use `agent:web-research-specialist` to gather context before and during content generation. Research is especially valuable for:
+Do NOT proactively suggest diagrams unless user requested them.
 
-### When to Research
+### Phase 5: Review & Output
 
-- **Unfamiliar terms** - When the user mentions technologies, frameworks, or concepts you're uncertain about
-- **Technology references** - To understand capabilities, limitations, and best practices of proposed technologies
-- **Industry context** - To find how others have solved similar problems
-- **Competitor analysis** - To understand existing solutions in the market
-- **Best practices** - To validate the proposed approach against industry standards
-- **Prior art** - To find existing implementations or case studies
+1. Present complete draft
+2. Run quality validation (see below)
+3. Ask for refinements
+4. Save using `document-skills:docx` or `document-skills:pdf`
 
-### Research Triggers
+## Quality Validation
 
-Proactively suggest research when the user's proposal involves:
+Before presenting the final document, validate against these criteria:
 
-1. **New or emerging technologies** - Research current state, adoption, and community sentiment
-2. **Integration with external systems** - Research API capabilities, limitations, and gotchas
-3. **Security or compliance considerations** - Research standards and requirements
-4. **Performance claims** - Research benchmarks and real-world performance data
-5. **Cost estimates** - Research pricing models and typical costs
+### Universal Checklist
+- [ ] All required sections complete
+- [ ] Metadata filled (authors, date, status)
+- [ ] Problem clearly stated with impact
+- [ ] Clear recommendation made
+- [ ] Risks identified with mitigations
 
-### How to Research
+### Document-Specific Checklists
+Each document type has additional criteria in its `guidance.md` file.
 
-Invoke `agent:web-research-specialist` with specific queries:
+## Reference Files
 
-```
-Research: [specific technology/term] best practices for [use case]
-Research: [competitor/solution] approach to [problem]
-Research: [technology] vs [alternative] comparison for [context]
-```
-
-Incorporate research findings into the relevant sections:
-- **Problem section** - Use research to quantify impact or validate pain points
-- **Proposed solution** - Reference industry best practices and successful implementations
-- **Alternatives** - Include research-backed pros/cons for each option
-- **Risks** - Cite known issues or failure cases from research
-
----
+| File | Purpose |
+|------|---------||
+| [writing-guidelines.md](writing-guidelines.md) | Technical writing best practices |
+| [question-bank.md](question-bank.md) | Reusable `AskUserQuestion` patterns |
+| templates/{type}/template.md | Document structure |
+| templates/{type}/guidance.md | Section-specific guidance |
+| templates/{type}/examples.md | Completed examples |
 
 ## Integration Points
 
-This skill integrates with:
+- **`agent:web-research-specialist`** - Research, context gathering, prior art
+- **`common-engineering:mermaid`** - Diagrams (only when user requests)
+- **`document-skills:docx`** - Word document output
+- **`document-skills:pdf`** - PDF output
 
-- **`agent:web-research-specialist`** - For gathering context, research, technology references, and prior art
-- **`common-engineering:mermaid`** - For creating diagrams (architecture, flowchart, sequence)
-- **`document-skills:docx`** - For producing the final document as a Word document (.docx)
-- **`document-skills:pdf`** - For producing the final document as a PDF (.pdf)
+## Adding New Document Types
 
----
+To add a new document type (e.g., RFC):
 
-## Future Extensions
+1. Create `templates/rfc/` directory
+2. Add `template.md` - Document structure with guidance comments
+3. Add `guidance.md` - Section-by-section guidance for the agent
+4. Add `examples.md` - 2-3 completed examples
+5. Update the document types table above
+6. Add any type-specific questions to `question-bank.md`
 
-This skill is designed to be extended with additional document types:
+The core workflow in this skill handles all document types generically. Document-specific logic lives in the template files.
 
-- **RFC Template** - For detailed design proposals requiring broader review
-- **TSD Template** - For comprehensive technical specifications
-- **API Documentation** - For API reference documentation
-- **ADR Template** - For Architecture Decision Records
+## Adaptive Modes
+
+### Quick Start Mode
+For users with "I have everything ready":
+```
+1. Ask: Title, problem summary, solution summary
+2. Generate complete draft using template
+3. Review and refine
+4. Output
+```
+
+### Guided Mode
+For users with "I have the basics":
+```
+1. Ask core questions (purpose, audience, stakeholders)
+2. For each section: prompt → draft → feedback
+3. Review complete document
+4. Output
+```
+
+### Exploratory Mode
+For users with "Just an idea":
+```
+1. Offer research assistance
+2. Help define the problem through questions
+3. Brainstorm solutions and alternatives together
+4. Full guided mode for content generation
+5. Output
+```
+
+## Best Practices
+
+1. **Ask before assuming**: Always confirm understanding before generating content
+2. **Use choices**: Prefer multiple-choice questions over open-ended when possible
+3. **Skip what's known**: Don't re-ask information user already provided
+4. **Show progress**: Let user know which section you're working on
+5. **Validate quality**: Use the checklist before presenting final output
+6. **Reference examples**: Point users to examples.md when they're unsure of format
