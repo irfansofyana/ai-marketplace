@@ -1,6 +1,13 @@
 ---
-name: mermaid-diagrams
-description: Create sequence diagrams for message flows and temporal interactions, architecture diagrams for cloud/CI-CD infrastructure relationships, or flowchart diagrams for process flows and decision logic. Automatically validates all diagrams with mermaid-cli and applies self-healing fixes. Use for documenting API interactions, system workflows, microservices communication, cloud service architectures, or process documentation.
+name: mermaid
+description: Create validated Mermaid diagrams (sequence, architecture, flowchart) with automatic syntax checking and self-healing. Use when users request diagrams, visualizations of API flows, system architecture, or process documentation. All diagrams are validated with mermaid-cli before delivery.
+license: MIT
+compatibility: Requires mermaid-cli (npm install -g @mermaid-js/mermaid-cli), bash, /tmp directory access
+metadata:
+  author: irfansofyana
+  version: "1.1.0"
+  last-updated: "2024-12-24"
+allowed-tools: Bash Read Grep Glob
 ---
 
 # Mermaid Diagrams
@@ -38,7 +45,7 @@ Sequence diagrams are interaction diagrams that show how processes operate with 
 3. Show activations: Append `+`/`-` to arrows (`A->>+B`, `B-->>-A`)
 4. Control structures: `alt`/`else`, `loop`, `par`, `critical` for complex flows
 
-**→ For detailed syntax, see [sequence-diagrams-reference.md](sequence-diagrams-reference.md)**
+**→ For detailed syntax, see [references/sequence-diagrams.md](references/sequence-diagrams.md)**
 
 ### 🔍 Automatic Validation Process
 
@@ -136,7 +143,7 @@ sequenceDiagram
 - Use activations (`+`/`-`) to show processing periods
 - Apply control structures (`alt`, `loop`, `par`) for complex flows
 
-**→ See [sequence-diagrams-reference.md](sequence-diagrams-reference.md) for detailed patterns and best practices**
+**→ See [references/sequence-diagrams.md](references/sequence-diagrams.md) for detailed patterns and best practices**
 
 ---
 
@@ -163,7 +170,7 @@ Architecture diagrams show relationships between services and resources commonly
 
 **Default icons**: `cloud`, `database`, `disk`, `internet`, `server`
 
-**→ For extended icons and advanced features, see [architecture-diagram-reference.md](architecture-diagram-reference.md)**
+**→ For extended icons and advanced features, see [references/architecture-diagrams.md](references/architecture-diagrams.md)**
 
 ### 🔍 Automatic Validation Process
 
@@ -240,7 +247,7 @@ architecture-beta
 - Use clear directional indicators (T/B/L/R) and arrows (`-->`)
 - Limit to 8-12 services per diagram for clarity
 
-**→ See [architecture-diagram-reference.md](architecture-diagram-reference.md) for icons, junctions, and complex patterns**
+**→ See [references/architecture-diagrams.md](references/architecture-diagrams.md) for icons, junctions, and complex patterns**
 
 ---
 
@@ -257,7 +264,7 @@ Flowchart diagrams visualize processes, decision logic, algorithms, and workflow
 5. Group related nodes: use `subgraph` blocks
 6. Apply styling: `style id fill:#color,stroke:#color`
 
-**→ For detailed syntax, see [flowchart-diagram-reference.md](flowchart-diagram-reference.md)**
+**→ For detailed syntax, see [references/flowcharts.md](references/flowcharts.md)**
 
 ### 🔍 Automatic Validation Process
 
@@ -329,7 +336,7 @@ flowchart TD
 - Label arrows to clarify flow logic
 - Group related processes with `subgraph` for organization
 
-**→ See [flowchart-diagram-reference.md](flowchart-diagram-reference.md) for all node shapes, arrow types, subgraphs, and styling options**
+**→ See [references/flowcharts.md](references/flowcharts.md) for all node shapes, arrow types, subgraphs, and styling options**
 
 ---
 
@@ -469,9 +476,9 @@ flowchart TD
 
 For complete syntax, advanced features, and more examples:
 
-- **[sequence-diagrams-reference.md](sequence-diagrams-reference.md)** - All arrow types, activations, control structures, styling, and configuration
-- **[architecture-diagram-reference.md](architecture-diagram-reference.md)** - Complete syntax, junctions, extended icons (200k+ from iconify), and complex patterns
-- **[flowchart-diagram-reference.md](flowchart-diagram-reference.md)** - All node shapes, arrow types, subgraphs, styling, and advanced features
+- **[references/sequence-diagrams.md](references/sequence-diagrams.md)** - All arrow types, activations, control structures, styling, and configuration
+- **[references/architecture-diagrams.md](references/architecture-diagrams.md)** - Complete syntax, junctions, extended icons (200k+ from iconify), and complex patterns
+- **[references/flowcharts.md](references/flowcharts.md)** - All node shapes, arrow types, subgraphs, styling, and advanced features
 
 ---
 

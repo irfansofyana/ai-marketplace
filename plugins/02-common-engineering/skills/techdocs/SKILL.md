@@ -1,6 +1,12 @@
 ---
 name: techdocs
-description: This skill should be used when creating technical documentation for software projects. Trigger phrases include "write technical documentation", "create a one-pager", "document a proposal", "write an RFC", "create design document", "document this decision", or "help me write a proposal". Guides users interactively through template-based document creation with structured questioning, research assistance, and diagram generation. Currently supports one-pager proposals with RFC, TSD, and ADR templates coming soon.
+description: Interactive technical documentation writer using template-based creation with guided questioning. Use when users request technical documentation, one-pagers, proposals, RFCs, design documents, or need help documenting decisions. Currently supports one-pager proposals with RFC, TSD, and ADR templates coming soon. Integrates with web-research-specialist agent for research and mermaid skill for diagrams.
+license: MIT
+metadata:
+  author: irfansofyana
+  version: "1.1.0"
+  last-updated: "2024-12-24"
+allowed-tools: AskUserQuestion Bash Read
 ---
 
 # Technical Documentation Skill
@@ -24,10 +30,10 @@ This approach produces better documentation because it forces users to think thr
 
 | Type | Template | Status | Use Case |
 |------|----------|--------|----------|
-| **One-Pager** | [templates/one-pager/](templates/one-pager/) | ✅ Active | Proposals, feature briefs, quick decisions |
-| RFC | *templates/rfc/* | 🚧 Coming | Request for Comments, cross-team design proposals |
-| TSD | *templates/tsd/* | 🚧 Coming | Technical Specification Documents |
-| ADR | *templates/adr/* | 🚧 Coming | Architecture Decision Records |
+| **One-Pager** | [assets/templates/one-pager/](assets/templates/one-pager/) | ✅ Active | Proposals, feature briefs, quick decisions |
+| RFC | *assets/templates/rfc/* | 🚧 Coming | Request for Comments, cross-team design proposals |
+| TSD | *assets/templates/tsd/* | 🚧 Coming | Technical Specification Documents |
+| ADR | *assets/templates/adr/* | 🚧 Coming | Architecture Decision Records |
 
 ## Workflow Overview
 
@@ -47,7 +53,7 @@ This approach produces better documentation because it forces users to think thr
 **Goal**: Understand what the user needs before writing anything.
 
 #### Step 1: Select Document Type
-Ask user to choose document type. See [question-bank.md](question-bank.md) for the `AskUserQuestion` pattern.
+Ask user to choose document type. See [references/question-bank.md](references/question-bank.md) for the `AskUserQuestion` pattern.
 
 #### Step 2: Assess User Readiness (MANDATORY)
 
@@ -72,7 +78,7 @@ Based on readiness, collect:
 - Stakeholders
 - Output preferences (format, diagrams)
 
-See [question-bank.md](question-bank.md) for reusable question patterns.
+See [references/question-bank.md](references/question-bank.md) for reusable question patterns.
 
 ### Phase 2: Research (Conditional)
 
@@ -110,13 +116,13 @@ If user needs research assistance, invoke `agent:web-research-specialist` for:
 
 **Content Generation Process:**
 
-1. **Load template guidance**: Read the appropriate `templates/{type}/guidance.md`
+1. **Load template guidance**: Read the appropriate `assets/templates/{type}/guidance.md`
 2. **Work section-by-section**: For each template section:
    - Explain what the section needs
    - Ask targeted questions from guidance.md (use choices where possible)
    - Generate draft content WITHOUT any checkboxes or quality criteria
    - Get feedback before moving on
-3. **Reference examples**: Use `templates/{type}/examples.md` for quality benchmarks
+3. **Reference examples**: Use `assets/templates/{type}/examples.md` for quality benchmarks
 
 ### Phase 4: Visual Aids (Optional)
 
@@ -150,7 +156,7 @@ Before presenting ANY draft to the user, you MUST verify:
    - The draft should contain ONLY section headings and user content
 
 2. **Internal Validation** (Using quality-checklist.md):
-   - Read `templates/{type}/quality-checklist.md`
+   - Read `assets/templates/{type}/quality-checklist.md`
    - INTERNALLY validate the document against quality criteria
    - Do NOT show the checklist to the user
    - Do NOT include checkboxes in any response
@@ -205,7 +211,7 @@ When user requests diagrams:
 
 **How to validate:**
 
-1. **Read the validation file**: `templates/{type}/quality-checklist.md`
+1. **Read the validation file**: `assets/templates/{type}/quality-checklist.md`
 2. **Validate internally**: Check the document against criteria WITHOUT showing the checklist
 3. **Address gaps**: If issues found, ask targeted questions to improve content
 4. **Never show criteria**: Offer improvements without mentioning the validation checklist
@@ -230,18 +236,18 @@ These criteria are checked internally during Phase 5:
 
 ### Document-Specific Validation
 
-Each document type has detailed validation criteria in `templates/{type}/quality-checklist.md`. Read this file during Phase 5 but NEVER show it to users.
+Each document type has detailed validation criteria in `assets/templates/{type}/quality-checklist.md`. Read this file during Phase 5 but NEVER show it to users.
 
 ## Reference Files
 
 | File | Purpose | Use In |
 |------|---------|--------|
-| [writing-guidelines.md](writing-guidelines.md) | Technical writing best practices | All phases |
-| [question-bank.md](question-bank.md) | Reusable `AskUserQuestion` patterns | Phase 1, 3 |
-| templates/{type}/template.md | Clean document structure (headings only) | Phase 3 (structure) |
-| templates/{type}/guidance.md | Section-specific guidance with questions and quality criteria (DO NOT copy to output) | Phase 3 (read for context) |
-| templates/{type}/quality-checklist.md | Validation criteria (DO NOT show to user) | Phase 5 (internal validation) |
-| templates/{type}/examples.md | Completed example documents | Phase 3 (quality reference) |
+| [writing-guidelines.md](references/writing-guidelines.md) | Technical writing best practices | All phases |
+| [question-bank.md](references/question-bank.md) | Reusable `AskUserQuestion` patterns | Phase 1, 3 |
+| assets/templates/{type}/template.md | Clean document structure (headings only) | Phase 3 (structure) |
+| assets/templates/{type}/guidance.md | Section-specific guidance with questions and quality criteria (DO NOT copy to output) | Phase 3 (read for context) |
+| assets/templates/{type}/quality-checklist.md | Validation criteria (DO NOT show to user) | Phase 5 (internal validation) |
+| assets/templates/{type}/examples.md | Completed example documents | Phase 3 (quality reference) |
 
 **File Usage Rules:**
 - ✅ USE template.md for document structure
@@ -284,12 +290,12 @@ Each document type has detailed validation criteria in `templates/{type}/quality
 
 To add a new document type (e.g., RFC):
 
-1. Create `templates/rfc/` directory
+1. Create `assets/templates/rfc/` directory
 2. Add `template.md` - Document structure with guidance comments
 3. Add `guidance.md` - Section-by-section guidance for the agent
 4. Add `examples.md` - 2-3 completed examples
 5. Update the document types table above
-6. Add any type-specific questions to `question-bank.md`
+6. Add any type-specific questions to `references/question-bank.md`
 
 The core workflow in this skill handles all document types generically. Document-specific logic lives in the template files.
 
