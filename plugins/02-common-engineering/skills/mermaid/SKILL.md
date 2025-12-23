@@ -1,5 +1,5 @@
 ---
-name: mermaid-diagrams
+name: mermaid
 description: Create sequence diagrams for message flows and temporal interactions, architecture diagrams for cloud/CI-CD infrastructure relationships, or flowchart diagrams for process flows and decision logic. Automatically validates all diagrams with mermaid-cli and applies self-healing fixes. Use for documenting API interactions, system workflows, microservices communication, cloud service architectures, or process documentation.
 ---
 
