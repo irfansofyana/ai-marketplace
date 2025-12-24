@@ -19,10 +19,17 @@
 			}
 		},
 		"jina": {
-			"type": "http",
-			"url": "https://mcp.jina.ai/v1",
-			"headers": {
-				"Authorization": "Bearer ${JINA_API_KEY}"
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote",
+				"https://mcp.jina.ai/v1",
+				"--header",
+				"Authorization: Bearer ${JINA_API_KEY}"
+			],
+			"env": {
+				"JINA_API_KEY": "${JINA_API_KEY}"
 			}
 		},
 		"exa": {
