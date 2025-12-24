@@ -171,7 +171,7 @@ Examples:
 ```
 
 If breaking change:
-- Add `!` after the type/scope: `feat(api)!: remove deprecated endpoint`
+- Include an exclamation mark (`!`) immediately after the type/scope, like: `feat(api)!: remove deprecated endpoint`
 - OR add `BREAKING CHANGE:` footer in the body
 
 ### Phase 5: Pre-commit Validation
