@@ -185,10 +185,54 @@ Ask what they want to change (type, scope, subject, or body) and incorporate the
 
 ### Phase 4: Execute Commit (Autonomous)
 
-After user approval, execute the commit:
+After user approval, execute the commit using one of these patterns:
+
+#### Pattern 1: Simple commit (no body)
+
+For commits with only type/scope and subject:
 
 ```bash
+git commit -m "<type>(<scope>): <subject>"
+```
+
+#### Pattern 2: Commit with body
+
+For commits with a body, use EITHER multiple `-m` flags OR a heredoc (not both):
+
+**Option A: Multiple -m flags**
+```bash
 git commit -m "<type>(<scope>): <subject>" -m "<body>"
+```
+
+**Option B: Heredoc (for multi-line bodies)**
+```bash
+git commit -m "$(cat <<'EOF'
+<type>(<scope>): <subject>
+
+<body>
+EOF
+)"
+```
+
+**CRITICAL HEREDOC RULES:**
+- The closing `EOF` must be on its own line
+- `EOF` must be at the start of the line (no leading spaces)
+- Do not add any text after the closing `EOF`
+- The `$(cat <<'EOF'` pattern with single quotes prevents variable expansion
+
+#### Pattern 3: Breaking change
+
+For breaking changes, include `!` and a BREAKING CHANGE footer:
+
+```bash
+git commit -m "$(cat <<'EOF'
+<type>(<scope>)!: <subject>
+
+<body if applicable>
+
+BREAKING CHANGE: <explanation>
+EOF
+)"
 ```
 
 **CRITICAL**: The commit message must contain ONLY user-approved content. No AI-generated footers.
