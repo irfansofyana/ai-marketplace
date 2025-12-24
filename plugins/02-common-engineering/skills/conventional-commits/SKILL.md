@@ -1,23 +1,23 @@
 ---
 name: conventional-commits
-description: Create git commits following Conventional Commits v1.0.0 specification. Auto-detects scopes from changed files, validates commit format, and prevents non-compliant commits. NO AI-generated footers added to commits for clean audit trails. Use when user wants to commit, push, or create git commits, or mentions "commit", "git commit", "push changes", "stage and commit", "make a commit", "create commit".
+description: Create git commits following Conventional Commits v1.0.0 specification. Autonomous agent that analyzes changes, auto-detects type/scope, generates commit message, and only asks for final review. NO AI-generated footers for clean audit trails. Use when user wants to commit, push, or create git commits.
 license: MIT
 metadata:
   author: irfansofyana
-  version: "1.0.0"
+  version: "2.0.0"
   last-updated: "2025-12-24"
-allowed-tools: AskUserQuestion Bash Grep
+allowed-tools: AskUserQuestion Bash Grep Read
 ---
 
-# Conventional Commits Skill
+# Conventional Commits Skill (Autonomous)
 
-Create git commits that follow the [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) specification. This skill replaces the built-in commit command to ensure clean, audit-friendly commit messages without any AI-generated footers.
+An autonomous agent that creates git commits following the [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) specification. The agent analyzes your changes, auto-detects the commit type and scope, generates a commit message, and only asks for your review before committing.
 
 ## Core Principle
 
-**CRITICAL**: Commit messages contain ONLY user-provided content. Never add footers like:
+**CRITICAL**: Commit messages contain ONLY user-approved content. Never add footers like:
 - "Generated with Claude Code"
-- "Co-Authored-By: Claude <noreply@anthropic.com>"
+- "Co-Authored-By: Claude"
 - Any other AI attribution
 
 This ensures clean git history for audit processes and compliance requirements.
@@ -37,315 +37,262 @@ This ensures clean git history for audit processes and compliance requirements.
 - `fix(auth): prevent token reuse in concurrent requests`
 - `docs: update installation guide with new prerequisites`
 - `feat!: redesign authentication flow` (breaking change)
-- `fix(api)!: remove deprecated user endpoint` (breaking change)
 
-## Workflow
+## Autonomous Workflow
 
-### Phase 1: Pre-commit Analysis
+### Phase 1: Gather Context (Autonomous)
 
 **Step 1: Check for staged changes**
-
-```bash
-git status --porcelain
-```
-
-If nothing is staged (`git diff --cached --name-only` returns empty), ask the user to stage files first:
-
-```
-No files are staged for commit. Please stage the files you want to commit first:
-- Use `git add <files>` to stage specific files
-- Use `git add -p` to interactively stage hunks
-- Use `git add -u` to stage all modified files
-```
-
-**Step 2: Get list of changed files**
 
 ```bash
 git diff --cached --name-only
 ```
 
-Save this list for scope auto-detection in Phase 3.
-
-### Phase 2: Commit Type Selection
-
-Use `AskUserQuestion` to present commit type options. Include descriptions for clarity:
-
-| Type | Description | Example |
-|------|-------------|---------|
-| `feat` | New feature for the user | `feat(auth): add OAuth2 support` |
-| `fix` | Bug fix for the user | `fix(api): handle null response correctly` |
-| `docs` | Documentation only changes | `docs: update README with setup instructions` |
-| `style` | Code style changes (formatting, semicolons) | `style: format code with prettier` |
-| `refactor` | Code change that neither fixes bug nor adds feature | `refactor(auth): extract validation logic` |
-| `test` | Adding or updating tests | `test(api): add integration tests for users endpoint` |
-| `chore` | Maintenance tasks, dependency updates | `chore: update dependencies to latest versions` |
-| `perf` | Performance improvement | `perf(api): add caching for user queries` |
-| `ci` | CI/CD changes | `ci: add automated tests to github actions` |
-| `build` | Build system changes | `build: upgrade webpack to v5` |
-| `revert` | Revert a previous commit | `revert: feat(api)!: remove oauth support` |
-
-**Ask the user:**
-```
-What type of change is this commit?
-```
-
-Proceed to Phase 3 after user selects a type.
-
-### Phase 3: Scope Suggestion & Confirmation
-
-**Step 1: Auto-detect scope from changed files**
-
-Analyze the file paths from Phase 1 to suggest a scope. Use the patterns from [references/scopes.md](references/scopes.md).
-
-**Step 2: Present suggested scope**
+If nothing is staged, inform the user:
 
 ```
-Based on the changed files, I suggest the scope: "<suggested-scope>"
-
-The suggested scope is derived from: <file-patterns>
+No files are staged for commit. Please stage the files you want to commit:
+- git add <files>     # Stage specific files
+- git add -p          # Interactive staging
+- git add -u          # Stage all modified files
 ```
 
-**Step 3: User confirmation**
+**Step 2: Get the full diff for analysis**
 
-Use `AskUserQuestion`:
-- Accept suggested scope
-- Provide custom scope
-- No scope (omit scope entirely)
-
-**Important rules:**
-- Scopes should be lowercase
-- Use hyphens for multi-word scopes: `user-profile`, not `user_profile` or `userProfile`
-- For `docs` type, scope is usually omitted (docs are typically project-wide)
-- For `chore` type, scope is often omitted unless it's a specific subsystem
-
-### Phase 4: Subject & Body Drafting
-
-**Step 1: Subject line**
-
-Ask for the commit subject. Validate it meets these criteria:
-- Maximum 72 characters
-- Use imperative mood ("add" not "added" or "adding")
-- No period at the end
-- Describes WHAT changed, not WHY
-
-**Ask the user:**
-```
-Write a brief subject line for this commit (max 72 chars, imperative mood, no period):
-
-Examples:
-- "add rate limiting to API endpoints"
-- "fix authentication token validation"
-- "update installation documentation"
+```bash
+git diff --cached
 ```
 
-**Step 2: Body (optional)**
+**Step 3: Get recent commit history for context**
 
-Ask if the user wants to add a body. The body should explain:
-- WHAT was changed (more detail than subject)
-- WHY the change was made
-- NOT how it was implemented (code shows that)
-
-```
-Do you want to add a body to this commit? The body explains WHAT and WHY.
-
-Example body:
-"The previous implementation did not handle edge cases where users had
-multiple active sessions. This could lead to race conditions during
-concurrent requests."
+```bash
+git log --oneline -5
 ```
 
-**Step 3: Breaking change check**
+### Phase 2: Autonomous Analysis
 
-Ask if this is a breaking change:
+Analyze the gathered context to determine:
+
+1. **Commit Type** - Based on diff patterns
+2. **Scope** - Based on file paths
+3. **Subject** - Based on what changed
+4. **Breaking Change** - Based on removal/signature patterns
+5. **Body** - Optional, for complex changes
+
+#### Commit Type Detection Rules
+
+Analyze the diff content and file paths to determine the commit type:
+
+| Priority | Condition | Type |
+|----------|-----------|------|
+| 1 | All changed files are `.md` files | `docs` |
+| 2 | All changed files are test files (`*.test.*`, `*.spec.*`, `__tests__/*`) | `test` |
+| 3 | All changed files are CI/workflow files (`.github/workflows/*`, `*.yml` in CI context) | `ci` |
+| 4 | All changed files are Docker-related (`Dockerfile*`, `docker-compose*`) | `build` |
+| 5 | Only `package.json`/`package-lock.json` with dependency changes | `chore` |
+| 6 | Only whitespace/formatting changes (no logic changes) | `style` |
+| 7 | Performance-related keywords in diff (`cache`, `optimize`, `performance`, `speed up`) | `perf` |
+| 8 | Bug fix indicators in diff or context (`fix`, `bug`, `issue`, `error`, `crash`, `handle`) | `fix` |
+| 9 | New functions/classes/components added | `feat` |
+| 10 | Code restructuring without behavior change | `refactor` |
+| 11 | Default fallback | `chore` |
+
+#### Scope Detection Rules
+
+Use file paths to determine scope (reference: [references/scopes.md](references/scopes.md)):
+
+1. Extract the primary directory or component from changed files
+2. Use the most specific common ancestor
+3. Apply scope naming conventions:
+   - Lowercase: `api`, not `API`
+   - Hyphens for multi-word: `user-profile`, not `userProfile`
+   - Short but descriptive: `auth`, not `authentication-service`
+
+**Omit scope when:**
+- Changes span multiple unrelated areas
+- Type is `docs` (typically project-wide)
+- Type is `chore` with project-wide changes
+- Scope would not add meaningful context
+
+#### Subject Generation Rules
+
+Generate a concise subject line:
+
+1. **Analyze the primary change** - What is the main thing being modified?
+2. **Use imperative mood** - "add", "fix", "update" (not "added", "fixes", "updating")
+3. **Keep under 72 characters**
+4. **No period at the end**
+5. **Focus on WHAT changed**, not HOW
+
+**Subject patterns by type:**
+- `feat`: "add [feature]", "implement [capability]", "support [functionality]"
+- `fix`: "fix [issue]", "handle [edge case]", "prevent [problem]"
+- `docs`: "update [document]", "add [documentation]", "clarify [section]"
+- `refactor`: "extract [component]", "simplify [logic]", "reorganize [structure]"
+- `test`: "add tests for [feature]", "increase coverage for [module]"
+- `chore`: "update [dependency]", "configure [tool]", "clean up [area]"
+
+#### Breaking Change Detection
+
+Detect breaking changes by looking for:
+
+1. **Removed exports** - `export` statements removed
+2. **Removed public functions/methods** - Public API deletions
+3. **Changed function signatures** - Parameters added/removed/reordered
+4. **Removed configuration options** - Config keys deleted
+5. **Major version bumps** - In package.json
+6. **Renamed public APIs** - Function/class renames
+
+If breaking change detected, add `!` after type/scope.
+
+#### Body Generation (Optional)
+
+Generate a body only when the change is complex:
+
+- Multiple logical changes in one commit
+- Non-obvious reasoning behind the change
+- Important context for future readers
+
+Keep the body concise and focused on WHAT and WHY, not HOW.
+
+### Phase 3: User Review (Single Interaction)
+
+Present the generated commit message for review:
 
 ```
-Is this a BREAKING CHANGE?
-A breaking change is a commit that introduces a change that breaks
-existing API contracts or requires users to update their code.
-
-Examples:
-- Removing or renaming a public API endpoint
-- Changing the type or structure of a return value
-- Modifying required configuration parameters
-- Removing support for a previously supported feature
-```
-
-If breaking change:
-- Include an exclamation mark (`!`) immediately after the type/scope, like: `feat(api)!: remove deprecated endpoint`
-- OR add `BREAKING CHANGE:` footer in the body
-
-### Phase 5: Pre-commit Validation
-
-**Step 1: Validate the commit message format**
-
-Verify the commit message matches this regex:
-```
-^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?!?: .+
-```
-
-**Validation checklist:**
-- [ ] Type is one of: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert
-- [ ] Scope (if present) is wrapped in parentheses
-- [ ] Subject starts with a space after the colon
-- [ ] Subject is in imperative mood
-- [ ] Subject does NOT end with a period
-- [ ] Subject is 72 characters or less
-- [ ] If breaking change, `!` is present OR `BREAKING CHANGE:` footer is present
-
-**Step 2: Show final commit message for confirmation**
-
-```
-Ready to commit. Here's the commit message:
+Based on my analysis of your changes, here's the proposed commit:
 
 ---
 <type>(<scope>): <subject>
 
-<body>
-<BREAKING CHANGE: footer if applicable>
+<body if applicable>
 ---
 
-Confirm? (yes/no)
+Files changed:
+- file1.ts
+- file2.ts
+
+Detected: <brief explanation of why this type/scope was chosen>
 ```
 
-Use `AskUserQuestion` for confirmation:
-- Yes - proceed to commit
-- No - go back and edit
+Use `AskUserQuestion` with options:
+- **Commit** - Proceed with this message
+- **Edit** - Let user provide modifications
+- **Cancel** - Abort the commit
 
-### Phase 6: Execute Commit
+**If user chooses Edit:**
+Ask what they want to change (type, scope, subject, or body) and incorporate their feedback. Then present the updated message for final confirmation.
 
-**Execute the commit using bash:**
+### Phase 4: Execute Commit (Autonomous)
+
+After user approval, execute the commit:
 
 ```bash
-git commit -m "<type>(<scope>): <subject>" -m "<body>" -m "<footer>"
+git commit -m "<type>(<scope>): <subject>" -m "<body>"
 ```
 
-**CRITICAL**: The commit message must contain ONLY the user-provided content. No AI-generated footers.
+**CRITICAL**: The commit message must contain ONLY user-approved content. No AI-generated footers.
 
-**Confirmation:**
+**Confirmation output:**
+
 ```
 Commit created successfully!
 
-Commit hash: <hash>
+Commit: <hash>
 Branch: <branch>
-Files changed: <count>
+Files: <count> changed
 ```
-
-## When Scope Should Be Omitted
-
-Omit the scope when:
-1. The change affects multiple scopes and no single scope is appropriate
-2. The change is project-wide (docs, chore, style often omit scope)
-3. The scope would not provide meaningful context to readers
-
-**Examples:**
-- `docs: update README with new installation steps` (no scope)
-- `chore: upgrade all dependencies to latest versions` (no scope)
-- `style: format code with prettier` (no scope)
-
-## Breaking Changes
-
-There are two ways to indicate a breaking change:
-
-**Option 1: Exclamation mark**
-```
-feat(api)!: remove deprecated user endpoint
-```
-
-**Option 2: BREAKING CHANGE footer**
-```
-feat(api): remove deprecated user endpoint
-
-BREAKING CHANGE: The user endpoint has been removed. Use the new
-profile endpoint instead.
-```
-
-**For breaking changes, always:**
-- Clearly explain what broke
-- Provide migration instructions if applicable
-- Update version number accordingly (semantic versioning)
-
-## Common Mistakes
-
-### ❌ Wrong: Imperative mood not used
-```
-feat(api): added rate limiting
-feat(api): adding rate limiting
-```
-### ✅ Correct: Imperative mood
-```
-feat(api): add rate limiting
-```
-
-### ❌ Wrong: Period at end of subject
-```
-feat(api): add rate limiting.
-```
-### ✅ Correct: No period
-```
-feat(api): add rate limiting
-```
-
-### ❌ Wrong: Subject too long (>72 chars)
-```
-feat(auth): implement comprehensive OAuth2 authentication flow with refresh token rotation and session management
-```
-### ✅ Correct: Concise subject
-```
-feat(auth): implement OAuth2 with refresh token rotation
-```
-
-### ❌ Wrong: Subject explains HOW instead of WHAT
-```
-fix(api): change the if statement to handle null values correctly
-```
-### ✅ Correct: Subject explains WHAT
-```
-fix(api): handle null responses
-```
-
-## Commit Message Examples
-
-See [references/examples.md](references/examples.md) for comprehensive examples of good and bad commit messages.
 
 ## Commit Type Reference
 
-See [references/commit-types.md](references/commit-types.md) for detailed explanations of each commit type with extensive examples.
+| Type | Description | Example |
+|------|-------------|---------|
+| `feat` | New feature for the user | `feat(auth): add OAuth2 support` |
+| `fix` | Bug fix for the user | `fix(api): handle null response` |
+| `docs` | Documentation only changes | `docs: update README` |
+| `style` | Code style changes (formatting) | `style: format with prettier` |
+| `refactor` | Code restructuring | `refactor(auth): extract validator` |
+| `test` | Adding or updating tests | `test(api): add user endpoint tests` |
+| `chore` | Maintenance tasks | `chore: update dependencies` |
+| `perf` | Performance improvement | `perf(api): add caching` |
+| `ci` | CI/CD changes | `ci: add test workflow` |
+| `build` | Build system changes | `build: upgrade webpack` |
+| `revert` | Revert a previous commit | `revert: feat(api): remove endpoint` |
 
-## Scope Detection Reference
+## Common Patterns
 
-See [references/scopes.md](references/scopes.md) for configurable scope detection patterns for different project structures.
+### New Feature Detection
+```diff
++ export function newFeature() {
++   // implementation
++ }
+```
+Result: `feat(<scope>): add newFeature function`
 
-## Troubleshooting
+### Bug Fix Detection
+```diff
+- if (value) {
++ if (value !== null && value !== undefined) {
+    process(value);
+  }
+```
+Result: `fix(<scope>): handle null/undefined values`
 
-**No staged changes:**
-- Use `git add <files>` to stage files
-- Use `git add -p` for interactive staging
-- Use `git status` to see what files are available
+### Documentation Detection
+```diff
+# README.md
++ ## Installation
++ Run `npm install` to get started.
+```
+Result: `docs: add installation instructions`
 
-**Commit rejected by pre-commit hook:**
-- Fix the issue identified by the hook
-- Re-run the commit workflow
-- The skill does not bypass pre-commit hooks
+### Refactoring Detection
+```diff
+- function validateUser(user) {
+-   if (!user.email) return false;
+-   if (!user.name) return false;
+-   return true;
+- }
++ function validateUser(user) {
++   return validateEmail(user.email) && validateName(user.name);
++ }
++ function validateEmail(email) { return !!email; }
++ function validateName(name) { return !!name; }
+```
+Result: `refactor(<scope>): extract validation functions`
 
-**Scope detection not working:**
-- The skill suggests a scope but you can always override it
-- For projects with unique structures, you may need to manually specify scope each time
-- Consider customizing scope patterns in your project documentation
+## Breaking Changes
 
-## Integration
-
-This skill replaces the built-in `/commit` command for creating commits with semantic conventions. To use this skill, simply ask to create a commit:
+When a breaking change is detected:
 
 ```
-"Create a commit for these changes"
-"Commit my staged changes"
-"Make a conventional commit"
+feat(api)!: remove deprecated user endpoint
+
+BREAKING CHANGE: The /api/v1/user endpoint has been removed.
+Use /api/v2/users instead.
 ```
 
-The skill will guide you through the process interactively.
+## Edge Cases
+
+### Multiple File Types
+When changes span different types (e.g., feature + tests):
+- Prioritize the primary change (usually `feat` or `fix`)
+- Tests accompanying a feature are part of `feat`
+
+### Ambiguous Changes
+When the type is unclear:
+- Default to analyzing the intent from diff content
+- Consider the most impactful change
+- When truly ambiguous, include reasoning in the review for user to adjust
+
+### Large Commits
+For commits with many changes:
+- Focus on the primary purpose
+- Suggest splitting if changes are unrelated (but proceed if user confirms)
 
 ## References
 
-- [Conventional Commits v1.0.0 Specification](https://www.conventionalcommits.org/en/v1.0.0/)
-- [Semantic Versioning](https://semver.org/)
-- [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/)
+- [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Commit Types Reference](references/commit-types.md)
+- [Scope Detection Reference](references/scopes.md)
+- [Examples Reference](references/examples.md)
