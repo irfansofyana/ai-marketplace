@@ -13,7 +13,7 @@ allowed-tools: AskUserQuestion Bash Read
 
 Create professional technical documentation using structured templates with interactive guidance. This skill helps users articulate their ideas clearly, producing well-organized documents.
 
-**Key principle**: All information comes from the user through interactive prompts. Do NOT read the user's codebase.
+**Key principle**: All information comes from the user through interactive prompts. Do NOT read the user's codebase to discover or understand the problem. The `Read` tool is ONLY for reading user-provided context files (e.g., existing ADRs, RFCs, design documents) that the user explicitly references for additional context.
 
 ## Skill Philosophy
 

@@ -13,9 +13,10 @@ AskUserQuestion(
         "header": "📄 Document Type",
         "options": [
             {"label": "One-Pager", "description": "Concise proposal for features, changes, or decisions (1-3 pages)"},
-            {"label": "RFC", "description": "Request for Comments - detailed design proposal for cross-team review (coming soon)"},
-            {"label": "TSD", "description": "Technical Specification Document - comprehensive technical design (coming soon)"},
-            {"label": "ADR", "description": "Architecture Decision Record - document a specific architectural decision (coming soon)"}
+            {"label": "RFC", "description": "Request for Comments - detailed design proposal for cross-team review"},
+            {"label": "TSD", "description": "Technical Specification Document - comprehensive technical design"},
+            {"label": "ADR", "description": "Architecture Decision Record - document a specific architectural decision"},
+            {"label": "POC/Experiment", "description": "Proof of Concept or Experiment - validate hypotheses with Go/No-Go decision"}
         ],
         "multiSelect": false
     }]
@@ -144,7 +145,7 @@ AskUserQuestion(
 
 ### Problem Validation Gate (MANDATORY - Universal for All Document Types)
 
-> **CRITICAL**: The Problem Validation Gate MUST be completed BEFORE selecting a document type or discussing solutions. This applies to ALL document types (One-Pager, RFC, TSD, ADR).
+> **CRITICAL**: The Problem Validation Gate MUST be completed BEFORE selecting a document type or discussing solutions. This applies to ALL document types (One-Pager, RFC, TSD, ADR, POC/Experiment).
 
 #### 1. Current State Deep Dive
 
@@ -467,6 +468,7 @@ AskUserQuestion(
 | Complex architecture, multiple services, implementation phases | **RFC** | Detailed design requires thorough analysis |
 | API specification, data model, interface definition | **TSD** | Technical implementation details |
 | Technology choice, framework decision, architectural pivot | **ADR** | Decision-focused with alternatives analysis |
+| Hypothesis validation, technology evaluation, uncertain feasibility | **POC/Experiment** | Learning-focused with Go/No-Go decision |
 | User unsure, unclear scope | **Ask User** | Present options with descriptions |
 
 **Document Type Descriptions (for "Show all options"):**
@@ -475,6 +477,7 @@ AskUserQuestion(
 - **RFC (Request for Comments)**: Detailed design proposal (5-15 pages) for complex changes requiring cross-team review, architecture, implementation, migration, and rollback planning
 - **TSD (Technical Specification)**: Comprehensive technical spec (5-20 pages) documenting APIs, data models, interfaces, error handling, and versioning
 - **ADR (Architecture Decision Record)**: Decision record (1-3 pages) documenting a specific technology choice with alternatives considered, decision criteria, and trade-offs analysis
+- **POC/Experiment**: Proof of Concept or Experiment document (3-8 pages) for validating hypotheses with success criteria, measurement approach, and Go/No-Go decision framework
 
 #### 14. User Chooses Different Type
 
@@ -488,7 +491,8 @@ AskUserQuestion(
             {"label": "One-Pager", "description": "Concise proposal for quick approval"},
             {"label": "RFC", "description": "Detailed design with cross-team review"},
             {"label": "TSD", "description": "Technical specification for APIs/interfaces"},
-            {"label": "ADR", "description": "Architecture decision record"}
+            {"label": "ADR", "description": "Architecture decision record"},
+            {"label": "POC/Experiment", "description": "Proof of concept with Go/No-Go decision"}
         ],
         "multiSelect": false
     }]
@@ -515,6 +519,9 @@ say("  Example: 'User Authentication API v2 with OAuth 2.0'")
 say("")
 say("**ADR**: Best for technology choices, framework decisions, architecture pivots (1-3 pages)")
 say("  Example: 'Choose between PostgreSQL and MongoDB for user data storage'")
+say("")
+say("**POC/Experiment**: Best for hypothesis validation, technology evaluation, uncertain feasibility (3-8 pages)")
+say("  Example: 'Evaluate if WebAssembly can improve cold-start performance'")
 say("")
 say("Which one sounds right for your situation?")
 ```
