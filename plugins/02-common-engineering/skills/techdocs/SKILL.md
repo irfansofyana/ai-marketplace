@@ -4,8 +4,8 @@ description: Interactive technical documentation writer using template-based cre
 license: MIT
 metadata:
   author: irfansofyana
-  version: "1.1.0"
-  last-updated: "2024-12-24"
+  version: "1.3.0"
+  last-updated: "2025-12-24"
 allowed-tools: AskUserQuestion Bash Read
 ---
 
@@ -112,7 +112,7 @@ If user jumps to solution before completing Problem Validation Gate:
 - **Technical Context**: "What technologies/systems are involved? Any constraints?"
 - **Team Context**: "Who will implement this? Any organizational constraints?"
 
-See [references/question-bank.md](references/question-bank.md) for Universal Discovery question patterns (lines 138-350).
+See [references/question-bank.md](references/question-bank.md) for Universal Discovery question patterns (see "Universal Discovery Questions" section).
 
 ### Phase 2: Document Type Selection (NEW)
 
@@ -132,6 +132,7 @@ Analyze the problem to recommend a document type:
 | Complex architecture, multiple services, implementation phases | **RFC** | Detailed design requires thorough analysis |
 | API specification, data model, interface definition | **TSD** | Technical implementation details |
 | Technology choice, framework decision, architectural pivot | **ADR** | Decision-focused with alternatives analysis |
+| Hypothesis validation, technology evaluation, uncertain feasibility | **POC/Experiment** | Learning-focused with Go/No-Go decision |
 | User unsure, unclear scope | **Ask User** | Present options with descriptions |
 
 #### Step 2: Present Recommendation
@@ -169,6 +170,7 @@ Does that sound right?
 - **RFC**: Architecture overview, implementation phases, migration strategy, rollback plan
 - **TSD**: API endpoints, data models, interface contracts, error handling
 - **ADR**: Alternatives considered (mandatory 2+), decision criteria, trade-offs analysis
+- **POC/Experiment**: Hypothesis statement, success criteria, measurement approach, Go/No-Go criteria
 
 ### Research Integration (within Phases)
 
