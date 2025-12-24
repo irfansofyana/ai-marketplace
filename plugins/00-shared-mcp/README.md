@@ -19,7 +19,7 @@ This plugin consolidates commonly-used MCP servers to:
 | Server | Purpose | Tools Provided | Connection Type |
 |--------|---------|----------------|-----------------|
 | **Tavily** | Web search and content extraction | `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map` | stdio/npx |
-| **Jina** | Content reading and URL processing | `read_url`, `search_web`, `search_images`, `search_arxiv`, and more | SSE (Server-Sent Events) |
+| **Jina** | Content reading and URL processing | `read_url`, `search_web`, `search_images`, `search_arxiv`, and more | Streamable HTTP |
 | **Exa** | AI-powered web search and code context | `web_search_exa`, `get_code_context_exa`, `crawling_exa`, `deep_researcher_start/check` | stdio/npx |
 
 ## Installation
@@ -119,34 +119,17 @@ Ensure the plugin is installed and enabled:
 
 ## Recent Updates
 
-### November 2025: Jina MCP Configuration Updated
+### December 2025: Jina MCP Endpoint Migration
 
-The Jina MCP server configuration has been updated to use a direct SSE (Server-Sent Events) connection instead of the previous stdio/npx approach. This change:
-- Removes the dependency on `mcp-remote` npm package for Jina tools
-- Improves connection reliability for Jina tools
-- Reduces startup time for Jina tools
-- Maintains all existing functionality
-- Still requires Node.js/npx for Tavily and Exa tools
+The Jina MCP server configuration has been updated to use the new `/v1` endpoint with Streamable HTTP transport. The previous `/sse` endpoint is now deprecated.
 
-Previous configuration required npx and mcp-remote:
-```json
-"jina": {
-  "type": "stdio",
-  "command": "npx",
-  "args": [
-    "-y",
-    "mcp-remote",
-    "https://mcp.jina.ai/sse",
-    "--header",
-    "Authorization: Bearer ${JINA_API_KEY}"
-  ],
-  "env": {
-    "JINA_API_KEY": "${JINA_API_KEY}"
-  }
-}
-```
+**Migration Summary:**
+- Old endpoint: `https://mcp.jina.ai/sse` (SSE transport - deprecated)
+- New endpoint: `https://mcp.jina.ai/v1` (Streamable HTTP - current)
 
-Updated configuration uses direct SSE:
+This change aligns with the MCP specification update (2025-03-26) that deprecated Server-Sent Events in favor of Streamable HTTP transport.
+
+**Previous configuration:**
 ```json
 "jina": {
   "type": "sse",
@@ -157,7 +140,21 @@ Updated configuration uses direct SSE:
 }
 ```
 
+**Current configuration:**
+```json
+"jina": {
+  "type": "http",
+  "url": "https://mcp.jina.ai/v1",
+  "headers": {
+    "Authorization": "Bearer ${JINA_API_KEY}"
+  }
+}
+```
+
+**No action required** for users - the plugin update handles this automatically. All existing functionality remains unchanged.
+
 ## Version History
 
 - **1.0.0**: Initial release with Tavily, Jina, and Exa MCP servers
 - **1.1.0**: Updated Jina MCP to use direct SSE connection instead of stdio/npx (November 2025)
+- **1.2.0**: Updated Jina MCP endpoint from `/sse` to `/v1` with Streamable HTTP transport (December 2025)
