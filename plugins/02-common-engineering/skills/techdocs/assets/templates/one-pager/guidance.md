@@ -29,6 +29,81 @@ For quick access during document creation:
 
 ---
 
+## Universal Discovery Integration
+
+> **IMPORTANT**: One-Pagers are created AFTER completing Phase 1 (Universal Discovery) and Phase 2 (Document Type Selection). The Problem Validation Gate must be completed before writing this One-Pager.
+
+### Universal Discovery Output → One-Pager Section Mapping
+
+| Universal Discovery Output | Used In One-Pager Section | How It's Used |
+|----------------------------|--------------------------|---------------|
+| Current State description | Problem | Core content - "What's broken now" |
+| Evidence of Problem | Problem | "How do we know" - quantifies impact |
+| Who Has This Problem | Problem | "Who experiences this" |
+| Desired State description | High Level Goal | "What does done look like" |
+| State Gap | High Level Goal | Success metrics from gap analysis |
+| Pain Point (worst thing) | Problem | Priority framing |
+| Impact Urgency | What Happens If We Don't Solve This | Cost of inaction |
+| Related Documents | Throughout | Cite for context, previous attempts |
+| Historical Context | Alternatives | Previous attempts inform options |
+| Technical Context | Proposed Solution | System landscape, constraints |
+| Team Context | Risks | Team capacity, expertise risks |
+
+### Before Starting the One-Pager
+
+**Prerequisites:**
+1. ✅ Problem Validation Gate completed (current state, evidence, who's affected, gap analysis)
+2. ✅ Document type selection confirmed (AI recommended One-Pager, user accepted)
+3. ✅ One-Pager specific questions answered (sign-offs, timeline, high-level risks)
+
+### Key Benefits of Universal Discovery for One-Pagers
+
+**Better Problem Clarity:**
+- Problem Validation Gate ensures the problem is real and quantified
+- No more superficial problem statements ("performance is slow" → "API p95 latency increased from 100ms to 2800ms")
+
+**Better Goal Definition:**
+- Desired State from Universal Discovery directly informs High Level Goal
+- Gap analysis provides measurable success criteria
+
+**Better Solution Fit:**
+- Rich Context Input (related docs, historical context) ensures solution builds on previous work
+- Technical Context ensures solution fits system landscape
+
+**Better Risk Assessment:**
+- Team Context helps identify realistic team capacity and expertise risks
+- Historical Context helps avoid repeating past mistakes
+
+### How to Use Universal Discovery Output
+
+**When writing the Problem section:**
+1. Start with **Current State Deep Dive** output: "What happens now step by step?"
+2. Add **Evidence of Problem**: Quantify the impact (metrics, complaints, errors)
+3. Include **Who Has This Problem**: Specify affected users or teams
+4. Use **State Gap**: Show the difference between current and desired states
+
+**When writing the High Level Goal section:**
+1. Use **Desired State** output: "What should happen after we fix this?"
+2. Derive success metrics from **State Gap**: "What's the measurable improvement?"
+
+**When writing "What Happens If We Don't Solve This":**
+1. Use **Impact Urgency** output: "What's the cost of NOT fixing this?"
+2. Quantify if possible (revenue, time, frustration, technical debt)
+
+**When writing Proposed Solution:**
+1. Reference **Technical Context**: System landscape, constraints, dependencies
+2. Reference **Related Documents**: Previous attempts, existing RFCs/ADRs
+
+**When writing Alternatives:**
+1. Reference **Historical Context**: What was tried before? Why did it fail?
+2. Reference **Related Documents**: Previous decisions that inform current options
+
+**When writing Risks:**
+1. Use **Team Context**: Team capacity, expertise gaps
+2. Use **Technical Context**: Integration complexity, dependencies
+
+---
+
 ## Section-by-Section Guidance
 
 ### About This Doc
