@@ -57,10 +57,11 @@ Expert internet researcher with intelligent tool selection for technical problem
 Professional technical documentation creation with interactive guided templates.
 
 **Supported Document Types:**
-- **One-Pager** (Active): Concise proposals for features, changes, or decisions (1-3 pages)
-- **RFC** (Coming Soon): Request for Comments - detailed design proposals for cross-team review
-- **TSD** (Coming Soon): Technical Specification Documents
-- **ADR** (Coming Soon): Architecture Decision Records
+- **One-Pager**: Concise proposals for features, changes, or decisions (1-3 pages)
+- **RFC**: Request for Comments - detailed design proposals for cross-team review
+- **TSD**: Technical Specification Documents (APIs, data models, interfaces)
+- **ADR**: Architecture Decision Records (technology choices, trade-offs)
+- **POC/Experiment**: Proof of concepts and technical experiments
 
 **Key Capabilities:**
 - ✅ **Interactive guided creation**: Step-by-step prompts help you articulate your ideas
@@ -123,7 +124,7 @@ The techdocs-writer agent can export documents to Word (.docx) or PDF formats us
 
 1. **Add this marketplace to Claude Code** (if not already added):
    ```bash
-   /plugin marketplace add /Users/irfanputra/Personal/my-claude-code-marketplace
+   /plugin marketplace add https://github.com/irfansofyana/my-claude-code-marketplace
    ```
 
 2. **Install the plugin:**
@@ -441,7 +442,6 @@ Completed features:
 Planned additions to this plugin:
 - [ ] Code review agent
 - [ ] Shell script expert agent
-- [ ] Additional documentation templates (RFC, TSD, ADR)
 
 ## Author
 

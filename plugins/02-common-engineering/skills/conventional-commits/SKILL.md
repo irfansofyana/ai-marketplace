@@ -1,6 +1,6 @@
 ---
 name: conventional-commits
-description: Create git commits following Conventional Commits v1.0.0 specification. Auto-detects scopes from changed files, validates commit format, and prevents non-compliant commits. NO AI-generated footers added to commits for clean audit trails.
+description: Create git commits following Conventional Commits v1.0.0 specification. Auto-detects scopes from changed files, validates commit format, and prevents non-compliant commits. NO AI-generated footers added to commits for clean audit trails. Use when user wants to commit, push, or create git commits, or mentions "commit", "git commit", "push changes", "stage and commit", "make a commit", "create commit".
 license: MIT
 metadata:
   author: irfansofyana
@@ -82,9 +82,7 @@ Use `AskUserQuestion` to present commit type options. Include descriptions for c
 | `perf` | Performance improvement | `perf(api): add caching for user queries` |
 | `ci` | CI/CD changes | `ci: add automated tests to github actions` |
 | `build` | Build system changes | `build: upgrade webpack to v5` |
-| `revert` | Revert a previous commit | `revert: feat(api)!
-
-` |
+| `revert` | Revert a previous commit | `revert: feat(api)!: remove oauth support` |
 
 **Ask the user:**
 ```
