@@ -143,8 +143,6 @@ Detect breaking changes by looking for:
 5. **Major version bumps** - In package.json
 6. **Renamed public APIs** - Function/class renames
 
-If breaking change detected, add `!` after type/scope.
-
 #### Body Generation (Optional)
 
 Generate a body only when the change is complex:
