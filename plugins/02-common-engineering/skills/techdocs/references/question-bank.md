@@ -135,6 +135,390 @@ AskUserQuestion(
 )
 ```
 
+## Universal Discovery Questions
+
+> **IMPORTANT**: These questions are part of the NEW three-phase architecture.
+> Phase 1 (Universal Discovery) applies to ALL document types.
+> Phase 2 (Document Type Selection) comes AFTER Universal Discovery.
+> Phase 3 (Template-Specific) comes AFTER document type is chosen.
+
+### Problem Validation Gate (MANDATORY - Universal for All Document Types)
+
+> **CRITICAL**: The Problem Validation Gate MUST be completed BEFORE selecting a document type or discussing solutions. This applies to ALL document types (One-Pager, RFC, TSD, ADR).
+
+#### 1. Current State Deep Dive
+
+```python
+AskUserQuestion(
+    questions=[{
+        "question": "Let's start by understanding the current situation. Walk me through what happens now step by step.",
+        "header": "🔍 Current State",
+        "placeholder": "Describe the current workflow, process, or situation in detail..."
+    }]
+)
+```
+
+**Follow-up if needed:**
+- "What does 'broken' or 'problematic' look like in practice? Be specific."
+- "Describe the current workflow/process as if explaining to someone new."
+
+#### 2. Evidence of Problem
+
+```python
+AskUserQuestion(
+    questions=[{
+        "question": "How do we know this is a problem? What evidence exists?",
+        "header": "📊 Evidence",
+        "options": [
+            {"label": "User complaints", "description": "Direct feedback from users or customers"},
+            {"label": "Performance metrics", "description": "Quantitative data (latency, errors, throughput)"},
+            {"label": "Error logs", "description": "System errors, exceptions, failures"},
+            {"label": "Customer feedback", "description": "Sales objections, churn, NPS, support tickets"},
+            {"label": "Internal observations", "description": "Developer/team experience, pain points"}
+        ],
+        "multiSelect": true
+    }]
+)
+```
+
+**Follow-up quantification:**
+- "Can you quantify the impact? (e.g., 50 errors/day, 2s slower, 100 users affected)"
+- "How often does this happen?"
+
+#### 3. Who Has This Problem? (Conditional)
+
+> **Note**: Ask this based on the document purpose/audience. Skip if already clear from context.
+
+```python
+# If business-facing or audience includes end users:
+AskUserQuestion(
+    questions=[{
+        "question": "Who specifically experiences this problem? Describe the user persona.",
+        "header": "👤 Who's Affected",
+        "placeholder": "e.g., Enterprise sales reps trying to close deals, Mobile users in poor network conditions..."
+    }]
+)
+
+# If technical-only:
+AskUserQuestion(
+    questions=[{
+        "question": "Which teams, services, or systems are affected?",
+        "header": "👤 Who's Affected",
+        "placeholder": "e.g., Payment service team, API consumers, Database cluster..."
+    }]
+)
+```
+
+**Follow-up:**
+- "Who would notice if we fixed this?"
+
+#### 4. Current vs Desired State (Gap Analysis)
+
+```python
+AskUserQuestion(
+    questions=[
+        {
+            "question": "Complete this sentence: 'Today, ________ happens.'",
+            "header": "📍 Current State",
+            "placeholder": "e.g., Every API request queries the database directly..."
+        },
+        {
+            "question": "Complete this sentence: 'After we fix this, ________ should happen.'",
+            "header": "🎯 Desired State",
+            "placeholder": "e.g., Frequently-accessed data should be served from cache..."
+        }
+    ]
+)
+```
+
+**Follow-up:**
+- "What's the gap between these two states?"
+
+### Enhanced Problem Section Questions
+
+> These questions are asked when working on the Problem section of any document type.
+
+#### 5. Pain Point Specificity
+
+```python
+AskUserQuestion(
+    questions=[
+        {
+            "question": "What's the SINGLE WORST thing about the current situation?",
+            "header": "😩 Pain Point",
+            "placeholder": "e.g., 2-second API latency causes 30% drop-off..."
+        },
+        {
+            "question": "If you could fix ONE thing, what would it be?",
+            "header": "🎯 Priority",
+            "placeholder": "e.g., Reduce database query time..."
+        }
+    ]
+)
+```
+
+#### 6. Impact Urgency
+
+```python
+AskUserQuestion(
+    questions=[{
+        "question": "What's the cost of NOT fixing this?",
+        "header": "💸 Cost of Inaction",
+        "options": [
+            {"label": "Revenue impact", "description": "Lost sales, deals, customers"},
+            {"label": "Time impact", "description": "Hours/week wasted on workarounds"},
+            {"label": "Technical debt", "description": "Problem gets worse over time"},
+            {"label": "Team morale", "description": "Frustration, burnout risk"},
+            {"label": "Customer trust", "description": "Churn, complaints, bad reviews"}
+        ],
+        "multiSelect": true
+    }]
+)
+```
+
+**Follow-up:**
+- "Is this getting worse over time, or stable?"
+
+#### 7. Solution Challenge (When User Jumps to Solution)
+
+> **Use this proactively**: If the user mentions a solution before the problem is validated, redirect them.
+
+```python
+# If user mentions solution early:
+say("I see you're thinking about [solution]. Before we discuss solutions, let's validate the problem first.")
+# Then proceed with Problem Validation Gate above
+
+# Or as a question:
+AskUserQuestion(
+    questions=[{
+        "question": "You mentioned [solution]. What PROBLEM does that solve?",
+        "header": "🤔 Solution Challenge",
+        "placeholder": "Help me understand what problem this solution addresses..."
+    }]
+)
+```
+
+### Rich Context Input (Optional)
+
+> **These questions can be asked at ANY point** during or after Universal Discovery to enrich the proposal with existing information.
+
+#### 8. Related Documents
+
+```python
+AskUserQuestion(
+    questions=[{
+        "question": "Are there related documents we should reference? (ADRs, RFCs, TSDs, tickets, design docs)",
+        "header": "📚 Related Documents (Optional)",
+        "options": [
+            {"label": "Yes, ADRs exist", "description": "Previous architecture decisions"},
+            {"label": "Yes, TSDs/RFCs exist", "description": "Related technical designs"},
+            {"label": "Yes, tickets/issues", "description": "Jira, GitHub Issues, etc."},
+            {"label": "Multiple types", "description": "Several kinds of documents"},
+            {"label": "None", "description": "No related documents"},
+            {"label": "Skip for now", "description": "May add later"}
+        ],
+        "multiSelect": true
+    }]
+)
+```
+
+**Follow-up (if yes):**
+- See "Document Attachment Flow" below.
+
+#### 9. Document Attachment Flow
+
+```python
+AskUserQuestion(
+    questions=[{
+        "question": "How would you like to provide the document context?",
+        "header": "📎 Context Input Method",
+        "options": [
+            {"label": "File paths", "description": "I'll read the files directly"},
+            {"label": "Paste content", "description": "Copy-paste from existing docs"},
+            {"label": "Verbal description", "description": "I'll describe the key points"},
+            {"label": "Skip", "description": "No additional context needed"}
+        ],
+        "multiSelect": false
+    }]
+)
+```
+
+**For file paths:**
+- Use the `Read` tool to read the file contents
+- Ask for file paths: "Please provide the file paths (one per line or comma-separated)"
+
+**For paste content:**
+- Ask user to paste relevant content from the documents
+
+**For verbal:**
+- Ask: "What are the key points from these documents I should know?"
+
+#### 10. Historical Context
+
+```python
+AskUserQuestion(
+    questions=[{
+        "question": "Has this been proposed or attempted before?",
+        "header": "📜 History (Optional)",
+        "options": [
+            {"label": "First time proposal", "description": "This is a new idea"},
+            {"label": "Previously rejected", "description": "Similar proposal was declined"},
+            {"label": "Partially completed", "description": "Some work was done but not finished"},
+            {"label": "Ongoing effort", "description": "Currently in progress"},
+            {"label": "Unknown", "description": "Not sure about history"},
+            {"label": "Skip", "description": "Not relevant"}
+        ],
+        "multiSelect": false
+    }]
+)
+```
+
+**Follow-up (if not first time):**
+- "What happened? Why did it fail/succeed?"
+- "What's different this time?"
+
+#### 11. Technical Context
+
+```python
+AskUserQuestion(
+    questions=[
+        {
+            "question": "What technologies or systems are involved?",
+            "header": "⚙️ Tech Stack (Optional)",
+            "placeholder": "e.g., PostgreSQL, Redis, Node.js, Kubernetes..."
+        },
+        {
+            "question": "Any relevant technical constraints or dependencies?",
+            "header": "🔗 Constraints (Optional)",
+            "placeholder": "e.g., Must maintain API compatibility, limited to AWS services,..."
+        }
+    ]
+)
+```
+
+#### 12. Team/Organizational Context
+
+```python
+AskUserQuestion(
+    questions=[
+        {
+            "question": "Who will implement this?",
+            "header": "👥 Implementation Team (Optional)",
+            "options": [
+                {"label": "My team only", "description": "Single team can deliver independently"},
+                {"label": "Multiple teams", "description": "Requires cross-team coordination"},
+                {"label": "Not determined yet", "description": "Team assignment TBD"},
+                {"label": "External dependency", "description": "Vendors or partners involved"},
+                {"label": "Skip", "description": "Not relevant"}
+            ],
+            "multiSelect": false
+        },
+        {
+            "question": "Any organizational constraints or priorities to consider?",
+            "header": "🏢 Organizational Context (Optional)",
+            "placeholder": "e.g., Q1 OKR alignment, budget approval needed, depends on X team's capacity..."
+        }
+    ]
+)
+```
+
+### Document Type Selection (Phase 2)
+
+> **IMPORTANT**: This section comes AFTER Universal Discovery is complete. The AI analyzes the gathered information and recommends a document type. The user can accept or override.
+
+#### 13. Document Type Recommendation
+
+> **AI Instructions**: Analyze the Universal Discovery outputs and recommend the most appropriate document type. Use the decision logic table in guidance.md.
+
+```python
+# AI analyzes:
+# - Problem complexity (simple vs complex)
+# - Scope (single service vs multi-service vs platform)
+# - Evidence type and depth (clear metrics vs anecdotal)
+# - Technical vs business focus
+# - Previous attempts (historical context)
+
+# Then recommends with rationale:
+say("Based on what you've described, I recommend an **[TYPE]** because:")
+say("- [Reason 1]")
+say("- [Reason 2]")
+say("Does that sound right?")
+
+AskUserQuestion(
+    questions=[{
+        "question": "What document type would you like to create?",
+        "header": "📄 Document Type",
+        "options": [
+            {"label": "Yes, let's do [TYPE]", "description": "Accept the recommendation"},
+            {"label": "Choose different type", "description": "I'll explain why"},
+            {"label": "Show all options", "description": "Compare One-Pager, RFC, TSD, ADR"},
+            {"label": "Help me decide", "description": "I'm not sure which is right"}
+        ],
+        "multiSelect": false
+    }]
+)
+```
+
+**Decision Logic Table (for AI reference):**
+
+| Indicators | Recommended Type | Rationale |
+|------------|------------------|-----------|
+| Simple problem, single solution, quick decision | **One-Pager** | Concise proposal for fast approval |
+| Complex architecture, multiple services, implementation phases | **RFC** | Detailed design requires thorough analysis |
+| API specification, data model, interface definition | **TSD** | Technical implementation details |
+| Technology choice, framework decision, architectural pivot | **ADR** | Decision-focused with alternatives analysis |
+| User unsure, unclear scope | **Ask User** | Present options with descriptions |
+
+**Document Type Descriptions (for "Show all options"):**
+
+- **One-Pager**: Concise proposal (1-3 pages) for features, changes, or decisions seeking quick approval
+- **RFC (Request for Comments)**: Detailed design proposal (5-15 pages) for complex changes requiring cross-team review, architecture, implementation, migration, and rollback planning
+- **TSD (Technical Specification)**: Comprehensive technical spec (5-20 pages) documenting APIs, data models, interfaces, error handling, and versioning
+- **ADR (Architecture Decision Record)**: Decision record (1-3 pages) documenting a specific technology choice with alternatives considered, decision criteria, and trade-offs analysis
+
+#### 14. User Chooses Different Type
+
+```python
+# If user selects "Choose different type":
+AskUserQuestion(
+    questions=[{
+        "question": "Which document type would you prefer?",
+        "header": "📄 Your Choice",
+        "options": [
+            {"label": "One-Pager", "description": "Concise proposal for quick approval"},
+            {"label": "RFC", "description": "Detailed design with cross-team review"},
+            {"label": "TSD", "description": "Technical specification for APIs/interfaces"},
+            {"label": "ADR", "description": "Architecture decision record"}
+        ],
+        "multiSelect": false
+    }]
+)
+
+# Follow up:
+say("Why do you prefer [TYPE]? This helps me tailor the questions.")
+```
+
+#### 15. User Asks for Help Deciding
+
+```python
+# If user selects "Help me decide":
+say("Let me help you choose. Here's a quick comparison:")
+say("")
+say("**One-Pager**: Best for simple problems, single solutions, quick decisions (1-3 pages)")
+say("  Example: 'Add caching to improve API performance'")
+say("")
+say("**RFC**: Best for complex architecture, multiple services, implementation phases (5-15 pages)")
+say("  Example: 'Migrate payment system to microservices with phased rollout'")
+say("")
+say("**TSD**: Best for API specs, data models, interface definitions (5-20 pages)")
+say("  Example: 'User Authentication API v2 with OAuth 2.0'")
+say("")
+say("**ADR**: Best for technology choices, framework decisions, architecture pivots (1-3 pages)")
+say("  Example: 'Choose between PostgreSQL and MongoDB for user data storage'")
+say("")
+say("Which one sounds right for your situation?")
+```
+
 ## Content Gathering Questions
 
 ### Topic and Problem (Quick)
