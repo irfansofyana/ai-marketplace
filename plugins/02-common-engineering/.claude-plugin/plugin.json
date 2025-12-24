@@ -1,7 +1,7 @@
 {
   "name": "common-engineering",
   "description": "Foundational engineering tools for diagram generation, technical documentation, and common development tasks",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "author": {
     "name": "irfansofyana"
   }
