@@ -122,12 +122,14 @@ export TAVILY_API_KEY="your-tavily-api-key"     # https://tavily.com (free tier)
 export EXA_API_KEY="your-exa-api-key"           # https://exa.ai (free tier)
 ```
 
-**Optional for p-assist plugin features**:
+**Optional for common-engineering plugin**:
 ```bash
-export LOGSEQ_API_TOKEN="your-logseq-token"
-export LOGSEQ_API_URL="http://localhost:12315"
-export LINKWARDEN_BASE_URL="https://your-linkwarden.com"
-export LINKWARDEN_TOKEN="your-linkwarden-token"
+export CONTEXT7_API_KEY="your-context7-api-key"  # https://context7.ai (for library docs)
+```
+
+**Required for p-assist plugin**:
+```bash
+export N8N_API_TOKEN="your-n8n-api-token"  # Your n8n personal assistant API token
 ```
 
 **After adding variables**, reload your shell config:
@@ -143,6 +145,8 @@ After configuring, verify variables are loaded:
 ```bash
 echo $TAVILY_API_KEY  # Should display your API key
 echo $EXA_API_KEY
+echo $N8N_API_TOKEN   # Should display your n8n token
+echo $CONTEXT7_API_KEY  # Should display your Context7 key (if using common-engineering)
 ```
 
 If empty, reload your shell config or restart Claude Code.
@@ -192,13 +196,12 @@ If empty, reload your shell config or restart Claude Code.
   - **Requirements**: Node.js, API keys (TAVILY_API_KEY, EXA_API_KEY)
   - See environment configuration section above
 
-- **01-p-assist** (`./plugins/01-p-assist`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden).
-  - **Requires**: shared-mcp plugin
-  - **Optional**: LOGSEQ_API_TOKEN, LINKWARDEN_TOKEN (for those features)
+- **01-p-assist** (`./plugins/01-p-assist`): Productivity plugin for knowledge management (Capacities), expense tracking, RSS feed monitoring (FreshRSS), and VPS management.
+  - **Requires**: shared-mcp plugin, N8N_API_TOKEN
   - See `plugins/01-p-assist/README.md` for setup instructions
 
 - **02-common-engineering** (`./plugins/02-common-engineering`): Essential toolkit for software engineers with Mermaid diagram generation, technical documentation writer (one-pagers, RFCs, proposals), automatic validation, and self-healing capabilities.
-  - **Requires**: shared-mcp plugin, mermaid-cli (`npm install -g @mermaid-js/mermaid-cli`)
+  - **Requires**: shared-mcp plugin, mermaid-cli (`npm install -g @mermaid-js/mermaid-cli`), CONTEXT7_API_KEY
   - **Optional**: document-skills plugin (for Word/PDF export from techdocs-writer)
   - See `plugins/02-common-engineering/README.md` for setup
 
@@ -252,9 +255,9 @@ mcp__plugin_[plugin-name]_[server-key]__[tool-name]
 
 **Example:**
 - Plugin name: `p-assist`
-- Server key: `linkwd`
+- Server key: `n8n_pa`
 - Tool name: `get_public_collections_links`
-- Full tool name: `mcp__plugin_p-assist_linkwd__get_public_collections_links` (57 chars ✓)
+- Full tool name: `mcp__plugin_p-assist_n8n_pa__get_public_collections_links` (57 chars ✓)
 
 ### Naming Best Practices
 
@@ -294,7 +297,7 @@ Use the provided validation script to check tool names:
 python3 scripts/validate-mcp-tool-names.py <plugin-name> <server-key> <tool-names...>
 
 # Example:
-python3 scripts/validate-mcp-tool-names.py p-assist linkwd \
+python3 scripts/validate-mcp-tool-names.py p-assist n8n_pa \
     archive_link create_link get_public_collections_links
 ```
 
@@ -307,9 +310,9 @@ The script will:
 ### Example Validation
 
 ```python
-# Plugin: p-assist, Server: linkwd
+# Plugin: p-assist, Server: n8n_pa
 # Longest tool: get_public_collections_links (28 chars)
-full_name = "mcp__plugin_p-assist_linkwd__get_public_collections_links"
+full_name = "mcp__plugin_p-assist_n8n_pa__get_public_collections_links"
 assert len(full_name) <= 64  # 57 chars ✓ PASS
 ```
 

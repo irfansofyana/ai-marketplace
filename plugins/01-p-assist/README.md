@@ -1,5 +1,11 @@
 # P-Assist Plugin
 
+> **⚠️ NOTICE: This plugin is for personal use only.**
+>
+> This plugin integrates with a private n8n instance (`automate.irfansp.dev`) and is configured specifically for the author's personal infrastructure. It is **not intended for use by others**.
+>
+> If you're interested in building similar functionality, use this plugin as a reference and adapt it to your own services and infrastructure.
+
 A comprehensive productivity plugin for Claude Code that provides knowledge management (Capacities), expense tracking, RSS feed monitoring, and VPS management capabilities.
 
 ## Prerequisites
