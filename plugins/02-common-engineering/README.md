@@ -38,18 +38,22 @@ Professional Mermaid diagram creation with automatic validation and self-healing
 
 ### Web Research Specialist
 
-Expert internet researcher with intelligent tool selection for technical problem-solving and comprehensive topic research.
+Expert internet researcher for comprehensive topic research across ANY subject - technical debugging, news, business information, or general knowledge.
 
 **Research Capabilities:**
-- **Debugging Assistance**: Find solutions to library errors, framework issues, and technical problems
-- **Code Research**: Specialized Exa integration for API documentation, SDK usage, and implementation examples
-- **Comparative Analysis**: Research and compare technologies, libraries, and approaches
-- **Community Intelligence**: Search across GitHub issues, Stack Overflow, Reddit, forums, and documentation
+- **Technical Debugging**: Find solutions to library errors, framework issues, and code problems
+- **Code Research**: API documentation, SDK usage, and implementation examples
+- **Company/Business Research**: Company information, industry analysis, business insights
+- **News & Current Events**: Recent articles, breaking news, time-based research
+- **General Research**: Any topic requiring web investigation
 
 **Key Features:**
-- ✅ **Smart tool selection**: Automatically uses best research tool based on task and model type
-- ✅ **Code-optimized search**: Leverages Exa's `get_code_context_exa` for programming research
-- ✅ **Multi-source synthesis**: Compiles findings from diverse sources with quality assessment
+- ✅ **Comprehensive scope**: Handles technical, business, news, and general research
+- ✅ **Smart tool selection**: Automatically uses best research tool (Exa, Tavily, or WebSearch)
+- ✅ **Company research**: Exa's company_research for business information and LinkedIn data
+- ✅ **News optimization**: Tavily with time-based filtering for current events
+- ✅ **Code-optimized**: Leverages Exa's `get_code_context_exa` for programming research
+- ✅ **Delegates to librarian**: Automatically routes official documentation requests to librarian agent
 - ✅ **Structured output**: Executive summary, detailed findings, sources, and recommendations
 
 ### Librarian Agent
@@ -191,20 +195,34 @@ The `mermaid-expert` agent is automatically available to Claude Code. Simply ask
 
 ### Web Research Specialist Agent
 
-The `web-research-specialist` agent is automatically invoked when you need to research technical problems, debug issues, or gather information from multiple online sources.
+The `web-research-specialist` agent is automatically invoked when you need to research technical problems, business information, current events, or gather information from multiple online sources.
 
 **Example requests:**
 ```
+# Technical debugging
 "I'm getting a 'Module not found' error with webpack 5, can you research solutions?"
 "Research the best practices for implementing infinite scrolling with React"
+
+# Business/Company research
+"Tell me about Anthropic as a company"
+"What's the latest news about Tesla?"
+"Find information about Stripe's business model"
+
+# News & Current Events
+"What's the latest news about AI regulation?"
+"What are the recent developments in quantum computing?"
+
+# General research
 "Compare state management solutions for Vue.js - Pinia vs Vuex"
 "Find examples of how to configure Next.js partial prerendering"
 ```
 
-**When the agent is invoked:**
-- For **code/API research**: Uses Exa's specialized `get_code_context_exa` tool for highest quality results
-- For **non-Anthropic models**: Always uses Exa's `web_search_exa` tool
-- For **Anthropic models** (Claude) on non-code tasks: Falls back to built-in WebSearch
+**Agent behavior:**
+- For **code/API research**: Uses Exa's `get_code_context_exa` for highest quality results
+- For **company/business research**: Uses Exa's `company_research_exa` for comprehensive business information
+- For **news/current events**: Uses Tavily with time-based filtering for recent articles
+- For **official documentation**: Automatically delegates to librarian agent
+- Falls back to alternative tools if primary tool fails
 
 **Output format**: The agent provides structured findings with:
 1. Executive Summary (2-3 sentence overview)
@@ -511,6 +529,7 @@ Completed features:
 - [x] Web research specialist agent
 - [x] Technical documentation writer (v1.1.0)
 - [x] Librarian agent for library docs (v1.6.0)
+- [x] Enhanced web-research-specialist with general research, company research, and news capabilities (v1.7.0)
 
 Planned additions to this plugin:
 - [ ] Code review agent
