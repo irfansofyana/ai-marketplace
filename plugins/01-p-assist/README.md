@@ -1,6 +1,12 @@
 # P-Assist Plugin
 
-A comprehensive productivity plugin for Claude Code that provides article summarization, journal management (Logseq), and bookmark organization (Linkwarden) capabilities.
+> **⚠️ NOTICE: This plugin is for personal use only.**
+>
+> This plugin integrates with a private n8n instance (`automate.irfansp.dev`) and is configured specifically for the author's personal infrastructure. It is **not intended for use by others**.
+>
+> If you're interested in building similar functionality, use this plugin as a reference and adapt it to your own services and infrastructure.
+
+A comprehensive productivity plugin for Claude Code that provides knowledge management (Capacities), expense tracking, RSS feed monitoring, and VPS management capabilities.
 
 ## Prerequisites
 
@@ -16,9 +22,11 @@ A comprehensive productivity plugin for Claude Code that provides article summar
 
 ## Features
 
-- **Article Summarization**: Extract and summarize web articles using Tavily (from shared-mcp), optionally save to Linkwarden
-- **Journal Management**: Create and search Logseq journal entries
-- **Bookmark Management**: Save and organize bookmarks in Linkwarden
+- **Knowledge Management**: Daily notes and weblinks in Capacities
+- **Article Summarization**: Extract and summarize web articles using Tavily (from shared-mcp), optionally save to Capacities
+- **Expense Tracking**: Track and query expenses with flexible date ranges
+- **RSS Monitoring**: Fetch unread items from FreshRSS, curated news briefings with full content extraction
+- **VPS Management**: Check utilization and restart your VPS
 - **Web Research**: AI-powered web search and content extraction using shared-mcp tools
 
 ## MCP Server Configuration
@@ -35,18 +43,11 @@ See the [shared-mcp README](../00-shared-mcp/README.md) for API key configuratio
 
 ### Plugin-Specific Environment Variables
 
-These environment variables are specific to p-assist:
+This plugin uses the n8n MCP server for all integrations:
 
-#### Logseq Integration (`logseq`)
-- `LOGSEQ_API_TOKEN`: Your Logseq API token
-  - Get this from your Logseq instance (Settings → Features → Enable API)
-- `LOGSEQ_API_URL`: Your Logseq API URL (default: `http://localhost:12315`)
-
-#### Linkwarden Integration (`linkwd`)
-- `LINKWARDEN_BASE_URL`: Your Linkwarden instance URL
-  - Example: `https://your-linkwarden-instance.com`
-- `LINKWARDEN_TOKEN`: Your Linkwarden API token
-  - Get this from your Linkwarden account settings
+#### n8n Personal Assistant Integration (`n8n_pa`)
+- `N8N_API_TOKEN`: Your n8n personal assistant API token
+  - Required for accessing Capacities, expenses, RSS, and VPS tools
 
 ### Setup Instructions
 
@@ -62,19 +63,12 @@ These environment variables are specific to p-assist:
    ```
    See [shared-mcp README](../00-shared-mcp/README.md) for API key setup.
 
-2. **Optional: Set up Logseq** (add to shell config file):
+2. **Set up n8n API token** (add to shell config file):
    ```bash
-   export LOGSEQ_API_TOKEN="your_logseq_api_token_here"
-   export LOGSEQ_API_URL="http://localhost:12315"  # or your Logseq instance URL
+   export N8N_API_TOKEN="your_n8n_api_token_here"
    ```
 
-3. **Optional: Set up Linkwarden** (add to shell config file):
-   ```bash
-   export LINKWARDEN_BASE_URL="https://your-linkwarden-instance.com"
-   export LINKWARDEN_TOKEN="your_linkwarden_api_token_here"
-   ```
-
-4. **Reload your shell configuration:**
+3. **Reload your shell configuration:**
    ```bash
    # For Zsh (macOS)
    source ~/.zshrc
@@ -83,82 +77,106 @@ These environment variables are specific to p-assist:
    source ~/.bashrc
    ```
 
-5. **Verify variables are loaded:**
+4. **Verify variables are loaded:**
    ```bash
-   echo $LOGSEQ_API_TOKEN     # Should show your token (if configured)
-   echo $LINKWARDEN_TOKEN     # Should show your token (if configured)
+   echo $N8N_API_TOKEN  # Should show your token
    ```
 
-6. **Restart Claude Code** to ensure it picks up the new environment variables.
+5. **Restart Claude Code** to ensure it picks up the new environment variables.
 
 ## Available Commands
 
-### Journal Management
+### Knowledge Management (Capacities)
 
-#### `/p-assist:journal-entry [entry content]`
-Create a new journal entry in Logseq.
+#### `/p-assist:daily-note [content]`
+Create a daily note in Capacities.
 
 **Example:**
 ```bash
-/p-assist:journal-entry Today I worked on the new feature launch and had a productive meeting with the team.
+/p-assist:daily-note Today I worked on the new feature launch and had a productive meeting with the team.
 ```
 
-#### `/p-assist:search-journal [search query]`
-Search through your Logseq journal entries.
+#### `/p-assist:save-weblink [url] [title] [description]`
+Save a URL as a weblink in Capacities.
 
 **Example:**
 ```bash
-/p-assist:search-journal project updates
+/p-assist:save-weblink https://example.com/article "Interesting article about AI" "Summary of the article content"
 ```
 
-### Bookmark Management
+### Expense Management
 
-#### `/p-assist:save-bookmark [url] [description] [collection]`
-Save a bookmark to Linkwarden.
+#### `/p-assist:expenses [range]`
+Query expenses by date range (interactive). The command will prompt you to select from:
+- Today
+- Last 7 days
+- Last 2 weeks
+- Last 1 month
+- Custom range (within 1 month)
 
 **Example:**
 ```bash
-/p-assist:save-bookmark https://example.com/article "Interesting article about AI" "AI Research"
+/p-assist:expenses
+# Or specify a range directly:
+/p-assist:expenses last week
 ```
 
-#### `/p-assist:list-bookmarks [collection] [search query]`
-List bookmarks from Linkwarden with optional filtering.
+#### `/p-assist:add-expense [amount] [currency] [description]`
+Add a new expense to your tracking sheet.
 
 **Example:**
 ```bash
-/p-assist:list-bookmarks "AI Research" machine learning
+/p-assist:add-expense 29.99 USD "Cloud hosting services"
+```
+
+#### `/p-assist:update-expense [expense_id] [new_amount] [new_currency]`
+Update an existing expense record.
+
+**Example:**
+```bash
+/p-assist:update-expense abc123@example.com 39.99 USD
 ```
 
 ### Article Management
 
 #### `/p-assist:summarize-article [url] [save]`
-Summarize a web article and optionally save it to Linkwarden.
+Summarize a web article and optionally save it to Capacities.
 
 **Example:**
 ```bash
 /p-assist:summarize-article https://example.com/article save
 ```
 
-## Agents
+### RSS & System Management
 
-### Productivity Orchestrator
-A specialized agent that coordinates multi-step productivity workflows including:
-- Research and summarization
-- Bookmark management
-- Journal operations
+#### `/p-assist:curated-news [limit] [keywords] [save]`
+Get a curated news briefing from FreshRSS with full content extraction and summarization.
 
-The orchestrator agent automatically handles complex tasks that involve multiple tools and services.
+**Arguments:**
+- `limit` - Number of items to process (default: 5)
+- `keywords` - Optional keywords to filter items
+- `save` - If "save", also save briefing to Capacities
+
+**Example:**
+```bash
+/p-assist:curated-news 10 AI startup
+# Or save briefing to Capacities:
+/p-assist:curated-news 5 "" save
+```
+
+#### `/p-assist:list-rss`
+Get unread items from FreshRSS.
+
+#### `/p-assist:check-vps`
+Check your VPS resource utilization.
+
+#### `/p-assist:restart-vps`
+Restart your VPS (requires confirmation).
 
 ## Dependencies
 
-### System Requirements
-- **Docker**: Required for the Linkwarden MCP server
-- **uv (Python package manager)**: Required for the Logseq MCP server
-- **Internet connection**: For web search and article fetching
-
 ### MCP Servers Used
-- **logseq** (p-assist): Logseq integration server
-- **linkwd** (p-assist): Linkwarden bookmark management
+- **n8n_pa** (p-assist): n8n personal assistant integration
 - **tavily** (shared-mcp): AI-powered web search and content extraction
 - **exa** (shared-mcp): AI-powered web search and code context
 
@@ -166,30 +184,34 @@ The orchestrator agent automatically handles complex tasks that involve multiple
 
 ### Common Issues
 
-1. **Logseq connection failed:**
-   - Ensure Logseq is running with API enabled
-   - Verify `LOGSEQ_API_TOKEN` and `LOGSEQ_API_URL` are correct
-   - Check that your Logseq instance is accessible at the specified URL
+1. **n8n API connection failed:**
+   - Verify `N8N_API_TOKEN` is set correctly
+   - Check that your n8n instance is accessible at `https://automate.irfansp.dev/mcp/personal-assistant`
 
-2. **Linkwarden connection failed:**
-   - Verify Docker is running
-   - Check `LINKWARDEN_BASE_URL` and `LINKWARDEN_TOKEN` are correct
-   - Ensure your Linkwarden instance is accessible
+2. **Web search/content extraction not working:**
+   - Ensure shared-mcp plugin is installed
+   - Verify `TAVILY_API_KEY` and `EXA_API_KEY` are set
 
-3. **Docker MCP server not starting:**
-   - Make sure Docker daemon is running
-   - Check if you have permission to run Docker commands
-   - Verify the Docker image `ghcr.io/irfansofyana/linkwarden-mcp-server:v0.1.0` can be pulled
+3. **Environment variables not loaded:**
+   - Make sure variables are in your shell config file (~/.zshrc or ~/.bashrc)
+   - Run `source ~/.zshrc` (or ~/.bashrc) to reload
+   - Restart Claude Code after setting variables
 
 ### Verification
 
 Test your configuration by running:
 ```bash
-# Test Logseq integration
-/p-assist:journal-entry "Test entry - please delete me"
+# Test Capacities integration
+/p-assist:daily-note "Test entry - please delete me"
 
-# Test Linkwarden integration
-/p-assist:list-bookmarks
+# Test expense tracking
+/p-assist:expenses
+
+# Test RSS
+/p-assist:list-rss
+
+# Test curated news briefing
+/p-assist:curated-news 3
 ```
 
 ## Development
