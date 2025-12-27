@@ -19,9 +19,8 @@ Save the following bookmark to Linkwarden:
    - If collection doesn't exist, list available collections and ask user to choose
 
 2. Fetch the URL content briefly to generate a better name:
-   - **Primary**: Try `mcp__plugin_shared-mcp_tavily__tavily_extract` to get page title and content
-   - **Fallback**: If Tavily fails with token limit error, use `mcp__plugin_shared-mcp_jina__read_url`
-   - **Last resort**: If both fail, use the domain name as the bookmark name
+   - Try `mcp__plugin_shared-mcp_tavily__tavily_extract` to get page title and content
+   - If Tavily fails, use a simple format based on the URL domain (e.g., "Content from example.com")
    - Extract the page title from the content for the bookmark name
 
 3. Extract or generate relevant tags:
