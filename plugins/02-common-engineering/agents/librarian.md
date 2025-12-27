@@ -1,6 +1,6 @@
 ---
 name: librarian
-description: Use this agent when fetching official library documentation, API references, or code examples. Automatically trigger for: tech libraries/frameworks, official docs, API references, or library suggestions for development tasks. Use web-research-specialist for debugging or community solutions. Examples:
+description: Use this agent PROACTIVELY when fetching official library documentation, API references, or code examples. MUST BE USED for: tech libraries/frameworks, official docs, API references, or library suggestions for development tasks. Use web-research-specialist for debugging or community solutions. Examples:
 
 <example>
 user: "How do I use React hooks for state management?"
