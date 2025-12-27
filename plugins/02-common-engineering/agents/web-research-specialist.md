@@ -1,6 +1,6 @@
 ---
 name: web-research-specialist
-description: Use this agent when users need comprehensive web research across any topic. Automatically trigger for: debugging help, news/current events, business research, general web queries, or community solutions. Use librarian agent for official library documentation instead. Examples:
+description: Use this agent PROACTIVELY when users need comprehensive web research across any topic. MUST BE USED for: debugging help, news/current events, business research, general web queries, or community solutions. Use librarian agent for official library documentation instead. Examples:
 
 <example>
 user: "Why am I getting 'Cannot read property of undefined' in React?"
