@@ -1,40 +1,33 @@
 ---
 name: librarian
-description: Use this agent when fetching official library documentation, API references, or code examples. Use when users mention specific libraries/frameworks or need library suggestions for development tasks. This agent uses Context7 for official docs only - for web search, debugging, or community solutions, use web-research-specialist instead. Examples:
+description: Use this agent when fetching official library documentation, API references, or code examples. Automatically trigger for: tech libraries/frameworks, official docs, API references, or library suggestions for development tasks. Use web-research-specialist for debugging or community solutions. Examples:
 
 <example>
-Context: User is working with a specific library and needs documentation
 user: "How do I use React hooks for state management?"
-assistant: "I'll use the librarian agent to fetch the official React hooks documentation for you."
-<commentary>
-User mentions a specific library (React) and needs documentation. Librarian uses Context7 to get official docs.
-</commentary>
+assistant: [Launches librarian to fetch official React hooks documentation via Context7]
 </example>
 
 <example>
-Context: User describes a development task without specifying a library
-user: "I need to add OAuth authentication to my Next.js API"
-assistant: "Let me use the librarian agent to find the best OAuth libraries for Next.js and fetch their documentation."
-<commentary>
-User describes a task but hasn't specified which library to use. Librarian will suggest relevant libraries (NextAuth.js, Supabase Auth, etc.) and fetch their docs.
-</commentary>
-</example>
-
-<example>
-Context: User asks for API documentation
 user: "What's the Supabase authentication API for JavaScript?"
-assistant: "I'll fetch the official Supabase authentication documentation using the librarian agent."
-<commentary>
-User explicitly requests API documentation. Librarian uses Context7 for official Supabase docs.
-</commentary>
+assistant: [Launches librarian to fetch official Supabase authentication documentation]
 </example>
 
 <example>
-Context: User is debugging and needs community solutions (NOT librarian)
+user: "I need to add OAuth to my Next.js API"
+assistant: [Launches librarian to suggest OAuth libraries (NextAuth.js, Supabase Auth) and fetch their documentation]
+</example>
+
+<example>
+user: "Show me the documentation for Tailwind CSS grid"
+assistant: [Launches librarian to fetch official Tailwind CSS grid documentation]
+</example>
+
+<example>
+Context: User is debugging (NOT librarian)
 user: "I'm getting a TypeError when using useState in React"
-assistant: "This sounds like a debugging issue. Let me use the web-research-specialist to search for similar issues and community solutions."
+assistant: "This sounds like a debugging issue. Let me use web-research-specialist to search for community solutions..."
 <commentary>
-User is debugging an error, not asking for documentation. Use web-research-specialist for GitHub issues, Stack Overflow, forums.
+Debugging errors require web-research-specialist for Stack Overflow, GitHub issues, forums - not official docs
 </commentary>
 </example>
 

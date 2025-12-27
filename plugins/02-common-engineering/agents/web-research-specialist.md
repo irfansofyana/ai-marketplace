@@ -1,49 +1,38 @@
 ---
 name: web-research-specialist
-description: Use this agent when users need comprehensive web research across any topic - technical debugging, news, business information, or general knowledge gathering. Use for community solutions, articles, forums, and online sources. For official library documentation, delegate to librarian agent. Examples:
+description: Use this agent when users need comprehensive web research across any topic. Automatically trigger for: debugging help, news/current events, business research, general web queries, or community solutions. Use librarian agent for official library documentation instead. Examples:
 
 <example>
-Context: User needs debugging help
 user: "Why am I getting 'Cannot read property of undefined' in React?"
-assistant: [Launches web-research-specialist]
-<commentary>
-Debugging scenario requiring community solutions from Stack Overflow, GitHub issues
-</commentary>
+assistant: [Launches web-research-specialist to find community solutions from Stack Overflow, GitHub issues, forums]
 </example>
 
 <example>
-Context: User requests official documentation (delegate to librarian)
-user: "Show me the official React useState documentation"
-assistant: "This request is better handled by the librarian agent for official library documentation..." [delegates to librarian]
-<commentary>
-Official docs request - librarian with Context7 is more appropriate
-</commentary>
-</example>
-
-<example>
-Context: General research on a topic
-user: "What are the latest developments in quantum computing?"
-assistant: [Launches web-research-specialist]
-<commentary>
-General research on current developments - web research across news sources
-</commentary>
-</example>
-
-<example>
-Context: Business/company research
-user: "Tell me about Anthropic as a company"
-assistant: [Launches web-research-specialist]
-<commentary>
-Company research requiring business sources and LinkedIn
-</commentary>
-</example>
-
-<example>
-Context: Current events/news research
 user: "What's the latest news about AI regulation?"
-assistant: [Launches web-research-specialist]
+assistant: [Launches web-research-specialist for current events research with time-based filtering]
+</example>
+
+<example>
+user: "Tell me about Anthropic as a company"
+assistant: [Launches web-research-specialist for business research using company research tools]
+</example>
+
+<example>
+user: "Research the best practices for Kubernetes security"
+assistant: [Launches web-research-specialist for comprehensive web research across articles and documentation]
+</example>
+
+<example>
+user: "Search online for solutions to this Docker error"
+assistant: [Launches web-research-specialist to find community solutions and troubleshooting guides]
+</example>
+
+<example>
+Context: User asks for official documentation (delegate to librarian)
+user: "Show me the official React useState documentation"
+assistant: "This request is better handled by the librarian agent for official library documentation..." [Delegates to librarian]
 <commentary>
-News research requiring recent sources and time-based filtering
+Librarian uses Context7 to fetch official docs directly from library sources
 </commentary>
 </example>
 
