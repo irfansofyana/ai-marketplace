@@ -4,7 +4,7 @@ A comprehensive productivity plugin for Claude Code that provides article summar
 
 ## Prerequisites
 
-**Important**: This plugin requires the `shared-mcp` plugin to be installed first. The shared-mcp plugin provides common MCP servers (Tavily, Jina) used for web search and content extraction.
+**Important**: This plugin requires the `shared-mcp` plugin to be installed first. The shared-mcp plugin provides common MCP servers (Tavily, Exa) used for web search and content extraction.
 
 ```bash
 # Install shared-mcp first
@@ -29,7 +29,7 @@ This plugin uses MCP (Model Context Protocol) servers to integrate with external
 
 The following services are provided by the `shared-mcp` plugin (install it first):
 - **Tavily**: Web search and content extraction
-- **Jina**: Advanced web reading and content processing
+- **Exa**: AI-powered web search and code context
 
 See the [shared-mcp README](../00-shared-mcp/README.md) for API key configuration.
 
@@ -56,7 +56,7 @@ These environment variables are specific to p-assist:
 - macOS (Zsh): `~/.zshrc`
 - Linux (Bash): `~/.bashrc` or `~/.bash_profile`
 
-1. **Install and configure shared-mcp first** (provides Tavily and Jina):
+1. **Install and configure shared-mcp first** (provides Tavily and Exa):
    ```bash
    /plugin install shared-mcp@my-claude-code-marketplace
    ```
@@ -160,7 +160,7 @@ The orchestrator agent automatically handles complex tasks that involve multiple
 - **logseq** (p-assist): Logseq integration server
 - **linkwd** (p-assist): Linkwarden bookmark management
 - **tavily** (shared-mcp): AI-powered web search and content extraction
-- **jina** (shared-mcp): Advanced web reading, screenshots, and image search
+- **exa** (shared-mcp): AI-powered web search and code context
 
 ## Troubleshooting
 

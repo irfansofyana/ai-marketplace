@@ -119,7 +119,6 @@ Many plugins use MCP servers that require API keys. These MUST be configured in 
 **Required for shared-mcp plugin** (dependency for p-assist and common-engineering):
 ```bash
 export TAVILY_API_KEY="your-tavily-api-key"     # https://tavily.com (free tier)
-export JINA_API_KEY="your-jina-api-key"         # https://jina.ai (free tier)
 export EXA_API_KEY="your-exa-api-key"           # https://exa.ai (free tier)
 ```
 
@@ -143,7 +142,6 @@ source ~/.zshrc  # or source ~/.bashrc
 After configuring, verify variables are loaded:
 ```bash
 echo $TAVILY_API_KEY  # Should display your API key
-echo $JINA_API_KEY
 echo $EXA_API_KEY
 ```
 
@@ -190,8 +188,8 @@ If empty, reload your shell config or restart Claude Code.
 
 ## Current Plugins
 
-- **00-shared-mcp** (`./plugins/00-shared-mcp`): **INSTALL FIRST** - Shared MCP infrastructure providing common web search (Tavily, Exa) and content extraction (Jina) tools. Required by p-assist and common-engineering plugins.
-  - **Requirements**: Node.js, API keys (TAVILY_API_KEY, JINA_API_KEY, EXA_API_KEY)
+- **00-shared-mcp** (`./plugins/00-shared-mcp`): **INSTALL FIRST** - Shared MCP infrastructure providing common web search (Tavily, Exa) and content extraction tools. Required by p-assist and common-engineering plugins.
+  - **Requirements**: Node.js, API keys (TAVILY_API_KEY, EXA_API_KEY)
   - See environment configuration section above
 
 - **01-p-assist** (`./plugins/01-p-assist`): Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden).
@@ -213,7 +211,7 @@ Some plugins depend on others. Install dependencies first:
 
 ```
 shared-mcp (install first)
-├── p-assist (depends on shared-mcp for Tavily, Jina)
+├── p-assist (depends on shared-mcp for Tavily)
 └── common-engineering (depends on shared-mcp for Exa)
 ```
 

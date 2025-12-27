@@ -19,7 +19,6 @@ This plugin consolidates commonly-used MCP servers to:
 | Server | Purpose | Tools Provided | Connection Type |
 |--------|---------|----------------|-----------------|
 | **Tavily** | Web search and content extraction | `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map` | stdio/npx |
-| **Jina** | Content reading and URL processing | `read_url`, `search_web`, `search_images`, `search_arxiv`, and more | Streamable HTTP |
 | **Exa** | AI-powered web search and code context | `web_search_exa`, `get_code_context_exa`, `crawling_exa`, `deep_researcher_start/check` | stdio/npx |
 
 ## Installation
@@ -43,9 +42,6 @@ This plugin consolidates commonly-used MCP servers to:
 # Tavily API Key (https://tavily.com - free tier available)
 export TAVILY_API_KEY="your-tavily-api-key"
 
-# Jina API Key (https://jina.ai - free tier available)
-export JINA_API_KEY="your-jina-api-key"
-
 # Exa API Key (https://exa.ai - free tier available)
 export EXA_API_KEY="your-exa-api-key"
 ```
@@ -62,13 +58,11 @@ source ~/.bashrc
 **Verify variables are loaded:**
 ```bash
 echo $TAVILY_API_KEY  # Should display your API key
-echo $JINA_API_KEY
 echo $EXA_API_KEY
 ```
 
 **Getting API Keys:**
 - **Tavily**: Sign up at [tavily.com](https://tavily.com) - Free tier available
-- **Jina**: Sign up at [jina.ai](https://jina.ai) - Free tier available
 - **Exa**: Sign up at [exa.ai](https://exa.ai) - Free tier available
 
 ## Tool Name Format
@@ -80,14 +74,13 @@ mcp__plugin_shared-mcp_[server]__[tool_name]
 
 **Examples:**
 - `mcp__plugin_shared-mcp_tavily__tavily_search`
-- `mcp__plugin_shared-mcp_jina__read_url`
 - `mcp__plugin_shared-mcp_exa__web_search_exa`
 
 ## Plugins That Depend on This
 
 The following plugins require `shared-mcp` to be installed:
 
-- **p-assist**: Uses Tavily and Jina for article summarization and web content extraction
+- **p-assist**: Uses Tavily for article summarization and web content extraction
 - **common-engineering**: Uses Exa for web research and code context
 
 ## Troubleshooting
@@ -117,44 +110,9 @@ Ensure the plugin is installed and enabled:
 /plugin enable shared-mcp@my-claude-code-marketplace
 ```
 
-## Recent Updates
-
-### December 2025: Jina MCP Endpoint Migration
-
-The Jina MCP server configuration has been updated to use the new `/v1` endpoint with Streamable HTTP transport. The previous `/sse` endpoint is now deprecated.
-
-**Migration Summary:**
-- Old endpoint: `https://mcp.jina.ai/sse` (SSE transport - deprecated)
-- New endpoint: `https://mcp.jina.ai/v1` (Streamable HTTP - current)
-
-This change aligns with the MCP specification update (2025-03-26) that deprecated Server-Sent Events in favor of Streamable HTTP transport.
-
-**Previous configuration:**
-```json
-"jina": {
-  "type": "sse",
-  "url": "https://mcp.jina.ai/sse",
-  "headers": {
-    "Authorization": "Bearer ${JINA_API_KEY}"
-  }
-}
-```
-
-**Current configuration:**
-```json
-"jina": {
-  "type": "http",
-  "url": "https://mcp.jina.ai/v1",
-  "headers": {
-    "Authorization": "Bearer ${JINA_API_KEY}"
-  }
-}
-```
-
-**No action required** for users - the plugin update handles this automatically. All existing functionality remains unchanged.
-
 ## Version History
 
 - **1.0.0**: Initial release with Tavily, Jina, and Exa MCP servers
 - **1.1.0**: Updated Jina MCP to use direct SSE connection instead of stdio/npx (November 2025)
 - **1.2.0**: Updated Jina MCP endpoint from `/sse` to `/v1` with Streamable HTTP transport (December 2025)
+- **1.3.0**: Removed Jina MCP server (December 2025)
