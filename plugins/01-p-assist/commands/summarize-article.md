@@ -1,5 +1,5 @@
 ---
-description: Summarize an article from URL with optional Linkwarden save
+description: Summarize an article from URL with optional Capacities save
 argument-hint: [url] [save]
 ---
 
@@ -18,13 +18,13 @@ Fetch and summarize the article at: $1
    - Target audience or use case
 3. Present the summary in clear, readable markdown format
 
-**Optional Linkwarden Save:**
+**Optional Capacities Save:**
 
 If $2 equals "save":
-- Use `mcp__plugin_p-assist_linkwd__create_link` to save the article to Linkwarden
-- Use a descriptive name based on the article title
-- Add relevant tags based on the content
+- Use `mcp__plugin_p-assist_n8n_pa__capacities_save_weblink` to save the article to Capacities
+- Use the article title as the weblink title
 - Include the summary in the description field
+- Add relevant tags based on the content
 
 **Output Format:**
 
@@ -44,5 +44,5 @@ If $2 equals "save":
 ## Takeaways
 [Key insights or actionable items]
 
-[If saved to Linkwarden: "✓ Saved to Linkwarden in [collection name]"]
+[If saved to Capacities: "✓ Saved to Capacities as a weblink"]
 ```

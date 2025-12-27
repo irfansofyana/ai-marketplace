@@ -1,43 +1,17 @@
 {
 	"name": "p-assist",
-	"description": "Productivity plugin for article summarization, journal management, and bookmark organization using Claude Code",
-	"version": "1.1.0",
+	"description": "Productivity plugin for knowledge management (Capacities), expense tracking, RSS feeds, and VPS management using Claude Code",
+	"version": "2.0.0",
 	"author": {
 		"name": "irfansofyana"
 	},
 	"mcpServers": {
-		"logseq": {
-      		"type": "stdio",
-      		"command": "uv",
-      		"args": [
-        		"run",
-        		"--with",
-        		"mcp-logseq",
-        		"mcp-logseq"
-      		],
-      		"env": {
-        		"LOGSEQ_API_TOKEN": "${LOGSEQ_API_TOKEN}",
-        		"LOGSEQ_API_URL": "http://localhost:12315"
-      		}
-    	},
-		"linkwd": {
-      		"type": "stdio",
-      		"command": "docker",
-      		"args": [
-        		"run",
-        		"--rm",
-        		"-i",
-        		"--init",
-        		"-e",
-        		"LINKWARDEN_BASE_URL=${LINKWARDEN_BASE_URL}",
-        		"-e",
-        		"LINKWARDEN_TOKEN=${LINKWARDEN_TOKEN}",
-				"ghcr.io/irfansofyana/linkwarden-mcp-server:v0.1.0"
-      		],
-			"env": {
-				"LINKWARDEN_BASE_URL": "${LINKWARDEN_BASE_URL}",
-				"LINKWARDEN_TOKEN": "${LINKWARDEN_TOKEN}"
+		"n8n_pa": {
+			"type": "http",
+			"url": "https://automate.irfansp.dev/mcp/personal-assistant",
+			"headers": {
+				"Authorization": "Bearer ${N8N_API_TOKEN}"
 			}
-    	}
+		}
 	}
 }
