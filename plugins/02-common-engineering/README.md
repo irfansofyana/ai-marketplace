@@ -52,6 +52,31 @@ Expert internet researcher with intelligent tool selection for technical problem
 - ✅ **Multi-source synthesis**: Compiles findings from diverse sources with quality assessment
 - ✅ **Structured output**: Executive summary, detailed findings, sources, and recommendations
 
+### Librarian Agent
+
+Library documentation specialist for fetching official API docs, code examples, and library references.
+
+**Dual-Mode Operation:**
+- **Documentation Lookup**: When you mention a library ("How do I use React hooks?", "Supabase auth")
+- **Proactive Research**: Suggests libraries for your development tasks ("I need to add file uploads")
+
+**Supported Libraries:**
+- 50,000+ libraries with version-specific documentation
+- JavaScript/TypeScript: React, Vue, Next.js, Node.js, Express
+- Python: Django, FastAPI, SQLAlchemy, Celery
+- Go, Rust, Java, Ruby, PHP, and many more
+
+**Key Features:**
+- ✅ **Official docs only**: Version-specific API documentation from official sources
+- ✅ **Topic-focused search**: Retrieve docs for specific topics (authentication, routing, etc.)
+- ✅ **Code examples**: Real code snippets from official documentation
+- ✅ **Proactive suggestions**: Recommends libraries based on your development needs
+- ✅ **Seamless fallback**: Delegates to web-research-specialist if Context7 is unavailable
+
+**Distinction from web-research-specialist:**
+- `librarian`: Official documentation via Context7 (docs, APIs, examples)
+- `web-research-specialist`: Web search for debugging, community solutions, forums
+
 ### Technical Documentation Writer
 
 Professional technical documentation creation with interactive guided templates.
@@ -108,6 +133,25 @@ The web research specialist uses Exa's powerful search capabilities from the `sh
 2. **Configured the EXA_API_KEY** as described in the [shared-mcp README](../00-shared-mcp/README.md)
 
 **Note**: Without the `EXA_API_KEY` configured in shared-mcp, the web research specialist will fall back to using Claude's built-in WebSearch tool, which is less optimized for code research.
+
+#### Optional for Librarian: Context7 API Key
+
+The librarian agent uses the Context7 MCP server to fetch official library documentation. The free tier works without an API key, but you can optionally get one for higher rate limits.
+
+**Optional - Get API Key at:** https://context7.com/dashboard
+
+**Add to your shell config (~/.zshrc or ~/.bashrc):**
+```bash
+# Optional: Context7 API key for librarian agent (free tier works without key)
+export CONTEXT7_API_KEY="your-api-key-here"
+```
+
+**Reload your shell:**
+```bash
+source ~/.zshrc  # or source ~/.bashrc
+```
+
+**Note**: The librarian agent works with the free tier without an API key. Setting the key is optional for increased rate limits.
 
 #### Optional for Technical Documentation: document-skills Plugin
 
@@ -193,6 +237,29 @@ The `techdocs-writer` agent is automatically invoked when you request technical 
 - Word (.docx) via document-skills plugin
 - PDF via document-skills plugin
 
+### Librarian Agent
+
+The `librarian` agent is automatically invoked when you ask about library documentation or mention specific libraries/frameworks.
+
+**Example requests:**
+```
+"How do I use React hooks for state management?"
+"What's the Supabase authentication API for JavaScript?"
+"I need to add file uploads to my Express app - what library should I use?"
+"Show me the Django ORM documentation for filtering queries"
+```
+
+**How it works:**
+- **Documentation Lookup**: Automatically detects library names and fetches official docs
+- **Proactive Mode**: Suggests relevant libraries when you describe development tasks
+- **Topic-Focused**: Narrows docs to specific topics (auth, routing, database, etc.)
+- **Fallback**: If Context7 is unavailable, delegates to web-research-specialist
+
+**Direct invocation:**
+```
+"Use the librarian agent to find React Context API docs"
+```
+
 ### Direct Agent Invocation
 
 You can also explicitly request agents in your prompts:
@@ -261,7 +328,8 @@ Every diagram goes through a rigorous validation process:
 ### System Requirements
 - **Node.js**: Required for `mermaid-cli` (npm package)
 - **mermaid-cli**: The Mermaid command-line renderer
-- **shared-mcp plugin**: Provides Exa MCP server for web research (optional but recommended)
+- **shared-mcp plugin**: Provides Exa/Tavily MCP servers for web research
+- **Context7 MCP**: Built into common-engineering for librarian agent (free tier works without API key)
 - **document-skills plugin**: Optional - for Word/PDF export in techdocs-writer (Markdown works without it)
 - **/tmp directory**: Used for validation temporary files
 
@@ -281,6 +349,9 @@ echo $EXA_API_KEY
 
 # 4. Test the Web Research agent by asking Claude:
 "Research how to implement dark mode in React"
+
+# 5. Test the Librarian agent by asking Claude:
+"How do I use Supabase authentication in JavaScript?"
 ```
 
 If Claude successfully generates diagrams and performs research, your setup is complete!
@@ -390,7 +461,8 @@ plugins/02-common-engineering/
 ├── agents/
 │   ├── mermaid-expert.md               # Mermaid diagram specialist
 │   ├── techdocs-writer.md              # Technical documentation specialist
-│   └── web-research-specialist.md      # Web research specialist
+│   ├── web-research-specialist.md      # Web research specialist
+│   └── librarian.md                    # Library documentation specialist
 ├── skills/
 │   ├── .claude/
 │   │   └── settings.local.json         # Permissions configuration
@@ -438,6 +510,7 @@ Completed features:
 - [x] Mermaid diagram generation with validation
 - [x] Web research specialist agent
 - [x] Technical documentation writer (v1.1.0)
+- [x] Librarian agent for library docs (v1.6.0)
 
 Planned additions to this plugin:
 - [ ] Code review agent

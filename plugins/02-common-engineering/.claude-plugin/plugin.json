@@ -1,8 +1,23 @@
 {
   "name": "common-engineering",
   "description": "Foundational engineering tools for diagram generation, technical documentation, and common development tasks",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "author": {
     "name": "irfansofyana"
+  },
+  "mcpServers": {
+    "ctx7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp",
+        "--api-key",
+        "${CONTEXT7_API_KEY}"
+      ],
+      "env": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      }
+    }
   }
 }
