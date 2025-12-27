@@ -1,17 +1,21 @@
 {
 	"name": "p-assist",
 	"description": "⚠️ FOR PERSONAL USE ONLY - Productivity plugin for knowledge management (Capacities), expense tracking, RSS feeds, and VPS management",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"author": {
 		"name": "irfansofyana"
 	},
 	"mcpServers": {
 		"n8n_pa": {
-			"type": "http",
-			"url": "https://automate.irfansp.dev/mcp/personal-assistant",
-			"headers": {
-				"Authorization": "Bearer ${N8N_API_TOKEN}"
-			},
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote",
+				"https://automate.irfansp.dev/mcp/personal-assistant",
+				"--header",
+				"Authorization: Bearer ${N8N_API_TOKEN}"
+			],
 			"env": {
 				"N8N_API_TOKEN": "${N8N_API_TOKEN}"
 			}
