@@ -101,6 +101,23 @@ Professional technical documentation creation with interactive guided templates.
 
 **Adaptive Workflow**: The agent adapts to your preparation level - whether you have everything ready, just the basics, or are starting from an idea.
 
+### Project Management Plan
+
+Generate professional Excel project management plans with full-year Gantt charts.
+
+**Supported Tabs:**
+- **Main Program Plan**: Task list with 52-week Monday-based Gantt chart
+- **Charters**: Team roles and PICs tracking
+- **Budget**: Cost tracking by category
+- **RAID Logs**: Risks, Assumptions, Issues, and Dependencies
+
+**Key Capabilities:**
+- ✅ **Full-year timeline**: Jan-Dec with every Monday as a column header
+- ✅ **Auto year detection**: From project start_date, task dates, or current year
+- ✅ **Dynamic Gantt bars**: Conditional formatting based on task dates
+- ✅ **Status validation**: Dropdown with standard statuses (Not Started, In Progress, Completed, Blocked, On Hold)
+- ✅ **Template rows**: 30 rows ready for task entry
+
 ### Future Additions
 
 This plugin will be expanded with additional engineering tools including:
@@ -167,6 +184,20 @@ The techdocs-writer agent can export documents to Word (.docx) or PDF formats us
 ```
 
 **Note**: Markdown output works without document-skills. The plugin is only needed for .docx and .pdf formats.
+
+#### Required for Project Management Plan: openpyxl
+
+The `/project-management-plan` skill generates Excel workbooks and requires the openpyxl Python library.
+
+**Install openpyxl:**
+```bash
+pip install openpyxl
+```
+
+**Verify installation:**
+```bash
+python3 -c "import openpyxl; print(openpyxl.__version__)"
+```
 
 ### Install the Plugin
 
@@ -278,6 +309,24 @@ The `librarian` agent is automatically invoked when you ask about library docume
 "Use the librarian agent to find React Context API docs"
 ```
 
+### Project Management Plan Skill
+
+The `/project-management-plan` skill generates a complete Excel project management plan with Gantt chart, team charters, budget tracking, and RAID logs.
+
+**Example request:**
+```
+"Generate a project management plan for a platform modernization project"
+```
+
+**How it works:**
+- Interactive guided workflow gathers project details
+- Generates Excel workbook with 4 tabs: Main Program Plan, Charters, Budget, RAID Logs
+- Full-year Gantt chart with Monday-based weekly columns
+- Auto-detects year from project dates or uses current year
+
+**Requirements:**
+- Python 3 with openpyxl (`pip install openpyxl`)
+
 ### Direct Agent Invocation
 
 You can also explicitly request agents in your prompts:
@@ -349,6 +398,7 @@ Every diagram goes through a rigorous validation process:
 - **shared-mcp plugin**: Provides Exa/Tavily MCP servers for web research
 - **Context7 MCP**: Built into common-engineering for librarian agent (free tier works without API key)
 - **document-skills plugin**: Optional - for Word/PDF export in techdocs-writer (Markdown works without it)
+- **openpyxl**: Python library for `/project-management-plan` Excel generation (`pip install openpyxl`)
 - **/tmp directory**: Used for validation temporary files
 
 ### Installation Verification
@@ -370,9 +420,12 @@ echo $EXA_API_KEY
 
 # 5. Test the Librarian agent by asking Claude:
 "How do I use Supabase authentication in JavaScript?"
+
+# 6. Test the Project Management Plan skill by asking Claude:
+"Generate a project management plan for a website redesign project"
 ```
 
-If Claude successfully generates diagrams and performs research, your setup is complete!
+If Claude successfully generates diagrams, performs research, and creates project plans, your setup is complete!
 
 ## Troubleshooting
 
@@ -530,6 +583,7 @@ Completed features:
 - [x] Technical documentation writer (v1.1.0)
 - [x] Librarian agent for library docs (v1.6.0)
 - [x] Enhanced web-research-specialist with general research, company research, and news capabilities (v1.7.0)
+- [x] Project Management Plan skill with full-year Gantt charts (v1.10.0)
 
 Planned additions to this plugin:
 - [ ] Code review agent
