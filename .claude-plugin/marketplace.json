@@ -3,6 +3,9 @@
 	"owner": {
 		"name": "irfansofyana"
 	},
+	"metadata": {
+		"description": "Curated plugin marketplace for shared MCP tools, engineering workflows, productivity automation, and system maintenance."
+	},
 	"plugins": [
 		{
 			"name": "shared-mcp",
