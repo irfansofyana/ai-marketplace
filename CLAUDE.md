@@ -266,8 +266,8 @@ mcp__plugin_[plugin-name]_[server-key]__[tool-name]
    - ✗ Bad: `personal-assistant` (too long)
 
 2. **Abbreviate MCP server keys when necessary**:
-   - ✓ Good: `linkwd` (linkwarden), `logseq` (logseq)
-   - ✗ Bad: `linkwarden`, `mcp-logseq`
+   - ✓ Good: `ctx7` (Context7), `n8n_pa` (n8n personal assistant)
+   - ✗ Bad: `context7`, `n8n-personal-assistant`
 
 3. **Validation is MANDATORY**: Always verify tool names before deploying:
    ```python

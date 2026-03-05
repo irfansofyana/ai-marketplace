@@ -16,7 +16,7 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 See [plugins/shared-mcp/README.md](./plugins/shared-mcp/README.md) for detailed setup instructions and API key configuration.
 
 ### [p-assist](./plugins/p-assist/)
-Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden).
+Productivity plugin for knowledge management (Capacities), expense tracking, RSS feeds, and VPS management.
 
 See [plugins/p-assist/README.md](./plugins/p-assist/README.md) for detailed setup and usage instructions.
 
@@ -52,11 +52,7 @@ Different plugins require different system dependencies. Install what you need:
   - Verify: `mmdc --version`
 
 **For p-assist plugin:**
-- Docker (for Linkwarden integration)
-  - Check: `docker --version`
-  - Install: https://www.docker.com/get-started
-- uv (Python package manager, for Logseq integration)
-  - Install: `pip install uv` or use system package manager
+- None (uses n8n cloud instance)
 
 **For sys-maint plugin:**
 - macOS only (uses platform-specific tools)
@@ -70,8 +66,7 @@ The following API keys are required for shared-mcp (used by multiple plugins):
 |---------|-----------|-------------|--------------|
 | Tavily | ✓ Yes | https://tavily.com | Web search, article extraction |
 | Exa | ✓ Yes | https://exa.ai | AI-powered search, code context |
-| Logseq | N/A (local) | - | Journal management (p-assist) |
-| Linkwarden | Self-hosted | - | Bookmark management (p-assist) |
+| n8n | ✓ Yes | https://n8n.io | Productivity automation (p-assist) |
 
 See the "Environment Setup" section in Quick Start for configuration details.
 
@@ -96,12 +91,6 @@ The plugins in this marketplace require API keys for MCP servers. Add these to y
 # Required for shared-mcp plugin (install this first)
 export TAVILY_API_KEY="your-tavily-api-key"     # Get from https://tavily.com
 export EXA_API_KEY="your-exa-api-key"           # Get from https://exa.ai
-
-# Optional: For p-assist plugin features
-export LOGSEQ_API_TOKEN="your-logseq-token"     # Logseq Settings → Features → Enable API
-export LOGSEQ_API_URL="http://localhost:12315" # Default Logseq API URL
-export LINKWARDEN_BASE_URL="https://your-linkwarden.com"
-export LINKWARDEN_TOKEN="your-linkwarden-token"
 ```
 
 **After adding these variables**, reload your shell configuration:

@@ -25,13 +25,13 @@ python3 scripts/validate-mcp-tool-names.py <plugin-name> <server-key> <tool1> <t
 ### Example
 
 ```bash
-# Validate Linkwarden tools for the p-assist plugin
-python3 scripts/validate-mcp-tool-names.py p-assist linkwd \
-    archive_link \
-    create_collection \
-    create_link \
-    delete_collection_by_id \
-    get_public_collections_links
+# Validate n8n personal assistant tools for the p-assist plugin
+python3 scripts/validate-mcp-tool-names.py p-assist n8n_pa \
+    add_expense \
+    capacities_daily_note \
+    capacities_save_weblink \
+    get_expenses_last_1_week \
+    get_unread_items_freshRSS
 ```
 
 ### Output
@@ -51,18 +51,20 @@ MCP Tool Name Validation for AWS Bedrock
 ================================================================================
 
 Plugin: p-assist
-Server: linkwd
-Format: mcp__plugin_p-assist_linkwd__[tool-name]
+Server: n8n_pa
+Format: mcp__plugin_p-assist_n8n_pa__[tool-name]
 AWS Bedrock Limit: 64 characters
 
-  41 chars: mcp__plugin_p-assist_linkwd__archive_link ✓
-  40 chars: mcp__plugin_p-assist_linkwd__create_link ✓
-  57 chars: mcp__plugin_p-assist_linkwd__get_public_collections_links ✓
+  44 chars: mcp__plugin_p-assist_n8n_pa__add_expense ✓
+  48 chars: mcp__plugin_p-assist_n8n_pa__capacities_daily_note ✓
+  50 chars: mcp__plugin_p-assist_n8n_pa__capacities_save_weblink ✓
+  53 chars: mcp__plugin_p-assist_n8n_pa__get_expenses_last_1_week ✓
+  54 chars: mcp__plugin_p-assist_n8n_pa__get_unread_items_freshRSS ✓
 
 ================================================================================
 
-Longest tool name: mcp__plugin_p-assist_linkwd__get_public_collections_links
-Length: 57 characters
+Longest tool name: mcp__plugin_p-assist_n8n_pa__get_unread_items_freshRSS
+Length: 54 characters
 Status: ✓ PASS - All tools within limit
 
 ✓ All tool names are AWS Bedrock compatible!
@@ -81,7 +83,7 @@ Run this validation:
 
 If validation fails:
 1. Shorten the plugin name (e.g., `personal-assistant` → `p-assist`)
-2. Abbreviate the server key (e.g., `linkwarden` → `linkwd`)
+2. Abbreviate the server key (e.g., `n8n-personal-assistant` → `n8n_pa`)
 3. Consider if the tool names can be shortened (consult MCP server documentation)
 
 ### Integration with CI/CD
