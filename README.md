@@ -8,31 +8,31 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 
 ## Available Plugins
 
-### [shared-mcp](./plugins/00-shared-mcp/)
+### [shared-mcp](./plugins/shared-mcp/)
 **INSTALL FIRST** - Shared MCP infrastructure providing common web search, content extraction, and research tools. This plugin provides Tavily (web search) and Exa (AI-powered search) tools that are used by other plugins in this marketplace.
 
 **Required dependency** for p-assist and common-engineering plugins.
 
-See [plugins/00-shared-mcp/README.md](./plugins/00-shared-mcp/README.md) for detailed setup instructions and API key configuration.
+See [plugins/shared-mcp/README.md](./plugins/shared-mcp/README.md) for detailed setup instructions and API key configuration.
 
-### [p-assist](./plugins/01-p-assist/)
+### [p-assist](./plugins/p-assist/)
 Productivity plugin for article summarization, journal management (Logseq), and bookmark organization (Linkwarden).
 
-See [plugins/01-p-assist/README.md](./plugins/01-p-assist/README.md) for detailed setup and usage instructions.
+See [plugins/p-assist/README.md](./plugins/p-assist/README.md) for detailed setup and usage instructions.
 
-### [common-engineering](./plugins/02-common-engineering/)
+### [common-engineering](./plugins/common-engineering/)
 Foundational engineering tools for diagram generation, technical documentation, and common development tasks. Features
 interactive document creation with templates for one-pagers, RFCs, proposals, and architecture decisions,
 with built-in research assistance and automated Mermaid diagram generation with validation.
 
-See [plugins/02-common-engineering/README.md](./plugins/02-common-engineering/README.md) for installation prerequisites and
+See [plugins/common-engineering/README.md](./plugins/common-engineering/README.md) for installation prerequisites and
 full feature documentation.
 
-### [sys-maint](./plugins/03-sys-maint/)
+### [sys-maint](./plugins/sys-maint/)
 System maintenance and cleanup utilities for Docker and disk space management. Provides interactive commands with preview
 and confirmation workflows for safely cleaning up Docker resources and analyzing disk usage.
 
-See [plugins/03-sys-maint/README.md](./plugins/03-sys-maint/README.md) for usage instructions and safety features.
+See [plugins/sys-maint/README.md](./plugins/sys-maint/README.md) for usage instructions and safety features.
 
 
 ## Prerequisites
@@ -193,7 +193,7 @@ Shows all installed slash commands from all enabled plugins.
 ### Directory Structure
 
 ```
-plugins/02-my-plugin/
+plugins/my-plugin/
 ├── .claude-plugin/
 │   └── plugin.json          # Required: plugin metadata
 ├── commands/                 # Optional: custom slash commands
@@ -212,8 +212,8 @@ plugins/02-my-plugin/
 1. **Create Plugin Directory:**
 
 ```bash
-mkdir -p plugins/02-my-plugin/.claude-plugin
-mkdir -p plugins/02-my-plugin/commands
+mkdir -p plugins/my-plugin/.claude-plugin
+mkdir -p plugins/my-plugin/commands
 ```
 
 2. **Create `plugin.json`:**
@@ -236,7 +236,7 @@ Edit `.claude-plugin/marketplace.json` and add your plugin to the `plugins` arra
 ```json
 {
   "name": "my-plugin",
-  "source": "./plugins/02-my-plugin",
+  "source": "./plugins/my-plugin",
   "description": "Brief description for marketplace listing"
 }
 ```
@@ -309,10 +309,10 @@ my-claude-code-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json     # Marketplace manifest
 ├── plugins/
-│   ├── 00-shared-mcp/      # Shared MCP infrastructure (Tavily, Exa)
-│   ├── 01-p-assist/        # Productivity assistant plugin
-│   ├── 02-common-engineering/ # Engineering tools and diagram generation
-│   └── 03-sys-maint/       # System maintenance and cleanup
+│   ├── shared-mcp/         # Shared MCP infrastructure (Tavily, Exa)
+│   ├── p-assist/           # Productivity assistant plugin
+│   ├── common-engineering/ # Engineering tools and diagram generation
+│   └── sys-maint/          # System maintenance and cleanup
 ├── CLAUDE.md               # Instructions for Claude Code
 └── README.md               # This file
 ```

@@ -151,7 +151,7 @@ The web research specialist uses Exa's powerful search capabilities from the `sh
    /plugin install shared-mcp@my-claude-code-marketplace
    ```
 
-2. **Configured the EXA_API_KEY** as described in the [shared-mcp README](../00-shared-mcp/README.md)
+2. **Configured the EXA_API_KEY** as described in the [shared-mcp README](../shared-mcp/README.md)
 
 **Note**: Without the `EXA_API_KEY` configured in shared-mcp, the web research specialist will fall back to using Claude's built-in WebSearch tool, which is less optimized for code research.
 
@@ -511,7 +511,7 @@ If you encounter issues:
 1. **For Mermaid issues**:
    - Check that `mmdc --version` works in your terminal
    - Verify you can run: `echo 'graph TD; A-->B' | mmdc -i - -o /tmp/test.svg`
-   - Review the skill documentation in `plugins/02-common-engineering/skills/mermaid/`
+   - Review the skill documentation in `plugins/common-engineering/skills/mermaid/`
 2. **For Web Research issues**:
    - Verify `EXA_API_KEY` is set: `echo $EXA_API_KEY`
    - Check your Exa account status at https://exa.ai
@@ -526,7 +526,7 @@ If you encounter issues:
 ### Plugin Structure
 
 ```
-plugins/02-common-engineering/
+plugins/common-engineering/
 ├── .claude-plugin/
 │   └── plugin.json                     # Plugin metadata + MCP config
 ├── agents/

@@ -153,13 +153,13 @@ If empty, reload your shell config or restart Claude Code.
 
 ## Adding a New Plugin
 
-1. **Create plugin directory** (all plugins are organized in `plugins/` directory with numbered prefix, e.g., `plugins/02-my-plugin/`):
+1. **Create plugin directory** (all plugins are organized in `plugins/` directory, e.g., `plugins/my-plugin/`):
    ```bash
-   mkdir -p plugins/02-my-plugin/.claude-plugin
-   mkdir -p plugins/02-my-plugin/commands
+   mkdir -p plugins/my-plugin/.claude-plugin
+   mkdir -p plugins/my-plugin/commands
    ```
 
-2. **Create `plugins/02-my-plugin/.claude-plugin/plugin.json`:**
+2. **Create `plugins/my-plugin/.claude-plugin/plugin.json`:**
    ```json
    {
      "name": "my-plugin",
@@ -181,7 +181,7 @@ If empty, reload your shell config or restart Claude Code.
      "plugins": [
        {
          "name": "my-plugin",
-         "source": "./plugins/02-my-plugin",
+         "source": "./plugins/my-plugin",
          "description": "Brief description for marketplace listing"
        }
      ]
@@ -192,20 +192,20 @@ If empty, reload your shell config or restart Claude Code.
 
 ## Current Plugins
 
-- **00-shared-mcp** (`./plugins/00-shared-mcp`): **INSTALL FIRST** - Shared MCP infrastructure providing common web search (Tavily, Exa) and content extraction tools. Required by p-assist and common-engineering plugins.
+- **shared-mcp** (`./plugins/shared-mcp`): **INSTALL FIRST** - Shared MCP infrastructure providing common web search (Tavily, Exa) and content extraction tools. Required by p-assist and common-engineering plugins.
   - **Requirements**: Node.js, API keys (TAVILY_API_KEY, EXA_API_KEY)
   - See environment configuration section above
 
-- **01-p-assist** (`./plugins/01-p-assist`): Productivity plugin for knowledge management (Capacities), expense tracking, RSS feed monitoring (FreshRSS), and VPS management.
+- **p-assist** (`./plugins/p-assist`): Productivity plugin for knowledge management (Capacities), expense tracking, RSS feed monitoring (FreshRSS), and VPS management.
   - **Requires**: shared-mcp plugin, N8N_API_TOKEN
-  - See `plugins/01-p-assist/README.md` for setup instructions
+  - See `plugins/p-assist/README.md` for setup instructions
 
-- **02-common-engineering** (`./plugins/02-common-engineering`): Essential toolkit for software engineers with Mermaid diagram generation, technical documentation writer (one-pagers, RFCs, proposals), automatic validation, and self-healing capabilities.
+- **common-engineering** (`./plugins/common-engineering`): Essential toolkit for software engineers with Mermaid diagram generation, technical documentation writer (one-pagers, RFCs, proposals), automatic validation, and self-healing capabilities.
   - **Requires**: shared-mcp plugin, mermaid-cli (`npm install -g @mermaid-js/mermaid-cli`), CONTEXT7_API_KEY
   - **Optional**: document-skills plugin (for Word/PDF export from techdocs-writer)
-  - See `plugins/02-common-engineering/README.md` for setup
+  - See `plugins/common-engineering/README.md` for setup
 
-- **03-sys-maint** (`./plugins/03-sys-maint`): System maintenance and cleanup utilities for Docker and disk space management with interactive preview and confirmation workflows.
+- **sys-maint** (`./plugins/sys-maint`): System maintenance and cleanup utilities for Docker and disk space management with interactive preview and confirmation workflows.
   - **Requirements**: macOS, Docker (optional for docker-cleanup)
 
 ## Plugin Dependencies
