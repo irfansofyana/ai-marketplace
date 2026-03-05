@@ -39,7 +39,7 @@ The following services are provided by the `shared-mcp` plugin (install it first
 - **Tavily**: Web search and content extraction
 - **Exa**: AI-powered web search and code context
 
-See the [shared-mcp README](../00-shared-mcp/README.md) for API key configuration.
+See the [shared-mcp README](../shared-mcp/README.md) for API key configuration.
 
 ### Plugin-Specific Environment Variables
 
@@ -61,7 +61,7 @@ This plugin uses the n8n MCP server for all integrations:
    ```bash
    /plugin install shared-mcp@my-claude-code-marketplace
    ```
-   See [shared-mcp README](../00-shared-mcp/README.md) for API key setup.
+   See [shared-mcp README](../shared-mcp/README.md) for API key setup.
 
 2. **Set up n8n API token** (add to shell config file):
    ```bash

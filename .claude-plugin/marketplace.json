@@ -6,22 +6,22 @@
 	"plugins": [
 		{
 			"name": "shared-mcp",
-			"source": "./plugins/00-shared-mcp",
+			"source": "./plugins/shared-mcp",
 			"description": "Shared MCP infrastructure (Tavily, Exa) - install first as dependency for other plugins"
 		},
 		{
 			"name": "p-assist",
-			"source": "./plugins/01-p-assist",
+			"source": "./plugins/p-assist",
 			"description": "⚠️ FOR PERSONAL USE ONLY - Productivity plugin (reference only)"
 		},
 		{
 			"name": "common-engineering",
-			"source": "./plugins/02-common-engineering",
+			"source": "./plugins/common-engineering",
 			"description": "Foundational engineering tools for diagram generation, technical documentation, and development workflows"
 		},
 		{
 			"name": "sys-maint",
-			"source": "./plugins/03-sys-maint",
+			"source": "./plugins/sys-maint",
 			"description": "System maintenance and cleanup utilities for Docker and disk space"
 		}
 	]
