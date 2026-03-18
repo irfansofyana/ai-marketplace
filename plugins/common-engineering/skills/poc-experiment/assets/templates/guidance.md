@@ -28,68 +28,17 @@ For quick access during document creation:
 
 ---
 
-## Universal Discovery Integration
+## Context Gathered → Section Mapping
 
-> **IMPORTANT**: POC/Experiment documents are created AFTER completing Phase 1 (Universal Discovery) and Phase 2 (Document Type Selection). The Problem Validation Gate must be completed before writing this POC.
-
-### Universal Discovery Output → POC/Experiment Section Mapping
-
-| Universal Discovery Output | Used In POC Section | How It's Used |
-|----------------------------|---------------------|---------------|
-| Current State description | Problem Statement | Current pain points and limitations |
-| Evidence of Problem | Problem Statement | Quantifying the problem to define success criteria |
-| Who Has This Problem | Problem Statement | Who is affected, prioritizing criteria |
-| Desired State description | Problem Statement | Target outcomes for success criteria |
-| State Gap | Problem Statement | Measurable improvement targets |
-| Pain Point (worst thing) | Problem Statement | Priority framing for what to test |
-| Impact Urgency | Problem Statement | Why this matters now |
-| Technical Context | Approach & Solution Design | System landscape, constraints, technology choices |
-| Team Context | Implementation Details | Team capacity, expertise for implementation |
-| Related Documents | Appendix | References to previous work |
-| Historical Context | Approach & Solution Design | What was tried before, what to avoid |
-
-### Before Starting the POC/Experiment Document
-
-**Prerequisites:**
-1. ✅ Problem Validation Gate completed (current state, evidence, who's affected, gap analysis)
-2. ✅ Document type selection confirmed (AI recommended POC/Experiment, user accepted)
-3. ✅ POC/Experiment specific questions answered (hypothesis, success criteria, measurement approach)
-
-### Key Benefits of Universal Discovery for POC/Experiments
-
-**Better Hypothesis Definition:**
-- Problem Validation Gate ensures the problem is real and worth investigating
-- Evidence of Problem helps quantify what "success" means
-
-**Better Success Criteria:**
-- Desired State from Universal Discovery directly informs target outcomes
-- Gap analysis provides measurable improvement targets
-
-**Better Approach Design:**
-- Technical Context ensures the approach fits the system landscape
-- Historical Context helps avoid repeating failed experiments
-
-**Better Decision Quality:**
-- Team Context helps assess whether results are actionable
-- Rich Context Input (related docs) ensures results build on previous work
-
-### How to Use Universal Discovery Output
-
-**When writing Problem Statement:**
-1. Start with **Current State Deep Dive** output for pain points
-2. Add **Evidence of Problem** to quantify the issue
-3. Use **Desired State** to define success criteria
-4. Use **Who Has This Problem** to prioritize criteria
-
-**When writing Approach & Solution Design:**
-1. Reference **Technical Context**: System landscape, constraints
-2. Reference **Historical Context**: What was tried before?
-
-**When writing Implementation Details:**
-1. Use **Team Context**: Who can execute? What expertise exists?
-
-**When writing Recommendation & Next Steps:**
-1. Reference **Impact Urgency**: What's the cost of delaying?
+| Context Gathered | Used In POC Section | How It's Used |
+|-----------------|---------------------|---------------|
+| Current state / pain points | Problem Statement | Current pain points and limitations |
+| Evidence of problem | Problem Statement | Quantifying the problem to define success criteria |
+| Who is affected | Problem Statement | Who is affected, prioritizing criteria |
+| Desired state | Problem Statement | Target outcomes for success criteria |
+| Technical context and constraints | Approach & Solution Design | System landscape, constraints, technology choices |
+| Related documents | Appendix | References to previous work |
+| Historical context | Approach & Solution Design | What was tried before, what to avoid |
 
 ---
 
