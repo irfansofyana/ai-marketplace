@@ -208,6 +208,10 @@ If empty, reload your shell config or restart Claude Code.
 - **sys-maint** (`./plugins/sys-maint`): System maintenance and cleanup utilities for Docker and disk space management with interactive preview and confirmation workflows.
   - **Requirements**: macOS, Docker (optional for docker-cleanup)
 
+- **thinking-tools** (`./plugins/thinking-tools`): Thinking tools for pressure-testing ideas through natural conversation, producing concise Idea Briefs with problem framing, MVP scope, risk assessment, and next actions.
+  - **Requirements**: None
+  - **Skills**: `idea-refinery` — triggered by phrases like "pressure-test my idea", "I have an idea", "sparring partner"
+
 ## Plugin Dependencies
 
 Some plugins depend on others. Install dependencies first:
@@ -222,6 +226,8 @@ Installation order:
 1. `/plugin install shared-mcp@my-claude-code-marketplace`
 2. `/plugin install p-assist@my-claude-code-marketplace` (optional)
 3. `/plugin install common-engineering@my-claude-code-marketplace` (optional)
+4. `/plugin install sys-maint@my-claude-code-marketplace` (optional, macOS only)
+5. `/plugin install thinking-tools@my-claude-code-marketplace` (optional, no dependencies)
 
 ## Adding a Command to an Existing Plugin
 

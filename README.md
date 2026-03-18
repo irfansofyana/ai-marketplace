@@ -14,6 +14,7 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 | **[p-assist](./plugins/p-assist/)** | Productivity: Capacities, expenses, RSS, VPS | shared-mcp, N8N_API_TOKEN |
 | **[common-engineering](./plugins/common-engineering/)** | Engineering tools: Mermaid diagrams, tech docs (RFCs, proposals, ADRs) | shared-mcp, mermaid-cli, CONTEXT7_API_KEY |
 | **[sys-maint](./plugins/sys-maint/)** | System maintenance: Docker cleanup, disk analysis | macOS only |
+| **[thinking-tools](./plugins/thinking-tools/)** | Idea refinery: pressure-test ideas through conversation, produce concise Idea Briefs | None |
 
 See individual plugin READMEs for detailed setup instructions.
 
@@ -44,6 +45,7 @@ Reload: `source ~/.zshrc` or `source ~/.bashrc`
 /plugin install p-assist@my-claude-code-marketplace       # Optional
 /plugin install common-engineering@my-claude-code-marketplace  # Optional
 /plugin install sys-maint@my-claude-code-marketplace      # Optional (macOS only)
+/plugin install thinking-tools@my-claude-code-marketplace # Optional
 ```
 
 ### Manual Installation (Alternative)
