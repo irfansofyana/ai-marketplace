@@ -26,6 +26,11 @@
 			"name": "sys-maint",
 			"source": "./plugins/sys-maint",
 			"description": "System maintenance and cleanup utilities for Docker and disk space"
+		},
+		{
+			"name": "thinking-tools",
+			"source": "./plugins/thinking-tools",
+			"description": "Thinking tools for pressure-testing ideas and sharpening decisions"
 		}
 	]
 }
