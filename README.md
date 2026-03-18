@@ -11,12 +11,41 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 | Plugin | Description | Requirements |
 |--------|-------------|--------------|
 | **[shared-mcp](./plugins/shared-mcp/)** | **INSTALL FIRST** - MCP infrastructure for web search (Tavily, Exa) | Node.js, TAVILY_API_KEY, EXA_API_KEY |
-| **[p-assist](./plugins/p-assist/)** | Productivity: Capacities, expenses, RSS, VPS | shared-mcp, N8N_API_TOKEN |
+| **[p-assist](./plugins/p-assist/)** | Productivity: expenses, RSS, VPS | shared-mcp, N8N_API_TOKEN |
 | **[common-engineering](./plugins/common-engineering/)** | Engineering tools: Mermaid diagrams, tech docs (RFCs, proposals, ADRs) | shared-mcp, mermaid-cli, CONTEXT7_API_KEY |
 | **[sys-maint](./plugins/sys-maint/)** | System maintenance: Docker cleanup, disk analysis | macOS only |
 | **[thinking-tools](./plugins/thinking-tools/)** | Idea refinery: pressure-test ideas through conversation, produce concise Idea Briefs | None |
+| **[softskills](./plugins/softskills/)** | Office politics coach for navigating workplace dynamics | None |
 
 See individual plugin READMEs for detailed setup instructions.
+
+## Available Skills
+
+Skills are model-invoked capabilities that Claude can activate when triggered by natural language. They are organized by plugin:
+
+### common-engineering Skills
+
+| Skill | Trigger Phrases | Output |
+|-------|-----------------|--------|
+| `mermaid` | "create a diagram", "draw architecture", "sequence diagram for..." | Validated Mermaid diagrams (sequence, architecture, flowchart) |
+| `one-pager` | "write a one-pager", "create a proposal", "draft a one-pager" | 1-3 page stakeholder approval document |
+| `adr` | "write an ADR", "document architecture decision", "compare X vs Y" | 1-3 page Architecture Decision Record |
+| `rfc` | "write an RFC", "design proposal for cross-team review" | 5-15 page Request for Comments |
+| `tsd` | "write a TSD", "document an API", "API spec" | 5-20 page Technical Specification Document |
+| `poc-experiment` | "write a POC document", "Go/No-Go recommendation" | 3-8 page proof of concept with decision |
+| `project-management-plan` | "project plan excel", "Gantt chart", "project tracker" | Excel workbook with 4 tabs (plan, charters, budget, RAID) |
+
+### thinking-tools Skills
+
+| Skill | Trigger Phrases | Output |
+|-------|-----------------|--------|
+| `idea-refinery` | "pressure-test my idea", "sparring partner", "gut-check this idea" | Concise Idea Brief with problem, MVP, risks, next actions |
+
+### softskills Skills
+
+| Skill | Trigger Phrases | Output |
+|-------|-----------------|--------|
+| `office-politics-coach` | "office politics", "navigate this situation", "difficult coworker" | Reframe, options, and word-for-word scripts for workplace dynamics |
 
 ## Quick Start
 

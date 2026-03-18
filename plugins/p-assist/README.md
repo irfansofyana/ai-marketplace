@@ -6,7 +6,7 @@
 >
 > If you're interested in building similar functionality, use this plugin as a reference and adapt it to your own services and infrastructure.
 
-A comprehensive productivity plugin for Claude Code that provides knowledge management (Capacities), expense tracking, RSS feed monitoring, and VPS management capabilities.
+A comprehensive productivity plugin for Claude Code that provides expense tracking, RSS feed monitoring, and VPS management capabilities.
 
 ## Prerequisites
 
@@ -22,8 +22,6 @@ A comprehensive productivity plugin for Claude Code that provides knowledge mana
 
 ## Features
 
-- **Knowledge Management**: Daily notes and weblinks in Capacities
-- **Article Summarization**: Extract and summarize web articles using Tavily (from shared-mcp), optionally save to Capacities
 - **Expense Tracking**: Track and query expenses with flexible date ranges
 - **RSS Monitoring**: Fetch unread items from FreshRSS, curated news briefings with full content extraction
 - **VPS Management**: Check utilization and restart your VPS
@@ -47,7 +45,7 @@ This plugin uses the n8n MCP server for all integrations:
 
 #### n8n Personal Assistant Integration (`n8n_pa`)
 - `N8N_API_TOKEN`: Your n8n personal assistant API token
-  - Required for accessing Capacities, expenses, RSS, and VPS tools
+  - Required for accessing expenses, RSS, and VPS tools
 
 ### Setup Instructions
 
@@ -86,24 +84,6 @@ This plugin uses the n8n MCP server for all integrations:
 
 ## Available Commands
 
-### Knowledge Management (Capacities)
-
-#### `/p-assist:daily-note [content]`
-Create a daily note in Capacities.
-
-**Example:**
-```bash
-/p-assist:daily-note Today I worked on the new feature launch and had a productive meeting with the team.
-```
-
-#### `/p-assist:save-weblink [url] [title] [description]`
-Save a URL as a weblink in Capacities.
-
-**Example:**
-```bash
-/p-assist:save-weblink https://example.com/article "Interesting article about AI" "Summary of the article content"
-```
-
 ### Expense Management
 
 #### `/p-assist:expenses [range]`
@@ -139,29 +119,26 @@ Update an existing expense record.
 
 ### Article Management
 
-#### `/p-assist:summarize-article [url] [save]`
-Summarize a web article and optionally save it to Capacities.
+#### `/p-assist:summarize-article [url]`
+Summarize a web article.
 
 **Example:**
 ```bash
-/p-assist:summarize-article https://example.com/article save
+/p-assist:summarize-article https://example.com/article
 ```
 
 ### RSS & System Management
 
-#### `/p-assist:curated-news [limit] [keywords] [save]`
+#### `/p-assist:curated-news [limit] [keywords]`
 Get a curated news briefing from FreshRSS with full content extraction and summarization.
 
 **Arguments:**
 - `limit` - Number of items to process (default: 5)
 - `keywords` - Optional keywords to filter items
-- `save` - If "save", also save briefing to Capacities
 
 **Example:**
 ```bash
 /p-assist:curated-news 10 AI startup
-# Or save briefing to Capacities:
-/p-assist:curated-news 5 "" save
 ```
 
 #### `/p-assist:list-rss`
@@ -201,9 +178,6 @@ Restart your VPS (requires confirmation).
 
 Test your configuration by running:
 ```bash
-# Test Capacities integration
-/p-assist:daily-note "Test entry - please delete me"
-
 # Test expense tracking
 /p-assist:expenses
 
