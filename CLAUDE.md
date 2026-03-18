@@ -196,7 +196,7 @@ If empty, reload your shell config or restart Claude Code.
   - **Requirements**: Node.js, API keys (TAVILY_API_KEY, EXA_API_KEY)
   - See environment configuration section above
 
-- **p-assist** (`./plugins/p-assist`): Productivity plugin for knowledge management (Capacities), expense tracking, RSS feed monitoring (FreshRSS), and VPS management.
+- **p-assist** (`./plugins/p-assist`): Productivity plugin for expense tracking, RSS feed monitoring (FreshRSS), and VPS management.
   - **Requires**: shared-mcp plugin, N8N_API_TOKEN
   - See `plugins/p-assist/README.md` for setup instructions
 

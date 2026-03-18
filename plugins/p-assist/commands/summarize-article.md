@@ -1,6 +1,6 @@
 ---
-description: Summarize an article from URL with optional Capacities save
-argument-hint: [url] [save]
+description: Summarize an article from URL
+argument-hint: [url]
 ---
 
 # Summarize Article
@@ -17,14 +17,6 @@ Fetch and summarize the article at: $1
    - Key insights or takeaways
    - Target audience or use case
 3. Present the summary in clear, readable markdown format
-
-**Optional Capacities Save:**
-
-If $2 equals "save":
-- Use `mcp__plugin_p-assist_n8n_pa__capacities_save_weblink` to save the article to Capacities
-- Use the article title as the weblink title
-- Include the summary in the description field
-- Add relevant tags based on the content
 
 **Output Format:**
 
@@ -43,6 +35,4 @@ If $2 equals "save":
 
 ## Takeaways
 [Key insights or actionable items]
-
-[If saved to Capacities: "✓ Saved to Capacities as a weblink"]
 ```
