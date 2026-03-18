@@ -210,7 +210,9 @@ If empty, reload your shell config or restart Claude Code.
 
 - **thinking-tools** (`./plugins/thinking-tools`): Thinking tools for pressure-testing ideas through natural conversation, producing concise Idea Briefs with problem framing, MVP scope, risk assessment, and next actions.
   - **Requirements**: None
-  - **Skills**: `idea-refinery` — triggered by phrases like "pressure-test my idea", "I have an idea", "sparring partner"
+
+- **softskills** (`./plugins/softskills`): Coaching skill for navigating workplace dynamics and difficult interpersonal situations with practical scripts.
+  - **Requirements**: None
 
 ## Plugin Dependencies
 
