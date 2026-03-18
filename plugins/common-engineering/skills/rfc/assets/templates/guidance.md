@@ -1,35 +1,21 @@
 # RFC (Request for Comments) Guidance
 
-> **Purpose**: This guide provides section-by-section instructions for writing high-quality RFCs. It explains how to use Universal Discovery output and what questions to ask for each section.
+> **Purpose**: This guide provides section-by-section instructions for writing high-quality RFCs and what questions to ask for each section.
 
 ---
 
-## Universal Discovery Integration
+## Context Gathered → Section Mapping
 
-> **CRITICAL**: RFCs are created AFTER completing Phase 1 (Universal Discovery) and Phase 2 (Document Type Selection). The Problem Validation Gate must be completed before writing this RFC.
-
-### Universal Discovery Output → RFC Section Mapping
-
-| Universal Discovery Output | Used In RFC Section | How It's Used |
-|----------------------------|---------------------|---------------|
-| Current State description | Motivation → Current State | Core content for "what happens now" |
-| Evidence type + metrics | Motivation → Problem Statement | "How do we know" - quantifies impact |
+| Context Gathered | Used In RFC Section | How It's Used |
+|-----------------|---------------------|---------------|
+| Current state description | Motivation → Current State | Core content for "what happens now" |
+| Evidence and metrics | Motivation → Problem Statement | "How do we know" - quantifies impact |
 | Who is affected | Motivation → Current State | "Who experiences this" |
-| Desired State description | Motivation → Desired State | "What does done look like" |
-| State Gap | Motivation → Problem Statement | Success metrics from gap analysis |
-| Pain Point (worst thing) | Motivation → Problem Statement | Priority framing |
-| Impact Urgency | Motivation → Problem Statement | Cost of inaction |
-| Related Documents | References | Linked/attached context |
-| Historical Context | Alternatives Considered | Previous attempts inform new design |
-| Technical Context | Architecture Overview | System landscape and constraints |
-| Team Context | Implementation Plan | Team capacity and ownership |
-
-### Before Starting the RFC
-
-**Prerequisites:**
-1. ✅ Problem Validation Gate completed (current state, evidence, who's affected, gap analysis)
-2. ✅ Document type selection confirmed (AI recommended RFC, user accepted)
-3. ✅ Template-specific discovery questions answered (RFC-specific questions from agent)
+| Desired state | Motivation → Desired State | "What does done look like" |
+| Related documents | References | Linked/attached context |
+| Historical context | Alternatives Considered | Previous attempts inform new design |
+| Technical context | Architecture Overview | System landscape and constraints |
+| Team context | Implementation Plan | Team capacity and ownership |
 
 ---
 
@@ -64,7 +50,7 @@
 
 **Purpose**: Convince readers that this change is necessary and important.
 
-**Uses Universal Discovery Output**: This is the primary section that uses validated problem information.
+**Uses gathered context**: This is the primary section that uses validated problem information.
 
 #### Current State
 
@@ -73,7 +59,7 @@
 - Evidence that this is a problem (metrics, complaints, errors)
 - Who is affected and how
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Current State Deep Dive** output → "What happens now" description
 - **Evidence of Problem** output → Quantified impact with metrics
 - **Who Has This Problem** output → Affected users/services
@@ -105,7 +91,7 @@
 - How you'll know the problem is solved
 - Success criteria from gap analysis
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Desired State** output → "What should happen" description
 - **State Gap** output → Success metrics
 
@@ -132,7 +118,7 @@
 - One-sentence desired state
 - Cost of inaction (urgency)
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Current State** (one-sentence)
 - **Desired State** (one-sentence)
 - **Pain Point Specificity** (worst thing)
@@ -217,7 +203,7 @@ graph TD
 
 **Purpose**: Break down the work into manageable phases with clear ownership.
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Team Context** → Team assignments and ownership
 - **Technical Context** → Technical dependencies
 
@@ -464,7 +450,7 @@ graph TD
 
 **Purpose**: Show that other options were evaluated and justify why the proposed solution is best.
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Historical Context** → Previous attempts and why they failed
 - **Related Documents** → Reference attached docs
 
@@ -603,7 +589,7 @@ graph TD
 
 **Purpose**: How do we know this implementation was successful?
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **State Gap** → Success metrics from gap analysis
 - **Desired State** → Target metrics
 
@@ -652,7 +638,7 @@ graph TD
 
 **Purpose**: Link to related documents, external resources, and context.
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Related Documents** → Link any attached docs from Rich Context Input
 - **Historical Context** → Reference previous attempts
 - **Technical Context** → Reference system documentation

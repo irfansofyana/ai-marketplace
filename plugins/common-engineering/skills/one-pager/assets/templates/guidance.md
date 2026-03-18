@@ -29,32 +29,21 @@ For quick access during document creation:
 
 ---
 
-## Universal Discovery Integration
+## Context Gathered → Section Mapping
 
-> **IMPORTANT**: One-Pagers are created AFTER completing Phase 1 (Universal Discovery) and Phase 2 (Document Type Selection). The Problem Validation Gate must be completed before writing this One-Pager.
+Use this to map context gathered during Phase 1 (Gather Context) to the appropriate one-pager sections:
 
-### Universal Discovery Output → One-Pager Section Mapping
-
-| Universal Discovery Output | Used In One-Pager Section | How It's Used |
-|----------------------------|--------------------------|---------------|
-| Current State description | Problem | Core content - "What's broken now" |
-| Evidence of Problem | Problem | "How do we know" - quantifies impact |
-| Who Has This Problem | Problem | "Who experiences this" |
-| Desired State description | High Level Goal | "What does done look like" |
-| State Gap | High Level Goal | Success metrics from gap analysis |
-| Pain Point (worst thing) | Problem | Priority framing |
-| Impact Urgency | What Happens If We Don't Solve This | Cost of inaction |
-| Related Documents | Throughout | Cite for context, previous attempts |
-| Historical Context | Alternatives | Previous attempts inform options |
-| Technical Context | Proposed Solution | System landscape, constraints |
-| Team Context | Risks | Team capacity, expertise risks |
-
-### Before Starting the One-Pager
-
-**Prerequisites:**
-1. ✅ Problem Validation Gate completed (current state, evidence, who's affected, gap analysis)
-2. ✅ Document type selection confirmed (AI recommended One-Pager, user accepted)
-3. ✅ One-Pager specific questions answered (sign-offs, timeline, high-level risks)
+| Context Gathered | Used In Section | How It's Used |
+|-----------------|-----------------|---------------|
+| Current state description | Problem | Core content - "What's broken now" |
+| Evidence of problem | Problem | "How do we know" - quantifies impact |
+| Who is affected | Problem | "Who experiences this" |
+| Desired state | High Level Goal | "What does done look like" |
+| Cost of inaction | What Happens If We Don't Solve This | Urgency framing |
+| Related documents | Throughout | Cite for context, previous attempts |
+| Historical context | Alternatives | Previous attempts inform options |
+| Technical context | Proposed Solution | System landscape, constraints |
+| Team context | Risks | Team capacity, expertise risks |
 
 ### Key Benefits of Universal Discovery for One-Pagers
 

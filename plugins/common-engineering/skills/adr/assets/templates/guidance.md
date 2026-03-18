@@ -1,30 +1,19 @@
 # ADR (Architecture Decision Record) Guidance
 
-> **Purpose**: This guide provides section-by-section instructions for writing high-quality ADRs. It explains how to use Universal Discovery output and what questions to ask for each section.
+> **Purpose**: This guide provides section-by-section instructions for writing high-quality ADRs and what questions to ask for each section.
 
 ---
 
-## Universal Discovery Integration
+## Context Gathered → Section Mapping
 
-> **CRITICAL**: ADRs are created AFTER completing Phase 1 (Universal Discovery) and Phase 2 (Document Type Selection). The Problem Validation Gate must be completed before writing this ADR.
-
-### Universal Discovery Output → ADR Section Mapping
-
-| Universal Discovery Output | Used In ADR Section | How It's Used |
-|----------------------------|---------------------|---------------|
-| Current State description | Context → Current Situation | "Current state" for decision context |
-| Evidence of Problem | Context → Drivers | Evidence supporting need for decision |
-| Desired State description | Context → Goals | Technical goals for the decision |
-| Technical Context | Alternatives Considered | Technical constraints inform options |
-| Related Documents | References | Linked/attached context |
-| Historical Context | Alternatives Considered | Previous attempts inform options |
-
-### Before Starting the ADR
-
-**Prerequisites:**
-1. ✅ Problem Validation Gate completed (current state, evidence, who's affected, gap analysis)
-2. ✅ Document type selection confirmed (AI recommended ADR, user accepted)
-3. ✅ Template-specific discovery questions answered (ADR-specific questions from agent)
+| Context Gathered | Used In ADR Section | How It's Used |
+|-----------------|---------------------|---------------|
+| Current state / situation | Context → Current Situation | "Current state" for decision context |
+| Evidence and drivers | Context → Drivers | Evidence supporting need for decision |
+| Desired state / goals | Context → Goals | Technical goals for the decision |
+| Technical context and constraints | Alternatives Considered | Technical constraints inform options |
+| Related documents | References | Linked/attached context |
+| Historical context | Alternatives Considered | Previous attempts inform options |
 
 ### ADR vs RFC vs TSD
 
@@ -41,7 +30,7 @@
 - The decision has trade-offs that need to be documented
 
 **ADRs are NOT appropriate when:**
-- The problem is not yet validated → Use Universal Discovery first
+- The problem is not yet validated → clarify the problem context first
 - The decision is trivial or obvious → Just make the decision
 - You need to specify implementation details → Write a TSD
 - You need to design a complex system → Write an RFC
@@ -79,7 +68,7 @@
 
 **Purpose**: Establish the context for why a decision is needed.
 
-**Uses Universal Discovery Output**: Uses current state, evidence, and desired state to frame the decision.
+**Uses gathered context**: Uses current state, evidence, and desired state to frame the decision.
 
 #### Current Situation
 
@@ -88,7 +77,7 @@
 - Problem being solved
 - Constraints (technical, organizational, time)
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Current State Deep Dive** → Current situation description
 - **Evidence of Problem** → Drivers for decision
 - **Technical Context** → Constraints
@@ -118,9 +107,9 @@
 
 **What to Include**:
 - Specific factors driving the decision
-- Evidence from Universal Discovery
+- Evidence gathered in Phase 1
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Evidence of Problem** → Quantified drivers
 
 **ADR-Specific Questions**:
@@ -147,7 +136,7 @@
 - What we want to achieve (goals)
 - What we're explicitly NOT trying to achieve (non-goals)
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Desired State** → Goals
 
 **ADR-Specific Questions**:
@@ -543,7 +532,7 @@ For each alternative:
 
 **Purpose**: Link to related documents and sources.
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Related Documents** → Reference any attached docs
 
 **ADR-Specific Questions**:

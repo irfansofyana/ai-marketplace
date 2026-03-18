@@ -1,29 +1,17 @@
 # TSD (Technical Specification Document) Guidance
 
-> **Purpose**: This guide provides section-by-section instructions for writing high-quality TSDs. It explains how to use Universal Discovery output and what questions to ask for each section.
+> **Purpose**: This guide provides section-by-section instructions for writing high-quality TSDs and what questions to ask for each section.
 
 ---
 
-## Universal Discovery Integration
+## Context Gathered → Section Mapping
 
-> **CRITICAL**: TSDs are created AFTER completing Phase 1 (Universal Discovery) and Phase 2 (Document Type Selection). The Problem Validation Gate must be completed before writing this TSD.
-
-### Universal Discovery Output → TSD Section Mapping
-
-| Universal Discovery Output | Used In TSD Section | How It's Used |
-|----------------------------|---------------------|---------------|
-| Current State description | Overview → Purpose | Technical context for "why this spec is needed" |
-| Technical Context | Overview → System Context | System landscape and dependencies |
-| Desired State description | Overview → Purpose | Technical goals |
-| State Gap | Performance Requirements | Performance targets from gap analysis |
-| Team Context | Testing Requirements | Team capacity and testing approach |
-
-### Before Starting the TSD
-
-**Prerequisites:**
-1. ✅ Problem Validation Gate completed (current state, evidence, who's affected, gap analysis)
-2. ✅ Document type selection confirmed (AI recommended TSD, user accepted)
-3. ✅ Template-specific discovery questions answered (TSD-specific questions from agent)
+| Context Gathered | Used In TSD Section | How It's Used |
+|-----------------|---------------------|---------------|
+| System overview and purpose | Overview → Purpose | Technical context for "why this spec is needed" |
+| Technical context and constraints | Overview → System Context | System landscape and dependencies |
+| Performance requirements | Performance Requirements | Performance targets |
+| Team context | Testing Requirements | Team capacity and testing approach |
 
 ### TSD vs RFC vs ADR
 
@@ -41,7 +29,7 @@
 - You need implementation-level details
 
 **TSDs are NOT appropriate when:**
-- The problem is not yet validated → Use Universal Discovery first
+- The problem is not yet validated → clarify the problem context first
 - The architectural approach is undecided → Write an RFC
 - Technology selection is needed → Write an ADR
 - The document is primarily for business stakeholders → Use a One-Pager
@@ -80,7 +68,7 @@
 
 **Purpose**: Establish technical context and scope for the specification.
 
-**Uses Universal Discovery Output**: Uses technical context and system understanding.
+**Uses gathered context**: Uses technical context and system understanding.
 
 #### Purpose
 
@@ -89,7 +77,7 @@
 - Problem it addresses (technical, not business)
 - High-level technical approach
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Current State** → Technical context (current system limitations)
 - **Desired State** → Technical goals
 
@@ -142,7 +130,7 @@
 - Interactions with other systems, APIs, databases
 - Dependencies
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Technical Context** → System landscape and dependencies
 
 **TSD-Specific Questions**:
@@ -645,7 +633,7 @@ For each interface, document:
 
 **Purpose**: Define performance targets for the system.
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **State Gap** → Performance targets from gap analysis
 
 **TSD-Specific Questions**:
@@ -702,7 +690,7 @@ For each interface, document:
 
 **Purpose**: Define testing requirements for the specification.
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Team Context** → Team capacity and testing approach
 
 **TSD-Specific Questions**:
@@ -876,7 +864,7 @@ For each example:
 
 **Purpose**: Link to related documents and external resources.
 
-**Uses Universal Discovery**:
+**Uses gathered context**:
 - **Related Documents** → Reference any attached docs
 
 **TSD-Specific Questions**:
