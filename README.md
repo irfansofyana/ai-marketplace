@@ -8,358 +8,128 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 
 ## Available Plugins
 
-### [shared-mcp](./plugins/shared-mcp/)
-**INSTALL FIRST** - Shared MCP infrastructure providing common web search, content extraction, and research tools. This plugin provides Tavily (web search) and Exa (AI-powered search) tools that are used by other plugins in this marketplace.
+| Plugin | Description | Requirements |
+|--------|-------------|--------------|
+| **[shared-mcp](./plugins/shared-mcp/)** | **INSTALL FIRST** - MCP infrastructure for web search (Tavily, Exa) | Node.js, TAVILY_API_KEY, EXA_API_KEY |
+| **[p-assist](./plugins/p-assist/)** | Productivity: Capacities, expenses, RSS, VPS | shared-mcp, N8N_API_TOKEN |
+| **[common-engineering](./plugins/common-engineering/)** | Engineering tools: Mermaid diagrams, tech docs (RFCs, proposals, ADRs) | shared-mcp, mermaid-cli, CONTEXT7_API_KEY |
+| **[sys-maint](./plugins/sys-maint/)** | System maintenance: Docker cleanup, disk analysis | macOS only |
 
-**Required dependency** for p-assist and common-engineering plugins.
+See individual plugin READMEs for detailed setup instructions.
 
-See [plugins/shared-mcp/README.md](./plugins/shared-mcp/README.md) for detailed setup instructions and API key configuration.
+## Quick Start
 
-### [p-assist](./plugins/p-assist/)
-Productivity plugin for knowledge management (Capacities), expense tracking, RSS feeds, and VPS management.
-
-See [plugins/p-assist/README.md](./plugins/p-assist/README.md) for detailed setup and usage instructions.
-
-### [common-engineering](./plugins/common-engineering/)
-Foundational engineering tools for diagram generation, technical documentation, and common development tasks. Features
-interactive document creation with templates for one-pagers, RFCs, proposals, and architecture decisions,
-with built-in research assistance and automated Mermaid diagram generation with validation.
-
-See [plugins/common-engineering/README.md](./plugins/common-engineering/README.md) for installation prerequisites and
-full feature documentation.
-
-### [sys-maint](./plugins/sys-maint/)
-System maintenance and cleanup utilities for Docker and disk space management. Provides interactive commands with preview
-and confirmation workflows for safely cleaning up Docker resources and analyzing disk usage.
-
-See [plugins/sys-maint/README.md](./plugins/sys-maint/README.md) for usage instructions and safety features.
-
-
-## Prerequisites
-
-### System Dependencies
-
-Different plugins require different system dependencies. Install what you need:
-
-**For all plugins:**
-- Node.js (required for Tavily and Exa MCP servers in shared-mcp)
-  - Check: `node --version`
-  - Install: https://nodejs.org
-
-**For common-engineering plugin:**
-- mermaid-cli (for diagram generation)
-  - Install: `npm install -g @mermaid-js/mermaid-cli`
-  - Verify: `mmdc --version`
-
-**For p-assist plugin:**
-- None (uses n8n cloud instance)
-
-**For sys-maint plugin:**
-- macOS only (uses platform-specific tools)
-- Docker (optional, for docker-cleanup command)
-
-### API Keys
-
-The following API keys are required for shared-mcp (used by multiple plugins):
-
-| Service | Free Tier | Sign Up URL | Required For |
-|---------|-----------|-------------|--------------|
-| Tavily | ✓ Yes | https://tavily.com | Web search, article extraction |
-| Exa | ✓ Yes | https://exa.ai | AI-powered search, code context |
-| n8n | ✓ Yes | https://n8n.io | Productivity automation (p-assist) |
-
-See the "Environment Setup" section in Quick Start for configuration details.
-
-## Quick Start (Automated)
-
-### 1. Add Marketplace via GitHub
+### 1. Add Marketplace
 
 ```bash
 /plugin marketplace add https://github.com/irfansofyana/my-claude-code-marketplace
 ```
 
-This automatically clones the marketplace and makes all plugins available for installation.
+### 2. Configure Environment Variables
 
-### 2. Configure Environment Variables (Required)
-
-The plugins in this marketplace require API keys for MCP servers. Add these to your shell configuration file:
-
-**For Zsh (macOS default):** `~/.zshrc`
-**For Bash:** `~/.bashrc` or `~/.bash_profile`
+Add to `~/.zshrc` (macOS) or `~/.bashrc` (Linux):
 
 ```bash
-# Required for shared-mcp plugin (install this first)
-export TAVILY_API_KEY="your-tavily-api-key"     # Get from https://tavily.com
-export EXA_API_KEY="your-exa-api-key"           # Get from https://exa.ai
+export TAVILY_API_KEY="your-tavily-api-key"     # https://tavily.com
+export EXA_API_KEY="your-exa-api-key"           # https://exa.ai
+export N8N_API_TOKEN="your-n8n-token"           # https://n8n.io (for p-assist)
 ```
 
-**After adding these variables**, reload your shell configuration:
+Reload: `source ~/.zshrc` or `source ~/.bashrc`
+
+### 3. Install Plugins (in dependency order)
+
 ```bash
-# For Zsh
-source ~/.zshrc
-
-# For Bash
-source ~/.bashrc
-```
-
-### 3. Verify Environment Variables
-
-Check that variables are loaded correctly:
-```bash
-echo $TAVILY_API_KEY  # Should show your API key
-echo $EXA_API_KEY     # Should show your API key
-```
-
-### 4. Install Plugins
-
-Browse and install plugins interactively:
-```bash
-/plugin
-```
-
-Or install directly in dependency order:
-```bash
-# Install in this order (respects dependencies)
-/plugin install shared-mcp@my-claude-code-marketplace     # REQUIRED: Install first
+/plugin install shared-mcp@my-claude-code-marketplace     # REQUIRED - install first
 /plugin install p-assist@my-claude-code-marketplace       # Optional
 /plugin install common-engineering@my-claude-code-marketplace  # Optional
 /plugin install sys-maint@my-claude-code-marketplace      # Optional (macOS only)
 ```
 
-## Manual Installation (Alternative)
+### Manual Installation (Alternative)
 
-If you prefer to manage the repository yourself or need offline access:
+For local development or offline access:
 
-### 1. Clone This Repository
 ```bash
 git clone https://github.com/irfansofyana/my-claude-code-marketplace.git
 cd my-claude-code-marketplace
-```
-
-### 2. Add Local Marketplace to Claude Code
-```bash
 /plugin marketplace add $(pwd)
 ```
 
-Or use an absolute path:
-```bash
-/plugin marketplace add /path/to/my-claude-code-marketplace
-```
+## Using with Other AI Agents (via OPKG)
 
-### 3. Configure Environment Variables
+This marketplace works with [OpenPackage (OPKG)](https://openpackage.dev) for 30+ AI platforms (Cursor, Windsurf, Cline, OpenCode, etc.).
 
-Follow the same environment setup steps from "Quick Start" section above.
+OPKG maps the universal structure to your platform's format:
 
-### 4. Install Plugins
+| Universal | Claude Code | Cursor | OpenCode |
+|-----------|-------------|--------|----------|
+| `commands/` | `.claude/commands/` | `.cursor/commands/` | `.opencode/commands/` |
+| `agents/` | `.claude/agents/` | `.cursor/agents/` | `.opencode/agents/` |
+| `skills/` | `.claude/skills/` | `.cursor/skills/` | `.opencode/skills/` |
 
-Follow the same plugin installation steps from "Quick Start" section above.
+**Learn More:** [OPKG Docs](https://openpackage.dev/docs) | [GitHub](https://github.com/enulus/OpenPackage)
 
 ## Plugin Management
 
-### Enable/Disable Plugins
-
 ```bash
-/plugin enable p-assist@my-claude-code-marketplace
-/plugin disable p-assist@my-claude-code-marketplace
+/plugin                                    # Browse and install plugins
+/plugin enable|disable <plugin>@marketplace
+/plugin uninstall <plugin>@marketplace
+/help                                      # View all commands
 ```
 
-### Uninstall Plugins
-
-```bash
-/plugin uninstall p-assist@my-claude-code-marketplace
-```
-
-### View Available Commands
-
-```bash
-/help
-```
-
-Shows all installed slash commands from all enabled plugins.
-
-## Creating a New Plugin
-
-### Directory Structure
+## Creating a Plugin
 
 ```
 plugins/my-plugin/
 ├── .claude-plugin/
-│   └── plugin.json          # Required: plugin metadata
-├── commands/                 # Optional: custom slash commands
-│   └── command-name.md
-├── agents/                   # Optional: custom agent definitions
-├── skills/                   # Optional: Agent Skills
-│   └── skill-name/
-│       └── SKILL.md
-├── hooks/                    # Optional: event handlers
-│   └── hooks.json
-└── .mcp.json                # Optional: MCP server integration
+│   └── plugin.json          # Required: name, description, version, author
+├── commands/                 # Optional: slash commands (.md files)
+├── agents/                   # Optional: subagent definitions
+├── skills/                   # Optional: SKILL.md files
+├── hooks/                    # Optional: hooks.json
+└── .mcp.json                # Optional: MCP server config
 ```
 
-### Step-by-Step Guide
-
-1. **Create Plugin Directory:**
-
-```bash
-mkdir -p plugins/my-plugin/.claude-plugin
-mkdir -p plugins/my-plugin/commands
-```
-
-2. **Create `plugin.json`:**
-
+**1. Create `plugin.json`:**
 ```json
 {
   "name": "my-plugin",
-  "description": "Description of what the plugin does",
+  "description": "What it does",
   "version": "1.0.0",
-  "author": {
-    "name": "irfansofyana"
-  }
+  "author": { "name": "irfansofyana" }
 }
 ```
 
-3. **Register in Marketplace:**
-
-Edit `.claude-plugin/marketplace.json` and add your plugin to the `plugins` array:
-
+**2. Register in `.claude-plugin/marketplace.json`:**
 ```json
 {
   "name": "my-plugin",
   "source": "./plugins/my-plugin",
-  "description": "Brief description for marketplace listing"
+  "description": "Brief description"
 }
 ```
 
-4. **Add Commands:**
-
-Create `commands/my-command.md`:
-
-```markdown
----
-description: What this command does
----
-
-# Command Instructions
-
-Detailed instructions for Claude Code when this command is executed.
-This becomes the prompt that Claude receives.
-```
-
-5. **Test Your Plugin:**
-
+**3. Test:**
 ```bash
-/plugin uninstall my-plugin@my-claude-code-marketplace  # if previously installed
+/plugin uninstall my-plugin@my-claude-code-marketplace
 /plugin install my-plugin@my-claude-code-marketplace
-/my-plugin:my-command
 ```
-
-## Plugin Components
-
-### Slash Commands
-Markdown files in `commands/` directory that provide custom prompts to Claude Code. Commands are invoked as `/plugin-name:command-name`.
-
-### Agents
-Custom agent definitions that can be invoked via the Task tool for specialized workflows.
-
-### Skills
-Agent Skills are model-invoked capabilities that agents can use. Defined in `skills/` directory with a `SKILL.md` file.
-
-### Hooks
-Event handlers defined in `hooks/hooks.json` that execute shell commands in response to Claude Code events.
-
-### MCP Servers
-Model Context Protocol server configurations in `.mcp.json` for external tool integrations.
-
-## Development Workflow
-
-1. Make changes to your plugin files
-2. Uninstall the plugin: `/plugin uninstall plugin-name@my-claude-code-marketplace`
-3. Reinstall the plugin: `/plugin install plugin-name@my-claude-code-marketplace`
-4. Test your changes
-
-## Key Requirements
-
-- Plugin `name` in marketplace.json MUST match the `name` in the plugin's plugin.json
-- The `source` path in marketplace.json is relative to the repository root
-- Command files must be `.md` files with valid YAML frontmatter
-- Use semantic versioning (1.0.0, 1.1.0, 2.0.0) when updating plugins
-
-## Contributing
-
-1. Create a new plugin following the structure above
-2. Register it in `.claude-plugin/marketplace.json`
-3. Test locally using the development workflow
-4. Commit your changes
-
-## Repository Structure
-
-```
-my-claude-code-marketplace/
-├── .claude-plugin/
-│   └── marketplace.json     # Marketplace manifest
-├── plugins/
-│   ├── shared-mcp/         # Shared MCP infrastructure (Tavily, Exa)
-│   ├── p-assist/           # Productivity assistant plugin
-│   ├── common-engineering/ # Engineering tools and diagram generation
-│   └── sys-maint/          # System maintenance and cleanup
-├── CLAUDE.md               # Instructions for Claude Code
-└── README.md               # This file
-```
-
-## Author
-
-**irfansofyana**
-
-## Learn More
-
-- [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code)
-- [Plugin Development Guide](https://docs.claude.com/en/docs/claude-code)
 
 ## Troubleshooting
 
-### Environment Variables Not Loaded
+| Problem | Solution |
+|---------|----------|
+| API key not found | Add to shell config, reload (`source ~/.zshrc`), restart Claude Code |
+| MCP server not responding | Check Node.js (`node --version`), verify API keys |
+| Plugin install failed | Ensure marketplace added first, install shared-mcp first |
 
-**Problem**: MCP servers fail to start with "API key not found" errors.
+## Learn More
 
-**Solution**:
-1. Verify variables are in your shell config file (`~/.zshrc` or `~/.bashrc`)
-2. Reload the config: `source ~/.zshrc` (or `source ~/.bashrc`)
-3. Restart Claude Code completely
-4. Check variables are loaded: `echo $TAVILY_API_KEY`
+- [Claude Code Docs](https://docs.claude.com/en/docs/claude-code)
+- [OPKG Docs](https://openpackage.dev/docs)
 
-### MCP Server Connection Failed
+---
 
-**Problem**: Plugin shows "MCP server not responding" errors.
-
-**Solution**:
-1. Check Node.js is installed: `node --version`
-2. For Tavily/Exa: Verify `npx` works: `npx --version`
-3. For p-assist: Verify Docker is running: `docker ps`
-4. Check API keys are valid by testing the service websites
-
-### Plugin Installation Failed
-
-**Problem**: `/plugin install` command fails.
-
-**Solution**:
-1. Ensure marketplace is added first: `/plugin marketplace list`
-2. Check internet connection (for GitHub-based installation)
-3. Install shared-mcp before other plugins (dependency requirement)
-
-### Shell Config File Not Loading
-
-**Problem**: Variables disappear after closing terminal.
-
-**Solution**:
-1. macOS: Add to `~/.zshrc` (default shell is Zsh)
-2. Linux: Add to `~/.bashrc` or `~/.bash_profile`
-3. Ensure file is being sourced automatically (add if missing):
-   ```bash
-   # In ~/.zshrc or ~/.bashrc
-   export TAVILY_API_KEY="..."
-   # ... other exports
-   ```
-
-## License
-
-This is a personal marketplace. Individual plugins may have their own licenses.
+**Author:** irfansofyana
