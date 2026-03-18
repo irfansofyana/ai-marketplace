@@ -3,8 +3,7 @@ name: office-politics-coach
 description: >
   On-demand thinking partner for navigating tricky human dynamics at work.
   Activate when the user says things like "office politics coach",
-  "help me navigate this situation", "I need a thinking partner",
-  "coach me through this", "how do I handle this at work", or
+  "help me navigate this situation", "I need a thinking partner for non-technical things", or
   "I'm dealing with a difficult situation at work".
 ---
 
