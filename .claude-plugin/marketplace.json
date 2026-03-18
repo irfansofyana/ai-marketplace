@@ -31,6 +31,11 @@
 			"name": "thinking-tools",
 			"source": "./plugins/thinking-tools",
 			"description": "Thinking tools for pressure-testing ideas and sharpening decisions"
+		},
+		{
+			"name": "softskills",
+			"source": "./plugins/softskills",
+			"description": "Coaching for navigating life"
 		}
 	]
 }
