@@ -74,9 +74,8 @@ Inspired by Matt Pocock's [grill-me skill](https://www.aihero.dev/my-grill-me-sk
 1. You share a plan — any type, any format
 2. The agent asks sharp questions one or two at a time, walking every branch of the decision tree and resolving dependencies one-by-one
 3. When a question has an obvious answer, it offers its lean: "I'd go with X here — does that match your thinking?"
-4. Probes for what you haven't thought to mention: undisclosed constraints, overlooked stakeholders, failure modes, second-order effects, and edge cases
-5. Surfaces execution assumptions the user hasn't stated — hidden constraints, overlooked stakeholders, second-order effects of the implementation
-6. If the plan involves code or systems, it can explore the codebase to ground its questions in reality
+4. Probes for what you haven't thought to mention: undisclosed constraints, hidden assumptions, overlooked stakeholders, failure modes, and second-order effects of the implementation
+5. If the plan involves code or systems, it can explore the codebase to ground its questions in reality
 
 **Scope:** Execution only — assumes the idea is already validated. Probes implementation details, sequencing, edge cases, and hidden constraints. Does not re-open the question of whether to pursue the idea.
 
