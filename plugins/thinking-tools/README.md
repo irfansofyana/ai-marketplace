@@ -2,6 +2,15 @@
 
 Thinking tools for pressure-testing ideas and sharpening decisions before you commit to them.
 
+## Which tool to use?
+
+| Question | Skill |
+|---|---|
+| Should I pursue this idea at all? | idea-refinery |
+| How do I actually build / execute this? | grill-me |
+
+Natural order: run **idea-refinery** first to validate the idea and produce an Idea Brief, then run **grill-me** to drill into execution.
+
 ## Skills
 
 ### idea-refinery
@@ -13,9 +22,11 @@ A sparring partner that challenges your raw ideas through natural conversation, 
 - "idea refinery"
 - "sparring partner"
 - "challenge this idea"
-- "help me think through"
 - "gut-check this idea"
 - "I have an idea"
+- "is this worth doing"
+- "should I pursue this"
+- "help me decide"
 
 **What it does:**
 
@@ -39,6 +50,8 @@ A sparring partner that challenges your raw ideas through natural conversation, 
 | **Biggest risk** | The single most likely thing to kill this |
 | **Next 3 actions** | Concrete P0/P1/P2 steps |
 
+**Scope:** Viability only — problem-fit, assumptions, risks, and whether this is worth doing. Implementation details are out of scope; that's what grill-me is for.
+
 **Works for any kind of idea:** product features, technical decisions, process changes, org changes, personal projects.
 
 ### grill-me
@@ -52,7 +65,9 @@ Inspired by Matt Pocock's [grill-me skill](https://www.aihero.dev/my-grill-me-sk
 - "interrogate my plan"
 - "walk through my design"
 - "stress-test this design"
-- "deep drill"
+- "drill into this plan"
+- "I have a plan, poke holes in it"
+- "I've decided to build X, help me think it through"
 
 **What it does:**
 
@@ -62,6 +77,8 @@ Inspired by Matt Pocock's [grill-me skill](https://www.aihero.dev/my-grill-me-sk
 4. Probes for what you haven't thought to mention: undisclosed constraints, overlooked stakeholders, failure modes, second-order effects, and edge cases
 5. Challenges whether the problem itself is worth solving
 6. If the plan involves code or systems, it can explore the codebase to ground its questions in reality
+
+**Scope:** Execution only — assumes the idea is already validated. Probes implementation details, sequencing, edge cases, and hidden constraints. Does not re-open the question of whether to pursue the idea.
 
 **Works for:** technical architecture, product plans, process changes, any decision with multiple moving parts.
 

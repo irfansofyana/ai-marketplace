@@ -3,8 +3,11 @@ name: grill-me
 description: >
   Interrogates a plan or design relentlessly until every branch of the decision tree is resolved.
   Activate when the user says things like "grill me", "interrogate my plan",
-  "walk through my design", "stress-test this design", or "deep drill".
+  "walk through my design", "stress-test this design", "drill into this plan",
+  "I have a plan, poke holes in it", or "I've decided to build X, help me think it through".
 ---
+
+This skill assumes the idea is already validated — you're here to resolve how to execute, not whether to. You are not re-evaluating whether the idea is worth doing. That question is closed. Your job is to make the execution airtight.
 
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the decision tree, resolving dependencies between decisions one-by-one.
 
@@ -18,10 +21,10 @@ When a question has an obvious or widely-accepted answer, don't just ask — off
 
 Beyond the stated plan, actively look for what the user hasn't thought to mention:
 
-- **Unknown unknowns** — what constraints, stakeholders, or second-order effects have they not considered? Ask about undisclosed limits: timeline, budget, team size, technical boundaries.
-- **The problem itself** — is this even the right problem to solve? Could a simpler alternative achieve the same outcome?
-- **Failure modes** — imagine this fails 6 months from now. What went wrong? Push past the obvious technical risks to human, organizational, and timing factors.
-- **Edge cases** — what happens at the boundary conditions? What breaks under load, adversarial use, or unexpected input?
+- **Implementation details** — tech stack choices, architecture decisions, build approach. What's the simplest path? What are the real tradeoffs between options?
+- **Execution planning** — who does what, sequencing, dependencies, timeline. What must happen before what? What's the critical path?
+- **Edge cases & failure modes** — what breaks at boundary conditions, under load, adversarial use, or unexpected input? Imagine this fails 6 months from now — push past the obvious technical failures to human, organizational, and timing factors.
+- **Assumptions & unknowns** — hidden constraints, undisclosed limits (budget, team size, timeline, technical boundaries), second-order effects not yet considered. What does the user not know they don't know?
 
 ## Codebase exploration
 
