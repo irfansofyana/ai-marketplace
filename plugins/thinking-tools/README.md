@@ -41,6 +41,29 @@ A sparring partner that challenges your raw ideas through natural conversation, 
 
 **Works for any kind of idea:** product features, technical decisions, process changes, org changes, personal projects.
 
+### deep-drill
+
+A relentless interrogator that drills into every branch of a plan's decision tree until nothing is unresolved.
+
+Inspired by Matt Pocock's [grill-me skill](https://www.aihero.dev/my-grill-me-skill-has-gone-viral).
+
+**Trigger phrases:**
+- "deep drill"
+- "drill into this"
+- "grill me"
+- "interrogate my plan"
+- "walk through my design"
+- "stress-test this design"
+
+**What it does:**
+
+1. You share a plan — any type, any format
+2. The agent asks sharp questions one or two at a time, walking every branch of the decision tree and resolving dependencies one-by-one
+3. When a question has an obvious answer, it offers its lean: "I'd go with X here — does that match your thinking?"
+4. If the plan involves code or systems, it can explore the codebase to ground its questions in reality
+
+**Works for:** technical architecture, product plans, process changes, any decision with multiple moving parts.
+
 ## Installation
 
 ```bash
