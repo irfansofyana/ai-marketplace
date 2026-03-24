@@ -14,7 +14,7 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 | **[p-assist](./plugins/p-assist/)** | Productivity: expenses, RSS, VPS | shared-mcp, N8N_API_TOKEN |
 | **[common-engineering](./plugins/common-engineering/)** | Engineering tools: Mermaid diagrams, tech docs (RFCs, proposals, ADRs) | shared-mcp, mermaid-cli, CONTEXT7_API_KEY |
 | **[sys-maint](./plugins/sys-maint/)** | System maintenance: Docker cleanup, disk analysis | macOS only |
-| **[thinking-tools](./plugins/thinking-tools/)** | Idea refinery: pressure-test ideas through conversation, produce concise Idea Briefs | None |
+| **[thinking-tools](./plugins/thinking-tools/)** | Thinking tools: pressure-test ideas (idea-refinery) and drill into execution plans (grill-me) | None |
 | **[softskills](./plugins/softskills/)** | Office politics coach for navigating workplace dynamics | None |
 
 See individual plugin READMEs for detailed setup instructions.
@@ -39,7 +39,8 @@ Skills are model-invoked capabilities that Claude can activate when triggered by
 
 | Skill | Trigger Phrases | Output |
 |-------|-----------------|--------|
-| `idea-refinery` | "pressure-test my idea", "sparring partner", "gut-check this idea" | Concise Idea Brief with problem, MVP, risks, next actions |
+| `idea-refinery` | "pressure-test my idea", "sparring partner", "gut-check this idea", "is this worth doing" | Concise Idea Brief with problem, MVP, risks, next actions |
+| `grill-me` | "grill me", "interrogate my plan", "stress-test this design", "drill into this plan" | Resolved decision tree — every branch of execution accounted for |
 
 ### softskills Skills
 

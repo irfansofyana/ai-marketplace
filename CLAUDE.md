@@ -208,7 +208,7 @@ If empty, reload your shell config or restart Claude Code.
 - **sys-maint** (`./plugins/sys-maint`): System maintenance and cleanup utilities for Docker and disk space management with interactive preview and confirmation workflows.
   - **Requirements**: macOS, Docker (optional for docker-cleanup)
 
-- **thinking-tools** (`./plugins/thinking-tools`): Thinking tools for pressure-testing ideas through natural conversation, producing concise Idea Briefs with problem framing, MVP scope, risk assessment, and next actions.
+- **thinking-tools** (`./plugins/thinking-tools`): Two thinking skills — **idea-refinery** pressure-tests raw ideas through natural conversation and produces a concise Idea Brief; **grill-me** interrogates execution plans relentlessly until every decision branch is resolved.
   - **Requirements**: None
 
 - **softskills** (`./plugins/softskills`): Coaching skill for navigating workplace dynamics and difficult interpersonal situations with practical scripts.
