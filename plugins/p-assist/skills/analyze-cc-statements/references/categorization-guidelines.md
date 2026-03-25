@@ -65,6 +65,7 @@ Split into two sub-categories:
 - Internet/telecom: IndiHome, Biznet, First Media, Telkomsel, XL, Indosat, Smartfren
 - Insurance: AIA, Prudential, Manulife, Allianz, Asuransi, BCA Life
 - Phone bills: "Pulsa", "Paket Data"
+- Rent/housing: Rukita
 
 ### Other
 

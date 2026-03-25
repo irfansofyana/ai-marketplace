@@ -7,7 +7,7 @@ description: >
   analysis for YYYY-MM", "categorize my transactions", "credit card report",
   "analyze-cc-statements", or provides a month argument like "2026-03" in the
   context of credit card or transaction analysis.
-allowed-tools: Read Write Glob Bash
+allowed-tools: Read Write Glob Bash Agent
 ---
 
 This skill reads a month's credit card transactions from a CSV file, categorizes each transaction, and writes a structured markdown analysis report with month-over-month comparison and savings recommendations.
@@ -44,6 +44,8 @@ Extract the YYYY-MM from the user's input. Verify it matches the `YYYY-MM` patte
 Use the Glob tool to check if `./trxns/{YYYY-MM}.csv` exists. If the file does not exist, inform the user and stop.
 
 ### 3. Parse CSV using the helper script
+
+**Tell the user:** "Parsing CSV file to extract transaction data..."
 
 Execute the helper script to accurately parse the CSV and get structured transaction data:
 
@@ -89,26 +91,100 @@ Using AI judgment, analyze both `transactions` (debits) and `credits` arrays to 
    - Final spend = sum of debits MINUS excluded refund/waiver amounts
    - Transaction count = debit_count MINUS number of matched debits (waived/refunded transactions are excluded)
 
-4. **Unmatched credits** — if a credit doesn't match any debit and isn't a card payment, treat as miscellaneous credit (note it, but don't reduce spending)
+4. **Unmatched credits** — if a credit doesn't match any debit and isn't a card payment, treat as miscellaneous credit:
+   - Add to `unmatched_credits` array for reporting
+   - Calculate `unmatched_credits_total` = sum of all unmatched credit amounts
+   - These WILL reduce the final spend (see step 6)
 
-### 5. Categorize transactions
+5. **Filter transactions for categorization**: Create a filtered list of transactions excluding those that were matched with refunds/waivers. These are the transactions to categorize.
 
-For each transaction in the `transactions` array, infer a category from the `description` field. Read `references/categorization-guidelines.md` for the full categorization rules and merchant pattern mappings.
+### 5. Categorize transactions using parallel subagents
 
-The categories are:
-- **Food & Drinks** — sub-categorized as **Essential** or **Social**
-- **Transport**
-- **Shopping**
-- **Subscriptions**
-- **Health**
-- **Bills & Utilities**
-- **Other**
+**Tell the user first:** "Starting parallel categorization of {N} transactions across {M} subagents..."
+
+**Determine chunk size and number of subagents:**
+- If ≤50 transactions: use 1 subagent (no parallelization needed)
+- If 51-150 transactions: split into 2 chunks, launch 2 subagents in parallel
+- If 151-300 transactions: split into 3-4 chunks, launch 3-4 subagents in parallel
+- If >300 transactions: split into 5-6 chunks, launch 5-6 subagents in parallel
+- Maximum chunk size: 60 transactions per subagent
+
+**Chunking strategy:**
+- Divide transactions array into roughly equal chunks
+- Each chunk should have contiguous transactions (no randomization needed)
+- Track chunk index for each subagent (0, 1, 2, ...)
+
+**Launch all subagents in parallel** using the Agent tool. For each chunk, launch a subagent with this prompt:
+
+```
+Categorize these credit card transactions according to the guidelines.
+
+TRANSACTIONS TO CATEGORIZE (Chunk {chunk_num}/{total_chunks}):
+{JSON array of transactions for this chunk}
+
+CATEGORIZATION GUIDELINES:
+Read and follow: references/categorization-guidelines.md
+
+Categories available:
+- Food & Drinks — sub-categorize as Essential (groceries, supermarkets) or Social (restaurants, cafes, bars)
+- Transport — ride-hailing, fuel, parking, tolls, public transit
+- Shopping — e-commerce, retail, fashion, electronics
+- Subscriptions — streaming, software, gaming, recurring memberships
+- Health — pharmacies, clinics, hospitals, fitness
+- Bills & Utilities — electricity, water, internet, insurance, phone
+- Other — anything that doesn't fit above
+
+For EACH transaction, determine:
+1. Primary category
+2. Sub-category (only for Food & Drinks: "Essential" or "Social", otherwise null)
+3. Confidence (only for non-obvious cases): "low" if uncertain, omit otherwise
+
+OUTPUT FORMAT (strict JSON):
+{
+  "categorized_transactions": [
+    {
+      "row": <original row number>,
+      "card": "<card last 4>",
+      "date": "<transaction date>",
+      "description": "<merchant description>",
+      "amount": <amount>,
+      "category": "<Primary Category>",
+      "sub_category": "<Essential|Social|null>",
+      "confidence": "<low>"  // only include if uncertain
+    }
+  ],
+  "chunk_num": <chunk number>,
+  "total_chunks": <total chunks>
+}
+
+Rules:
+- Process ALL transactions. Do not skip any.
+- Return ONLY valid JSON.
+- Do NOT include reasoning for individual transactions — categorization should be self-evident from the guidelines.
+- Only include "confidence": "low" when genuinely uncertain (e.g., garbled description, ambiguous merchant).
+```
+
+**Wait for all subagents to complete** before proceeding.
+
+**Aggregate results:**
+- Combine all `categorized_transactions` arrays from each subagent
+- Verify total count matches expected (should equal filtered transaction count)
+- If any subagent failed or returned invalid JSON, retry that chunk with a single agent
 
 ### 6. Aggregate and flag
 
 Compute total spend per category (and sub-category for Food & Drinks). Flag any category where the total exceeds 40% of the overall spend as potentially disproportionate. This flagging is at the aggregate level — do not flag individual transactions.
 
-### 6. Check for previous month's analysis
+**Calculate final net spend:**
+- `gross_spend` = sum of all categorized debits (excludes waived/refunded transactions)
+- `unmatched_credits_total` = sum of unmatched miscellaneous credits
+- `net_spend` = `gross_spend` - `unmatched_credits_total`
+- Report `net_spend` as the **Total spend** in the report header
+- Include a note showing the breakdown: "Rp X gross spend - Rp Y unmatched credits = Rp Z net spend"
+
+### 7. Check for previous month's analysis
+
+**Tell the user:** "Checking for previous month's analysis for comparison..."
 
 Compute the previous month's YYYY-MM:
 - For months 02-12: subtract 1 from the month
@@ -118,7 +194,7 @@ Use the Glob tool to check if `./analysis/{previous-YYYY-MM}.md` exists. If it e
 
 If the previous month's file does not exist, or its format cannot be parsed, skip the MoM comparison and note it in the output.
 
-### 7. Write the analysis
+### 8. Write the analysis
 
 Use the Write tool to create `./analysis/{YYYY-MM}.md`. Follow the template structure defined in `assets/templates/template.md`.
 
@@ -130,7 +206,7 @@ Fill in all sections:
 5. **Month-over-Month Comparison** — delta and percentage change per category (or "No previous month data available")
 6. **Savings Recommendations** — opinionated, specific recommendations
 
-### 8. Present summary
+### 9. Present summary
 
 After writing the file, present a concise summary to the user:
 - Total spend and number of transactions analyzed
@@ -166,3 +242,15 @@ Be direct and specific. "You spent Rp 890,000 at Tokopedia this month — that's
 
 - Categorization rules: `references/categorization-guidelines.md`
 - Output template: `assets/templates/template.md`
+
+## Performance notes
+
+- **CSV parsing**: Usually fast (<5 seconds)
+- **Refund/waiver analysis**: Quick AI operation (<10 seconds)
+- **Categorization**: Longest step — parallel subagents reduce time significantly
+  - Optimized: Removed per-transaction confidence and reasoning overhead
+  - 1 subagent: ~10-20 seconds for 50 transactions
+  - 4 subagents in parallel: ~10-20 seconds for 200 transactions (4x speedup)
+- **Report generation**: Fast (<10 seconds)
+
+**Always inform the user before starting long-running operations** (especially subagent launches).
