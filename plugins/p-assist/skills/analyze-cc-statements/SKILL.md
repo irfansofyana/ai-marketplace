@@ -85,18 +85,26 @@ Using AI judgment, analyze both `transactions` (debits) and `credits` arrays to 
      - Debit "IURAN TAHUNAN 500000" + Credit "PEMBEBASAN IURAN TAHUNAN 500000" = waiver pair
      - Debit "APPLE.COM/BILL" + Credit "Credit IRL CORK APPLE.COM/BILL" = refund pair
 
-3. **Net spending calculation**:
-   - For each matched refund/waiver pair: exclude BOTH the debit and credit from spending analysis
-   - Report matched pairs in a "Refunds & Waivers" section (transparency)
-   - Final spend = sum of debits MINUS excluded refund/waiver amounts
-   - Transaction count = debit_count MINUS number of matched debits (waived/refunded transactions are excluded)
+3. **Build matched pairs list**:
+   - Create `matched_waiver_pairs` array with objects: `{debit_row, debit_amount, debit_description, credit_row, credit_amount, credit_description}`
+   - Calculate `waived_debits_total` = sum of all `debit_amount` in matched pairs
+   - Calculate `waived_credits_total` = sum of all `credit_amount` in matched pairs
+   - **GUARDRAIL CHECK**: Verify that `waived_debits_total` equals `waived_credits_total` (or document any discrepancy). These should match because each waiver credit reverses its corresponding debit.
 
-4. **Unmatched credits** — if a credit doesn't match any debit and isn't a card payment, treat as miscellaneous credit:
+4. **Net spending calculation** (CRITICAL - avoid double-counting):
+   - `total_debit_raw` = `total_debit` from parser (includes ALL debits, including waived ones)
+   - `gross_spend` = `total_debit_raw` - `waived_debits_total`
+   - **GUARDRAIL CHECK**: Verify `gross_spend` equals the sum of all non-waived debits. If using categorized transactions sum, it should match.
+   - Transaction count for report = `debit_count` - (number of matched waiver debits)
+   - **IMPORTANT**: The waiver credit is NOT subtracted again — it simply cancels out the waived debit. Do NOT do: `gross_spend - waived_credits_total` — that would double-count the waiver.
+
+5. **Unmatched credits** — if a credit doesn't match any debit and isn't a card payment, treat as miscellaneous credit:
    - Add to `unmatched_credits` array for reporting
    - Calculate `unmatched_credits_total` = sum of all unmatched credit amounts
    - These WILL reduce the final spend (see step 6)
+   - **GUARDRAIL CHECK**: Ensure no credit is counted as both a waiver match AND an unmatched credit. Each credit should be classified exactly once: (1) card payment, (2) waiver/refund match, or (3) unmatched miscellaneous.
 
-5. **Filter transactions for categorization**: Create a filtered list of transactions excluding those that were matched with refunds/waivers. These are the transactions to categorize.
+6. **Filter transactions for categorization**: Create a filtered list of transactions excluding those that were matched with refunds/waivers. These are the transactions to categorize.
 
 ### 5. Categorize transactions using parallel subagents
 
@@ -129,10 +137,23 @@ Categories available:
 - Food & Drinks — sub-categorize as Essential (groceries, supermarkets) or Social (restaurants, cafes, bars)
 - Transport — ride-hailing, fuel, parking, tolls, public transit
 - Shopping — e-commerce, retail, fashion, electronics
-- Subscriptions — streaming, software, gaming, recurring memberships
+- Subscriptions — streaming, software, gaming, recurring memberships, CLOUD SERVICES
 - Health — pharmacies, clinics, hospitals, fitness
 - Bills & Utilities — electricity, water, internet, insurance, phone
 - Other — anything that doesn't fit above
+
+CRITICAL RULES (common errors to avoid):
+1. CLOUD SERVICES → Subscriptions, NOT Transport:
+   - "ALIBABA CLOUD", "ANYCLOUD", "AWS", "GOOGLE CLOUD", "AZURE" → Subscriptions
+   - "PROTON" (ProtonVPN/Mail), "NANONOBLE" → Subscriptions
+   - Any transaction with "CLOUD", "HOSTING", "SERVER" → Subscriptions
+2. INSTALLMENTS → categorize by MERCHANT, NOT as "Other":
+   - "CICILAN BCA SMARTPHONE", "CICILAN MATAHARI" → Shopping
+   - Look at the merchant name to determine category
+3. GRAB* entries:
+   - "GRAB*FOOD" → Food & Drinks (Social)
+   - "GRAB*TRANSPORT", "GRAB*CAR" → Transport
+4. APPLE.COM/BILL, GOOGLE* → Subscriptions (if software/service), Shopping (if hardware)
 
 For EACH transaction, determine:
 1. Primary category
@@ -171,16 +192,35 @@ Rules:
 - Verify total count matches expected (should equal filtered transaction count)
 - If any subagent failed or returned invalid JSON, retry that chunk with a single agent
 
-### 6. Aggregate and flag
+### 8. Aggregate and flag
 
 Compute total spend per category (and sub-category for Food & Drinks). Flag any category where the total exceeds 40% of the overall spend as potentially disproportionate. This flagging is at the aggregate level — do not flag individual transactions.
 
-**Calculate final net spend:**
-- `gross_spend` = sum of all categorized debits (excludes waived/refunded transactions)
-- `unmatched_credits_total` = sum of unmatched miscellaneous credits
-- `net_spend` = `gross_spend` - `unmatched_credits_total`
-- Report `net_spend` as the **Total spend** in the report header
-- Include a note showing the breakdown: "Rp X gross spend - Rp Y unmatched credits = Rp Z net spend"
+**Calculate final net spend** (CRITICAL - follow this exact formula to avoid double-counting):
+
+```
+# From parser
+total_debit_raw = total_debit  # Includes ALL debits
+
+# From waiver matching (step 4)
+waived_debits_total = sum of debit amounts from matched waiver pairs
+
+# From unmatched credits (step 4)
+unmatched_credits_total = sum of unmatched miscellaneous credit amounts
+
+# Final calculation
+gross_spend = total_debit_raw - waived_debits_total
+net_spend = gross_spend - unmatched_credits_total
+```
+
+**GUARDRAIL CHECKS** (perform these before finalizing):
+1. `gross_spend` should equal the sum of all categorized transaction amounts. If using the filtered transactions from step 4, verify: `sum(categorized_transactions.amount) == gross_spend`
+2. Verify waiver is only subtracted once: `gross_spend + waived_debits_total == total_debit_raw`
+3. **COMMON BUG TO AVOID**: Do NOT subtract `waived_credits_total` from `gross_spend`. The waiver credit already cancelled out the debit — subtracting it again would be double-counting.
+4. **COMMON BUG TO AVOID**: Do NOT add `waived_credits_total` to `unmatched_credits_total`. Waiver credits are matched pairs, not miscellaneous credits.
+
+**Report breakdown** in the report header:
+- "Rp X gross spend (Rp Y total_debit - Rp Z waived fees) - Rp W unmatched credits = Rp V net spend"
 
 ### 7. Check for previous month's analysis
 
@@ -196,11 +236,27 @@ If the previous month's file does not exist, or its format cannot be parsed, ski
 
 ### 8. Write the analysis
 
+**Before writing, VALIDATE CALCULATIONS** using the helper script:
+
+```bash
+python3 <script_path>/scripts/validate_calculations.py \
+    <total_debit_raw> <waived_debits_total> <unmatched_credits_total> <gross_spend> <net_spend>
+```
+
+Where:
+- `<total_debit_raw>` = `total_debit` from parser
+- `<waived_debits_total>` = sum of matched waiver debit amounts
+- `<unmatched_credits_total>` = sum of unmatched miscellaneous credits
+- `<gross_spend>` = calculated gross spend
+- `<net_spend>` = calculated net spend
+
+**If validation fails**, do NOT write the report. Instead, debug the calculation discrepancy first.
+
 Use the Write tool to create `./analysis/{YYYY-MM}.md`. Follow the template structure defined in `assets/templates/template.md`.
 
 Fill in all sections:
-1. **Header metadata** — month, date range, cards, transaction count (excluding waived/refunded), total spend (net of waivers)
-2. **Refunds & Waivers** — if any refund/waiver pairs were identified, list them here with amounts (for transparency)
+1. **Header metadata** — month, date range, cards, transaction count (excluding waived/refunded), total spend with breakdown: "Rp X gross (Rp Y total_debit - Rp Z waived fees) - Rp W unmatched credits = Rp V net spend"
+2. **Refunds & Waivers** — if any refund/waiver pairs were identified, list them here with amounts (for transparency). Show the matched pairs clearly.
 3. **Spend by Category** — table with totals, percentages, and flags
 4. **Transaction Details by Category** — all transactions listed per category, sorted descending by amount (exclude waived/refunded transactions)
 5. **Month-over-Month Comparison** — delta and percentage change per category (or "No previous month data available")

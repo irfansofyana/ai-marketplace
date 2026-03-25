@@ -5,9 +5,11 @@
 **Generated:** {current date}
 **Period:** {earliest transaction_date} to {latest transaction_date}
 **Cards analyzed:** {comma-separated list of unique card_last4 values}
-**Total transactions:** {count of debit rows analyzed}
+**Total transactions:** {count of debit rows analyzed, excluding waived/refunded}
 **Total spend:** Rp {net_spend, formatted with thousand separators}
-<!-- If unmatched credits exist, add: " (Rp {gross_spend} gross - Rp {unmatched_credits} credits)" -->
+<!-- If waived fees exist, add breakdown: " (Rp {gross_spend} = Rp {total_debit_raw} - Rp {waived_fees})" -->
+<!-- If unmatched credits exist, add: " - Rp {unmatched_credits} = Rp {net_spend}") -->
+<!-- Full breakdown example: "Rp 19,454,491 (Rp 19,959,330 - Rp 500,000 waived fees) - Rp 4,839 unmatched credits = Rp 19,454,491" -->
 <!-- If any rows were skipped due to malformed data, note it here -->
 <!-- If any refunds/waivers were identified, note them in the Refunds & Waivers section below -->
 
