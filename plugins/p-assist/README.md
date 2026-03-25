@@ -150,6 +150,41 @@ Check your VPS resource utilization.
 #### `/p-assist:restart-vps`
 Restart your VPS (requires confirmation).
 
+## Skills
+
+### `analyze-cc-statements`
+
+Analyze credit card statement CSV files, categorize transactions, and produce a markdown spending report with month-over-month comparison.
+
+**Directory structure required** (invoke from this root):
+```
+your-cc-directory/
+├── trxns/
+│   ├── 2026-02.csv
+│   └── 2026-03.csv
+└── analysis/          # Created by the skill
+    ├── 2026-02.md
+    └── 2026-03.md
+```
+
+**CSV schema:**
+```
+card_last4, transaction_date, posting_date, description, amount, type, installment_info
+```
+
+**Usage** (this is a skill, not a slash command — Claude activates it automatically when you mention credit card analysis):
+```
+analyze-cc-statements 2026-03
+```
+
+The skill will:
+1. Read and parse `trxns/2026-03.csv`
+2. Filter out credit card payments (`type = credit`)
+3. Categorize each transaction: Food & Drinks (Essential/Social), Transport, Shopping, Subscriptions, Health, Bills & Utilities, Other
+4. Flag categories exceeding 40% of total spend
+5. Compare with previous month's analysis if available
+6. Write `analysis/2026-03.md` with full breakdown and savings recommendations
+
 ## Dependencies
 
 ### MCP Servers Used

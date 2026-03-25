@@ -1,0 +1,114 @@
+{
+  "skill_name": "analyze-cc-statements",
+  "evals": [
+    {
+      "id": 1,
+      "name": "happy-path-no-previous",
+      "prompt": "analyze-cc-statements 2026-03",
+      "description": "Single month analysis with no previous month data",
+      "files": ["evals/files/sample-2026-03.csv"],
+      "setup": "mkdir -p trxns analysis && cp evals/files/sample-2026-03.csv trxns/2026-03.csv",
+      "expectations": [
+        "Output file created at analysis/2026-03.md",
+        "Credit row (PAYMENT THANK YOU) is excluded from analysis",
+        "Total transactions count is 14 (15 rows minus 1 credit)",
+        "At least 5 categories are represented in the spend breakdown",
+        "Food & Drinks is sub-categorized into Essential and Social",
+        "MoM section states no previous month data available",
+        "Savings recommendations reference actual merchant names",
+        "Summary presented to user after file is written"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "happy-path-with-mom",
+      "prompt": "analyze-cc-statements 2026-03",
+      "description": "Analysis with previous month comparison available",
+      "files": ["evals/files/sample-2026-03.csv", "evals/files/sample-analysis-2026-02.md"],
+      "setup": "mkdir -p trxns analysis && cp evals/files/sample-2026-03.csv trxns/2026-03.csv && cp evals/files/sample-analysis-2026-02.md analysis/2026-02.md",
+      "expectations": [
+        "Output file created at analysis/2026-03.md",
+        "MoM comparison section is populated with deltas",
+        "Shopping category shows notable increase (Tokopedia Rp 890k + Shopee Rp 450k vs prev Rp 320k)",
+        "Percentage changes are calculated for each category",
+        "Trend indicators are used (increase/decrease/stable)",
+        "Savings recommendations reference MoM changes"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "edge-all-credit",
+      "prompt": "analyze-cc-statements 2026-04",
+      "description": "CSV where all rows are credit type",
+      "files": [],
+      "setup": "mkdir -p trxns analysis && printf 'card_last4,transaction_date,posting_date,description,amount,type,installment_info\n1234,2026-04-01,2026-04-02,PAYMENT THANK YOU,500000,credit,\n5678,2026-04-05,2026-04-06,PAYMENT THANK YOU,300000,credit,\n' > trxns/2026-04.csv",
+      "expectations": [
+        "No output file is created at analysis/2026-04.md",
+        "User is informed that no spending transactions were found"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "edge-empty-csv",
+      "prompt": "analyze-cc-statements 2026-05",
+      "description": "CSV with only header row",
+      "files": [],
+      "setup": "mkdir -p trxns analysis && printf 'card_last4,transaction_date,posting_date,description,amount,type,installment_info\n' > trxns/2026-05.csv",
+      "expectations": [
+        "No output file is created at analysis/2026-05.md",
+        "User is informed that no transactions were found"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "edge-file-not-found",
+      "prompt": "analyze-cc-statements 2026-06",
+      "description": "CSV file does not exist",
+      "files": [],
+      "setup": "mkdir -p trxns analysis",
+      "expectations": [
+        "User is informed the CSV file was not found",
+        "Expected path trxns/2026-06.csv is mentioned in the error message",
+        "No output file is created"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "edge-january-boundary",
+      "prompt": "analyze-cc-statements 2026-01",
+      "description": "January analysis should look for December of previous year for MoM",
+      "files": ["evals/files/sample-2026-02.csv"],
+      "setup": "mkdir -p trxns analysis && cp evals/files/sample-2026-02.csv trxns/2026-01.csv",
+      "expectations": [
+        "Skill correctly computes previous month as 2025-12",
+        "Glob checks for analysis/2025-12.md (not analysis/2026-00.md)",
+        "MoM section gracefully handles missing 2025-12 analysis"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "suspicious-category-flag",
+      "prompt": "analyze-cc-statements 2026-07",
+      "description": "One category dominates spending (>40%)",
+      "files": [],
+      "setup": "mkdir -p trxns analysis && printf 'card_last4,transaction_date,posting_date,description,amount,type,installment_info\n1234,2026-07-01,2026-07-02,Retail IDN Tokopedia,900000,debit,\n1234,2026-07-05,2026-07-06,Retail IDN Shopee,800000,debit,\n5678,2026-07-10,2026-07-11,STARBUCKS COFFEE,50000,debit,\n5678,2026-07-15,2026-07-16,PLN LISTRIK,350000,debit,\n' > trxns/2026-07.csv",
+      "expectations": [
+        "Shopping category is flagged as disproportionately high (>40% of Rp 2.1M total)",
+        "Flag indicator appears in the Spend by Category table",
+        "Savings recommendations specifically address the high Shopping spend"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "multiple-cards",
+      "prompt": "analyze-cc-statements 2026-03",
+      "description": "Verify all 3 card numbers are listed in header",
+      "files": ["evals/files/sample-2026-03.csv"],
+      "setup": "mkdir -p trxns analysis && cp evals/files/sample-2026-03.csv trxns/2026-03.csv",
+      "expectations": [
+        "Header metadata lists all 3 cards: 1234, 5678, 9012",
+        "Transaction details show correct card_last4 for each entry"
+      ]
+    }
+  ]
+}
