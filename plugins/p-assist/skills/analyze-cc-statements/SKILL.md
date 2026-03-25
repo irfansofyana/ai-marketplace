@@ -7,7 +7,7 @@ description: >
   analysis for YYYY-MM", "categorize my transactions", "credit card report",
   "analyze-cc-statements", or provides a month argument like "2026-03" in the
   context of credit card or transaction analysis.
-allowed-tools: Read Write Glob
+allowed-tools: Read Write Glob Bash
 ---
 
 This skill reads a month's credit card transactions from a CSV file, categorizes each transaction, and writes a structured markdown analysis report with month-over-month comparison and savings recommendations.
@@ -39,25 +39,61 @@ Follow these steps in order:
 
 Extract the YYYY-MM from the user's input. Verify it matches the `YYYY-MM` pattern (4-digit year, dash, 2-digit month, month between 01-12). If invalid, tell the user the expected format and stop.
 
-### 2. Read the CSV
+### 2. Verify CSV file exists
 
-Use the Read tool on `./trxns/{YYYY-MM}.csv`. If the file does not exist, inform the user and stop.
+Use the Glob tool to check if `./trxns/{YYYY-MM}.csv` exists. If the file does not exist, inform the user and stop.
 
-### 3. Parse and filter
+### 3. Parse CSV using the helper script
 
-Parse the CSV content. Discard the header row. Filter out all rows where the `type` column equals `credit`.
+Execute the helper script to accurately parse the CSV and get structured transaction data:
 
-Handle these parsing edge cases:
-- The `description` field may contain commas. If the CSV uses comma delimiters with quoted fields, respect the quoting. Look for the expected 7-column structure to detect parsing issues.
-- Strip currency symbols, commas, and whitespace from the `amount` field before parsing as a number.
-- If `amount` is negative in a debit row, treat it as its absolute value.
-- Skip malformed rows that don't match the 7-column schema. Note skipped rows in the output.
+```bash
+python3 <script_path>/scripts/parse_transactions.py ./trxns/{YYYY-MM}.csv
+```
 
-If no debit rows remain after filtering, inform the user that no spending transactions were found and stop — do not write an output file.
+Where `<script_path>` is the path to this skill directory (derive it from the path to this SKILL.md file — the scripts directory is at `scripts/parse_transactions.py` relative to it).
 
-### 4. Categorize transactions
+The script returns JSON with:
+- `debit_count` — count of all rows where `type = debit`
+- `credit_count` — count of all rows where `type = credit`
+- `total_debit` — sum of all debit amounts (before any adjustments)
+- `total_credit` — sum of all credit amounts
+- `transactions` — array of all debit transactions with fields: row, card, date, description, amount, installment
+- `credits` — array of all credit transactions with fields: row, card, date, description, amount
+- `cards` — sorted list of unique card_last4 values
+- `date_range` — min/max transaction dates in ISO format
+- `skipped_rows` — any rows that couldn't be parsed (malformed)
 
-For every debit row, infer a category from the `description` field. Read `references/categorization-guidelines.md` for the full categorization rules and merchant pattern mappings.
+**Handle script errors:**
+- If the script returns an error (file not found, empty file, wrong column count), inform the user and stop
+- If `debit_count` is 0, inform the user that no spending transactions were found and stop — do not write an output file
+
+### 4. Analyze for refunds, waivers, and reversals
+
+**IMPORTANT**: Do not use `total_debit` from the script directly as the final spend. First, identify credits that are refunds/waivers/reversals (not card payments).
+
+Using AI judgment, analyze both `transactions` (debits) and `credits` arrays to identify:
+
+1. **Card payments** — credits with descriptions like "PAYMENT", "PEMBAYARAN TAGIHAN", "Pembayaran Kartu Kredit" — these are payments TO the card, NOT spending adjustments. Exclude from analysis.
+
+2. **Refunds/waivers/reversals** — credits that reverse a specific debit:
+   - Look for description keywords: "REFUND", "WAIVER", "FEE REVERSAL", "PEMBEBASAN", "REVERSAL", "CREDIT" (when not a payment)
+   - Match to debits by: similar description keywords, same card, similar amount, credit date after debit date
+   - Examples:
+     - Debit "IURAN TAHUNAN 500000" + Credit "PEMBEBASAN IURAN TAHUNAN 500000" = waiver pair
+     - Debit "APPLE.COM/BILL" + Credit "Credit IRL CORK APPLE.COM/BILL" = refund pair
+
+3. **Net spending calculation**:
+   - For each matched refund/waiver pair: exclude BOTH the debit and credit from spending analysis
+   - Report matched pairs in a "Refunds & Waivers" section (transparency)
+   - Final spend = sum of debits MINUS excluded refund/waiver amounts
+   - Transaction count = debit_count MINUS number of matched debits (waived/refunded transactions are excluded)
+
+4. **Unmatched credits** — if a credit doesn't match any debit and isn't a card payment, treat as miscellaneous credit (note it, but don't reduce spending)
+
+### 5. Categorize transactions
+
+For each transaction in the `transactions` array, infer a category from the `description` field. Read `references/categorization-guidelines.md` for the full categorization rules and merchant pattern mappings.
 
 The categories are:
 - **Food & Drinks** — sub-categorized as **Essential** or **Social**
@@ -68,7 +104,7 @@ The categories are:
 - **Bills & Utilities**
 - **Other**
 
-### 5. Aggregate and flag
+### 6. Aggregate and flag
 
 Compute total spend per category (and sub-category for Food & Drinks). Flag any category where the total exceeds 40% of the overall spend as potentially disproportionate. This flagging is at the aggregate level — do not flag individual transactions.
 
@@ -87,11 +123,12 @@ If the previous month's file does not exist, or its format cannot be parsed, ski
 Use the Write tool to create `./analysis/{YYYY-MM}.md`. Follow the template structure defined in `assets/templates/template.md`.
 
 Fill in all sections:
-1. **Header metadata** — month, date range, cards, transaction count, total spend
-2. **Spend by Category** — table with totals, percentages, and flags
-3. **Transaction Details by Category** — all transactions listed per category, sorted descending by amount
-4. **Month-over-Month Comparison** — delta and percentage change per category (or "No previous month data available")
-5. **Savings Recommendations** — opinionated, specific recommendations
+1. **Header metadata** — month, date range, cards, transaction count (excluding waived/refunded), total spend (net of waivers)
+2. **Refunds & Waivers** — if any refund/waiver pairs were identified, list them here with amounts (for transparency)
+3. **Spend by Category** — table with totals, percentages, and flags
+4. **Transaction Details by Category** — all transactions listed per category, sorted descending by amount (exclude waived/refunded transactions)
+5. **Month-over-Month Comparison** — delta and percentage change per category (or "No previous month data available")
+6. **Savings Recommendations** — opinionated, specific recommendations
 
 ### 8. Present summary
 

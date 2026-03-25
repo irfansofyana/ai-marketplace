@@ -8,6 +8,21 @@
 **Total transactions:** {count of debit rows analyzed}
 **Total spend:** Rp {total amount, formatted with thousand separators}
 <!-- If any rows were skipped due to malformed data, note it here -->
+<!-- If any refunds/waivers were identified, note them in the Refunds & Waivers section below -->
+
+---
+
+## Refunds & Waivers
+
+<!-- If any refund/waiver pairs were identified, list them here. Otherwise write "None identified." -->
+
+| Date | Card | Description | Amount | Note |
+|------|:----:|-------------|-------:|------|
+| {date} | {card} | {description} | Rp {amount} | {Waiver/Refund of original debit}
+
+<!-- These transactions were excluded from spending analysis (both debit and credit sides net to zero) -->
+
+---
 
 ---
 
