@@ -51,7 +51,7 @@ Handle these parsing edge cases:
 - The `description` field may contain commas. If the CSV uses comma delimiters with quoted fields, respect the quoting. Look for the expected 7-column structure to detect parsing issues.
 - Strip currency symbols, commas, and whitespace from the `amount` field before parsing as a number.
 - If `amount` is negative in a debit row, treat it as its absolute value.
-- Skip malformed rows that don't match the 6-column schema. Note skipped rows in the output.
+- Skip malformed rows that don't match the 7-column schema. Note skipped rows in the output.
 
 If no debit rows remain after filtering, inform the user that no spending transactions were found and stop — do not write an output file.
 

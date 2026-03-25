@@ -19,7 +19,6 @@
 | Subscriptions | - | Rp 258,000 | 10.7% | |
 | Health | - | Rp 98,000 | 4.1% | |
 | Bills & Utilities | - | Rp 849,000 | 35.2% | |
-| Other | - | Rp 0 | 0% | |
 | **Total** | | **Rp 2,415,000** | **100%** | |
 
 ---

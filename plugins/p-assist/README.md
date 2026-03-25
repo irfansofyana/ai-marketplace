@@ -172,7 +172,7 @@ your-cc-directory/
 card_last4, transaction_date, posting_date, description, amount, type, installment_info
 ```
 
-**Usage:**
+**Usage** (this is a skill, not a slash command — Claude activates it automatically when you mention credit card analysis):
 ```
 analyze-cc-statements 2026-03
 ```

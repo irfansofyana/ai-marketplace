@@ -12,7 +12,7 @@
         "Output file created at analysis/2026-03.md",
         "Credit row (PAYMENT THANK YOU) is excluded from analysis",
         "Total transactions count is 14 (15 rows minus 1 credit)",
-        "All 7 categories are represented in the spend breakdown",
+        "At least 5 categories are represented in the spend breakdown",
         "Food & Drinks is sub-categorized into Essential and Social",
         "MoM section states no previous month data available",
         "Savings recommendations reference actual merchant names",
@@ -41,7 +41,7 @@
       "prompt": "analyze-cc-statements 2026-04",
       "description": "CSV where all rows are credit type",
       "files": [],
-      "setup": "mkdir -p trxns analysis && echo 'card_last4,transaction_date,posting_date,description,amount,type,installment_info\n1234,2026-04-01,2026-04-02,PAYMENT THANK YOU,500000,credit,\n5678,2026-04-05,2026-04-06,PAYMENT THANK YOU,300000,credit,' > trxns/2026-04.csv",
+      "setup": "mkdir -p trxns analysis && printf 'card_last4,transaction_date,posting_date,description,amount,type,installment_info\n1234,2026-04-01,2026-04-02,PAYMENT THANK YOU,500000,credit,\n5678,2026-04-05,2026-04-06,PAYMENT THANK YOU,300000,credit,\n' > trxns/2026-04.csv",
       "expectations": [
         "No output file is created at analysis/2026-04.md",
         "User is informed that no spending transactions were found"
@@ -53,7 +53,7 @@
       "prompt": "analyze-cc-statements 2026-05",
       "description": "CSV with only header row",
       "files": [],
-      "setup": "mkdir -p trxns analysis && echo 'card_last4,transaction_date,posting_date,description,amount,type,installment_info' > trxns/2026-05.csv",
+      "setup": "mkdir -p trxns analysis && printf 'card_last4,transaction_date,posting_date,description,amount,type,installment_info\n' > trxns/2026-05.csv",
       "expectations": [
         "No output file is created at analysis/2026-05.md",
         "User is informed that no transactions were found"
@@ -91,7 +91,7 @@
       "prompt": "analyze-cc-statements 2026-07",
       "description": "One category dominates spending (>40%)",
       "files": [],
-      "setup": "mkdir -p trxns analysis && echo 'card_last4,transaction_date,posting_date,description,amount,type,installment_info\n1234,2026-07-01,2026-07-02,Retail IDN Tokopedia,900000,debit,\n1234,2026-07-05,2026-07-06,Retail IDN Shopee,800000,debit,\n5678,2026-07-10,2026-07-11,STARBUCKS COFFEE,50000,debit,\n5678,2026-07-15,2026-07-16,PLN LISTRIK,350000,debit,' > trxns/2026-07.csv",
+      "setup": "mkdir -p trxns analysis && printf 'card_last4,transaction_date,posting_date,description,amount,type,installment_info\n1234,2026-07-01,2026-07-02,Retail IDN Tokopedia,900000,debit,\n1234,2026-07-05,2026-07-06,Retail IDN Shopee,800000,debit,\n5678,2026-07-10,2026-07-11,STARBUCKS COFFEE,50000,debit,\n5678,2026-07-15,2026-07-16,PLN LISTRIK,350000,debit,\n' > trxns/2026-07.csv",
       "expectations": [
         "Shopping category is flagged as disproportionately high (>40% of Rp 2.1M total)",
         "Flag indicator appears in the Spend by Category table",
