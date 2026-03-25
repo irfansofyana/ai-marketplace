@@ -134,10 +134,10 @@ CATEGORIZATION GUIDELINES:
 Read and follow: references/categorization-guidelines.md
 
 Categories available:
-- Food & Drinks — sub-categorize as Essential (groceries, supermarkets) or Social (restaurants, cafes, bars)
+- Food & Drinks — sub-categorize as Essential (groceries, warung, restaurants, supermarkets) or Social (cafes, bars, food delivery)
 - Transport — ride-hailing, fuel, parking, tolls, public transit
 - Shopping — e-commerce, retail, fashion, electronics
-- Subscriptions — streaming, software, gaming, recurring memberships, CLOUD SERVICES
+- Subscriptions — streaming, software, gaming, recurring memberships, CLOUD SERVICES (e.g. Biznet NEO)
 - Health — pharmacies, clinics, hospitals, fitness
 - Bills & Utilities — electricity, water, internet, insurance, phone
 - Other — anything that doesn't fit above
