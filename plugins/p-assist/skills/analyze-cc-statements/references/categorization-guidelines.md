@@ -15,7 +15,7 @@ Split into two sub-categories:
 - Bakeries: BreadTalk, Holland Bakery, Tous Les Jours, Roti O
 - Convenience stores: Circle K, FamilyMart, Lawson, 7-Eleven
 
-**Social** — dining out, food delivery, cafes, bars:
+**Social** — food delivery, cafes, bars:
 - Cafes/coffee: Starbucks, Kopi Kenangan, Fore Coffee, Janji Jiwa, Tomoro, Flash Coffee, "Cafe", "Coffee", "Kopi"
 - Food delivery: GrabFood, GoFood, ShopeeFood — look for "GRAB*FOOD", "GOFOOD", "SHOPEEFOOD" patterns in description
 - Fast food: McDonalds, KFC, Burger King, Pizza Hut, Dominos, Hokben, CFC, Yoshinoya
@@ -23,7 +23,7 @@ Split into two sub-categories:
 
 ### Transport
 
-- Ride-hailing: Grab (transport, not food), Gojek, Maxim — look for "GRAB*TRANSPORT", "GRAB*CAR", "GRAB*BIKE", "GOJEK", "MAXIM"
+- Ride-hailing: Grab (transport, not food), Gojek (not recurring), Maxim — look for "GRAB*TRANSPORT", "GRAB*CAR", "GRAB*BIKE", "MAXIM"
 - Fuel: Shell, Pertamina, Total, BP, SPBU, Vivo
 - Parking: "Parking", "Parkir"
 - Tolls: "Toll", "Tol", "E-Toll", "Mandiri E-Money"
@@ -53,7 +53,7 @@ Split into two sub-categories:
 - **Domain/Hosting**: Namecheap, GoDaddy, Domain.com, hosting services
 - **Other SaaS tools**: Canva, Figma, Dropbox, Notion, Monday.com, Zo Computer
 
-**Identifying subscriptions:** Look for recurring charges with identical amounts across months. Common patterns include ".COM", "APPLE.COM/BILL", "SUBSCRIPTION", "PREMIUM", "PLUS", "PRO", "CLOUD", "HOSTING" in the description.
+**Identifying subscriptions:** Look for recurring charges with identical amounts across months. Common patterns include ".COM", "APPLE.COM/BILL", "RECURRING", "SUBSCRIPTION", "PREMIUM", "PLUS", "PRO", "CLOUD", "HOSTING" in the description.
 
 **Cloud services specific:** Any transaction containing "CLOUD", "HOSTING", "SERVER", "INFRASTRUCTURE" should be categorized here, NOT as Transport. Examples:
 - "ALIBABA CLOUD" → Subscriptions (NOT Transport)
