@@ -5,15 +5,48 @@
 **Generated:** {current date}
 **Period:** {earliest transaction_date} to {latest transaction_date}
 **Cards analyzed:** {comma-separated list of unique card_last4 values}
-**Total transactions:** {count of debit rows analyzed}
-**Total spend:** Rp {total amount, formatted with thousand separators}
+**Total transactions:** {count of debit rows analyzed, excluding waived/refunded}
+**Total spend:** Rp {net_spend, formatted with thousand separators}
+<!-- If waived fees exist, add breakdown: " (Rp {gross_spend} = Rp {total_debit_raw} - Rp {waived_fees})" -->
+<!-- If unmatched credits exist, add: " - Rp {unmatched_credits} = Rp {net_spend}") -->
+<!-- Full breakdown example: "Rp 19,454,491 (Rp 19,959,330 - Rp 500,000 waived fees) - Rp 4,839 unmatched credits = Rp 19,454,491" -->
 <!-- If any rows were skipped due to malformed data, note it here -->
+<!-- If any refunds/waivers were identified, note them in the Refunds & Waivers section below -->
+
+---
+
+## Refunds & Waivers
+
+<!-- If any refund/waiver pairs were identified, list them here. Otherwise write "None identified." -->
+
+| Date | Card | Description | Amount | Note |
+|------|:----:|-------------|-------:|------|
+| {date} | {card} | {description} | Rp {amount} | {Waiver/Refund of original debit}
+
+<!-- These transactions were excluded from spending analysis (both debit and credit sides net to zero) -->
+
+---
+
+## Other Credits
+
+<!-- If any unmatched credits were identified (credits that aren't card payments and don't match any debit), list them here. Otherwise write "None identified." -->
+
+| Date | Card | Description | Amount |
+|------|------|-------------|-------:|
+| {date} | {card} | {description} | Rp {amount} |
+
+**Total unmatched credits:** Rp {total}
+
+*These credits reduce your net spend: Rp {gross_spend} (gross) - Rp {unmatched_credits} (credits) = Rp {net_spend} (net)*
+
+---
 
 ---
 
 ## Spend by Category
 
 <!-- This table must remain pipe-delimited and parseable — future runs read it for MoM comparison -->
+<!-- Percentages are calculated against gross spend (before unmatched credits) -->
 
 | Category | Sub-category | Total | % of Total | Flag |
 |----------|-------------|------:|:----------:|:----:|
@@ -25,7 +58,9 @@
 | Health | - | Rp {amount} | {pct}% | |
 | Bills & Utilities | - | Rp {amount} | {pct}% | |
 | Other | - | Rp {amount} | {pct}% | |
-| **Total** | | **Rp {total}** | **100%** | |
+| **Gross Total** | | **Rp {gross_total}** | **100%** | |
+| Other Credits | | **- Rp {unmatched_credits}** | | |
+| **Net Total** | | **Rp {net_total}** | | |
 
 <!-- Flag column: mark with ⚠️ if category exceeds 40% of total spend -->
 <!-- Omit rows for categories with zero transactions -->
