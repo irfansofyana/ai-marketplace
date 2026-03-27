@@ -12,7 +12,7 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 |--------|-------------|--------------|
 | **[shared-mcp](./plugins/shared-mcp/)** | **INSTALL FIRST** - MCP infrastructure for web search (Tavily, Exa) | Node.js, TAVILY_API_KEY, EXA_API_KEY |
 | **[p-assist](./plugins/p-assist/)** | Productivity: expenses, RSS, VPS | shared-mcp, N8N_API_TOKEN |
-| **[common-engineering](./plugins/common-engineering/)** | Engineering tools: Mermaid diagrams, tech docs (RFCs, proposals, ADRs) | shared-mcp, mermaid-cli, CONTEXT7_API_KEY |
+| **[common-engineering](./plugins/common-engineering/)** | Engineering tools: code review, Mermaid diagrams, tech docs (RFCs, proposals, ADRs) | shared-mcp, mermaid-cli, CONTEXT7_API_KEY |
 | **[sys-maint](./plugins/sys-maint/)** | System maintenance: Docker cleanup, disk analysis | macOS only |
 | **[thinking-tools](./plugins/thinking-tools/)** | Idea refinery: pressure-test ideas through conversation, produce concise Idea Briefs | None |
 | **[softskills](./plugins/softskills/)** | Office politics coach for navigating workplace dynamics | None |
@@ -33,6 +33,7 @@ Skills are model-invoked capabilities that Claude can activate when triggered by
 | `rfc` | "write an RFC", "design proposal for cross-team review" | 5-15 page Request for Comments |
 | `tsd` | "write a TSD", "document an API", "API spec" | 5-20 page Technical Specification Document |
 | `poc-experiment` | "write a POC document", "Go/No-Go recommendation" | 3-8 page proof of concept with decision |
+| `code-review` | "review my code", "review this branch", "check my diff" | Structured review report with severity-classified findings |
 | `project-management-plan` | "project plan excel", "Gantt chart", "project tracker" | Excel workbook with 4 tabs (plan, charters, budget, RAID) |
 
 ### thinking-tools Skills
