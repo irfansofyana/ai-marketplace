@@ -588,7 +588,6 @@ plugins/common-engineering/
 │   ├── code-review/
 │   │   ├── SKILL.md                    # Skill definition + output format + example
 │   │   └── references/
-│   │       ├── REFERENCE.md            # Index of reference files
 │   │       └── review-checklist.md     # Review criteria per dimension
 │   └── techdocs/
 │       ├── SKILL.md                    # Main skill definition
