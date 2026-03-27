@@ -26,6 +26,20 @@ Use this as a reference when analyzing changed files. Not every item applies to 
 
 **Crypto**: MD5/SHA1 for security, ECB mode, static IVs, custom crypto, `Math.random()` for security
 
+## Reliability
+
+**Error recovery**: Missing retries on transient failures (network, DB), no fallback when a downstream service is unavailable, crash-on-error instead of graceful degradation
+
+**Timeouts**: External calls (HTTP, DB, RPC) without timeouts, unbounded blocking operations, missing circuit breakers on critical paths
+
+**Resource cleanup**: Unclosed connections/streams/file handles in error paths, missing `finally`/`defer`/`with` for cleanup, connection pool exhaustion under load
+
+**Idempotency**: Non-idempotent operations exposed to retries (duplicate payments, duplicate records), missing deduplication keys on write endpoints
+
+**Concurrency**: Race conditions on shared state, TOCTOU bugs, deadlock-prone lock ordering, uncoordinated concurrent writes
+
+**Observability**: Silent failures (swallowed errors with no logging), missing health checks on new services, no alerting hooks for new failure modes
+
 ## Maintainability
 
 **Complexity**: Deep nesting (>3 levels), overly clever one-liners, premature abstraction (factory pattern for 2 cases), functions with 5+ boolean flags

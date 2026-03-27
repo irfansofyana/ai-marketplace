@@ -1,13 +1,13 @@
 ---
 name: code-review
-description: This skill should be used when the user asks to "review my code", "review this branch", "review my changes", "check my diff", "review before merge", "code review", or needs a structured code review analyzing correctness, security, maintainability, and scalability of git diff changes against a base branch. Use this proactively whenever the user is working on a feature branch and mentions wanting feedback on their changes before merging or opening a PR.
+description: This skill should be used when the user asks to "review my code", "review this branch", "review my changes", "check my diff", "review before merge", "code review", or needs a structured code review analyzing correctness, security, reliability, maintainability, and scalability of git diff changes against a base branch. Use this proactively whenever the user is working on a feature branch and mentions wanting feedback on their changes before merging or opening a PR.
 license: MIT
 allowed-tools: AskUserQuestion Bash Read Glob Grep
 ---
 
 # Code Review
 
-Review code changes on the current branch against a base branch. Produce a structured report with findings classified by severity (Critical/Major/Minor/Nit) across four dimensions: correctness, security, maintainability, and scalability.
+Review code changes on the current branch against a base branch. Produce a structured report with findings classified by severity (Critical/Major/Minor/Nit) across five dimensions: correctness, security, reliability, maintainability, and scalability.
 
 **This skill applies the Pareto principle (80/20 rule):** Focus on the ~20% of findings that catch ~80% of real issues. Don't try to be exhaustive — be precise. A review with 3 high-confidence findings that each describe a real harm scenario is far more valuable than 15 speculative observations. Prioritize depth on what matters over breadth across everything.
 
@@ -24,7 +24,7 @@ Everything comes from the codebase — git diffs and source files. Only ask the 
    - Run `git remote show origin 2>/dev/null | grep 'HEAD branch'` to detect the remote default branch, then use `origin/<that-branch>`.
    - If none of the above work (e.g., no remote, unusual setup), ask the user with `AskUserQuestion`.
 
-   **Always diff against `origin/<branch>`** (not the local branch) to ensure you're comparing against the latest remote state, not a potentially stale local copy. Run `git fetch origin <branch>` first if needed.
+   **Always diff against `origin/<branch>`** (not the local branch) to ensure you're comparing against the latest remote state, not a potentially stale local copy. Run `git fetch origin <bare-branch-name>` first if needed (e.g., `git fetch origin main`, **not** `git fetch origin origin/main`).
 2. Run `git diff <base>...HEAD --stat` for a summary, then `git diff <base>...HEAD` for the full diff.
 3. Skip noise automatically — lockfiles (`package-lock.json`, `yarn.lock`, `go.sum`, etc.), generated code (`*.pb.go`, `*.min.js`, `dist/`, `build/`), binaries, and vendor dirs (`node_modules/`, `vendor/`). Log what was skipped. **Exception**: Always review dependency manifest files (`package.json`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `requirements.txt`, `Gemfile`, `pom.xml`, `build.gradle`) — these are never skipped.
 4. For large diffs (>30 files), triage automatically using the tiered reading strategy below. Only ask the user to scope if the diff is so large (>80 files) that even tiered reading won't produce a meaningful review.
@@ -58,9 +58,9 @@ Additional confidence rules:
 
 | Severity | Meaning | Examples |
 |----------|---------|----------|
-| **Critical** | Blocks merge | Security vulns, data corruption, breaking API changes |
-| **Major** | Fix before merge | Logic errors, missing error handling, perf regressions |
-| **Minor** | Can defer | Non-critical optimizations, minor inconsistencies |
+| **Critical** | Blocks merge | Security vulns, data corruption, breaking API changes, unhandled failures causing data loss |
+| **Major** | Fix before merge | Logic errors, missing error handling, missing retries/timeouts on external calls, perf regressions |
+| **Minor** | Can defer | Non-critical optimizations, minor inconsistencies, missing graceful degradation |
 | **Nit** | Optional | Formatting, minor readability tweaks |
 
 ### 5. Generate the report
