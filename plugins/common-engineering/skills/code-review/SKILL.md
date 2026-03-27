@@ -19,15 +19,15 @@ Everything comes from the codebase — git diffs and source files. Only ask the 
 
 1. **Detect the base branch** using this priority order:
    - If the user specified a base branch, use that.
-   - Run `git rev-parse --verify origin/main 2>/dev/null` — if it exists, use `origin/main`.
-   - Run `git rev-parse --verify origin/master 2>/dev/null` — if it exists, use `origin/master`.
-   - Run `git remote show origin 2>/dev/null | grep 'HEAD branch'` to detect the remote default branch, then use `origin/<that-branch>`.
-   - If none of the above work (e.g., no remote, unusual setup), ask the user with `AskUserQuestion`.
+   - Run `git remote show origin 2>/dev/null | grep 'HEAD branch'` to detect the remote default branch, then use `origin/<that-branch>`. This is the most reliable method because it respects the repo's actual configuration.
+   - If the remote query fails (e.g., no network, no remote configured), fall back to local detection: try `git rev-parse --verify origin/main 2>/dev/null`, then `origin/master`.
+   - If none of the above work, ask the user with `AskUserQuestion`.
 
-   **Always diff against `origin/<branch>`** (not the local branch) to ensure you're comparing against the latest remote state, not a potentially stale local copy. Run `git fetch origin <bare-branch-name>` first if needed (e.g., `git fetch origin main`, **not** `git fetch origin origin/main`).
-2. Run `git diff <base>...HEAD --stat` for a summary, then `git diff <base>...HEAD` for the full diff.
-3. Skip noise automatically — lockfiles (`package-lock.json`, `yarn.lock`, `go.sum`, etc.), generated code (`*.pb.go`, `*.min.js`, `dist/`, `build/`), binaries, and vendor dirs (`node_modules/`, `vendor/`). Log what was skipped. **Exception**: Always review dependency manifest files (`package.json`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `requirements.txt`, `Gemfile`, `pom.xml`, `build.gradle`) — these are never skipped.
-4. For large diffs (>30 files), triage automatically using the tiered reading strategy below. Only ask the user to scope if the diff is so large (>80 files) that even tiered reading won't produce a meaningful review.
+   **Always diff against `origin/<branch>`** (not the local branch) to ensure you're comparing against the latest remote state, not a potentially stale local copy.
+2. **Fetch the base branch** by running `git fetch origin <bare-branch-name>` (e.g., `git fetch origin main`, **not** `git fetch origin origin/main`). This is mandatory, not optional — stale local refs can hide upstream conflicts and newly introduced issues. If the fetch fails (no network), warn the user that the review is based on potentially stale data and proceed.
+3. Run `git diff <base>...HEAD --stat` for a summary, then `git diff <base>...HEAD` for the full diff.
+4. Skip noise automatically — lockfiles (`package-lock.json`, `yarn.lock`, `go.sum`, etc.), generated code (`*.pb.go`, `*.min.js`, `dist/`, `build/`), binaries, and vendor dirs (`node_modules/`, `vendor/`). Log what was skipped. **Exception**: Always review dependency manifest files (`package.json`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `requirements.txt`, `Gemfile`, `pom.xml`, `build.gradle`) — these are never skipped.
+5. For large diffs (>30 files), triage automatically using the tiered reading strategy below. Only ask the user to scope if the diff is so large (>80 files) that even tiered reading won't produce a meaningful review.
 
 ### 2. Read context
 
