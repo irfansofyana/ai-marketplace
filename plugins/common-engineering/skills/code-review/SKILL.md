@@ -2,10 +2,6 @@
 name: code-review
 description: This skill should be used when the user asks to "review my code", "review this branch", "review my changes", "check my diff", "review before merge", "code review", or needs a structured code review analyzing correctness, security, maintainability, and scalability of git diff changes against a base branch. Use this proactively whenever the user is working on a feature branch and mentions wanting feedback on their changes before merging or opening a PR.
 license: MIT
-metadata:
-  author: irfansofyana
-  version: "1.1.0"
-  last-updated: "2026-03-27"
 allowed-tools: AskUserQuestion Bash Read Glob Grep
 ---
 
@@ -21,7 +17,7 @@ Everything comes from the codebase — git diffs and source files. Only ask the 
 
 1. Run `git branch -a` and default to `main` or `master`. If ambiguous, ask.
 2. Run `git diff <base>...HEAD --stat` for a summary, then `git diff <base>...HEAD` for the full diff.
-3. Skip noise automatically — lockfiles (`package-lock.json`, `yarn.lock`, `go.sum`, etc.), generated code (`*.pb.go`, `*.min.js`, `dist/`, `build/`), binaries, and vendor dirs (`node_modules/`, `vendor/`). Log what was skipped.
+3. Skip noise automatically — lockfiles (`package-lock.json`, `yarn.lock`, `go.sum`, etc.), generated code (`*.pb.go`, `*.min.js`, `dist/`, `build/`), binaries, and vendor dirs (`node_modules/`, `vendor/`). Log what was skipped. **Exception**: Always review dependency manifest files (`package.json`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `requirements.txt`, `Gemfile`, `pom.xml`, `build.gradle`) — these are never skipped.
 4. For large diffs (>30 files), ask the user if they want to scope to specific directories or file types.
 
 ### 2. Read context
@@ -89,6 +85,15 @@ Use this exact structure:
 | File | Changes | Findings |
 |------|---------|----------|
 | `path` | +X / -Y | MJ-1, MN-1 or "Clean" |
+
+## Dependency Changes
+[Include this section whenever manifest files (package.json, go.mod, etc.) are in the diff. Omit if no dependency changes.]
+
+| Package | Change | From | To | Risk |
+|---------|--------|------|----|------|
+| `example-lib` | Added | — | ^2.1.0 | Low — well-maintained, small footprint |
+| `big-framework` | Major bump | 3.x | 4.0.0 | High — breaking changes, check migration guide |
+| `unused-dep` | Removed | 1.5.0 | — | Low — no remaining imports |
 
 ## Skipped Files
 | File | Reason |

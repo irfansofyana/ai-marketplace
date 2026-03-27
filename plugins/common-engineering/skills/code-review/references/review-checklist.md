@@ -46,6 +46,20 @@ Use this as a reference when analyzing changed files. Not every item applies to 
 
 **Missing indexes**: New WHERE/ORDER BY on unindexed columns (only flag when schema changes are in the diff)
 
+## Dependencies
+
+**Version bumps**: Major version bumps without migration notes, multiple unrelated deps upgraded in one PR (harder to bisect), downgrading a dependency without explanation
+
+**New dependencies**: Adding a dep for something achievable with stdlib or existing deps, unmaintained packages (no commits in 12+ months, low download counts), packages with known CVEs, adding a heavy dep for a small utility (e.g., lodash for one function)
+
+**Removals**: Removing a dep still imported elsewhere, removing without cleaning up its configuration files or types
+
+**Version pinning**: Inconsistent strategy (mixing exact `1.2.3` and range `^1.2.3`), overly broad ranges (`*` or `>=`), pinning to a pre-release without justification
+
+**Peer dependency conflicts**: New dep requiring a different major version of a shared peer dep (e.g., React 17 vs 18), missing peer deps
+
+**Manifest files to watch**: `package.json`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `requirements.txt`, `Gemfile`, `pom.xml`, `build.gradle`
+
 ## Language-Specific
 
 **JS/TS**: `==` vs `===`, unhandled promise rejections, React `useEffect` cleanup leaks, `any` proliferation (only flag in new code)

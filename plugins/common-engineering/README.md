@@ -137,14 +137,6 @@ Structured code review for git branch changes with findings classified by severi
 - ✅ **Verdict**: Ready to merge / Merge after fixes / Needs significant rework
 - ✅ **Zero dependencies**: No MCP servers, API keys, or external tools required
 
-**Example requests:**
-```
-"Review my code changes against main"
-"Do a code review of this branch"
-"Check my diff before I open a PR"
-"Review my changes focusing on security"
-```
-
 ### Future Additions
 
 This plugin will be expanded with additional engineering tools including:
@@ -595,6 +587,7 @@ plugins/common-engineering/
 │   ├── code-review/
 │   │   ├── SKILL.md                    # Skill definition + output format + example
 │   │   └── references/
+│   │       ├── REFERENCE.md            # Index of reference files
 │   │       └── review-checklist.md     # Review criteria per dimension
 │   └── techdocs/
 │       ├── SKILL.md                    # Main skill definition
