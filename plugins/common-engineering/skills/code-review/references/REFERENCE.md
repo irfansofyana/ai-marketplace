@@ -2,7 +2,7 @@
 
 ## Available References
 
-- **[review-checklist.md](review-checklist.md)** — Detailed review criteria organized by four dimensions (correctness, security, maintainability, scalability) plus language-specific checks and dependency review criteria
+- **[review-checklist.md](review-checklist.md)** — Detailed review criteria organized by five dimensions (correctness, security, reliability, maintainability, scalability) plus language-specific checks and dependency review criteria
 
 ## Document Templates
 

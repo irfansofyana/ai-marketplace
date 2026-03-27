@@ -27,13 +27,13 @@ Skills are model-invoked capabilities that Claude can activate when triggered by
 
 | Skill | Trigger Phrases | Output |
 |-------|-----------------|--------|
+| `code-review` | "review my code", "review this branch", "check my diff" | Structured review report with severity-classified findings |
 | `mermaid` | "create a diagram", "draw architecture", "sequence diagram for..." | Validated Mermaid diagrams (sequence, architecture, flowchart) |
 | `one-pager` | "write a one-pager", "create a proposal", "draft a one-pager" | 1-3 page stakeholder approval document |
 | `adr` | "write an ADR", "document architecture decision", "compare X vs Y" | 1-3 page Architecture Decision Record |
 | `rfc` | "write an RFC", "design proposal for cross-team review" | 5-15 page Request for Comments |
 | `tsd` | "write a TSD", "document an API", "API spec" | 5-20 page Technical Specification Document |
 | `poc-experiment` | "write a POC document", "Go/No-Go recommendation" | 3-8 page proof of concept with decision |
-| `code-review` | "review my code", "review this branch", "check my diff" | Structured review report with severity-classified findings |
 | `project-management-plan` | "project plan excel", "Gantt chart", "project tracker" | Excel workbook with 4 tabs (plan, charters, budget, RAID) |
 
 ### thinking-tools Skills

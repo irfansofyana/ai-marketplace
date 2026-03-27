@@ -125,6 +125,7 @@ Structured code review for git branch changes with findings classified by severi
 **Review Dimensions:**
 - **Correctness**: Logic errors, edge cases, race conditions, error handling, test coverage
 - **Security**: Input validation, auth checks, credential exposure, cryptographic issues
+- **Reliability**: Error recovery, timeouts, resource cleanup, idempotency, observability
 - **Maintainability**: Complexity, naming, duplication, code organization
 - **Scalability**: N+1 queries, unbounded operations, resource leaks, missing pagination
 
@@ -362,7 +363,7 @@ The code review skill is automatically invoked when you ask to review code chang
 - Detects the base branch automatically (defaults to `main`/`master`)
 - Generates a diff and pre-filters noise (lockfiles, generated code, binaries)
 - Reads full file context for each changed file
-- Analyzes against four dimensions: correctness, security, maintainability, scalability
+- Analyzes against five dimensions: correctness, security, reliability, maintainability, scalability
 - Produces a structured report with severity-classified findings and a merge verdict
 
 **Requirements:**
