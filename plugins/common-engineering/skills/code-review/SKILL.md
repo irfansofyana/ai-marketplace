@@ -1,0 +1,189 @@
+---
+name: code-review
+description: This skill should be used when the user asks to "review my code", "review this branch", "review my changes", "check my diff", "review before merge", "code review", or needs a structured code review analyzing correctness, security, maintainability, and scalability of git diff changes against a base branch. Use this proactively whenever the user is working on a feature branch and mentions wanting feedback on their changes before merging or opening a PR.
+license: MIT
+metadata:
+  author: irfansofyana
+  version: "1.1.0"
+  last-updated: "2026-03-27"
+allowed-tools: AskUserQuestion Bash Read Glob Grep
+---
+
+# Code Review
+
+Review code changes on the current branch against a base branch. Produce a structured report with findings classified by severity (Critical/Major/Minor/Nit) across four dimensions: correctness, security, maintainability, and scalability.
+
+Everything comes from the codebase — git diffs and source files. Only ask the user about configuration (base branch, scope).
+
+## Workflow
+
+### 1. Get the diff
+
+1. Run `git branch -a` and default to `main` or `master`. If ambiguous, ask.
+2. Run `git diff <base>...HEAD --stat` for a summary, then `git diff <base>...HEAD` for the full diff.
+3. Skip noise automatically — lockfiles (`package-lock.json`, `yarn.lock`, `go.sum`, etc.), generated code (`*.pb.go`, `*.min.js`, `dist/`, `build/`), binaries, and vendor dirs (`node_modules/`, `vendor/`). Log what was skipped.
+4. For large diffs (>30 files), ask the user if they want to scope to specific directories or file types.
+
+### 2. Read context
+
+For each changed file, use `Read` to load the full file — not just the diff hunks. Understanding surrounding code (function signatures, class structure, call patterns) is critical for accurate review. For very large files (>500 lines), read the changed sections with ~50 lines of surrounding context.
+
+Use `Glob` to detect the project type (`package.json`, `go.mod`, `Cargo.toml`, etc.) so you apply the right language-specific checks.
+
+### 3. Analyze
+
+Walk through each changed file against the four dimensions. Read `references/review-checklist.md` for the detailed criteria. The checklist is a reference — not every item applies to every file.
+
+**The confidence filter is the most important part of this skill.** For every potential finding, ask yourself: *can I describe a realistic scenario where this causes harm in 1-2 sentences?* If yes, include it with that scenario. If no, drop it — it's noise.
+
+Why this matters: AI code reviews tend to produce ~80% noise. The value of this skill is in surfacing the 2-4 findings per file that actually matter, not in cataloguing every imperfection. A review with 3 high-confidence findings is far more useful than one with 15 speculative ones.
+
+Additional confidence rules:
+- If a finding depends on runtime behavior, state your assumption explicitly ("If `user.profile` can be null — likely, since profiles are created async — this will throw")
+- If something is "possible but depends on context you can't see," lower it to Minor or drop it
+- Respect established project patterns — if the codebase consistently does something, don't flag new code for following suit
+
+### 4. Classify
+
+| Severity | Meaning | Examples |
+|----------|---------|----------|
+| **Critical** | Blocks merge | Security vulns, data corruption, breaking API changes |
+| **Major** | Fix before merge | Logic errors, missing error handling, perf regressions |
+| **Minor** | Can defer | Non-critical optimizations, minor inconsistencies |
+| **Nit** | Optional | Formatting, minor readability tweaks |
+
+### 5. Generate the report
+
+Use this exact structure:
+
+```
+# Code Review Report
+
+**Branch:** [branch-name] **Base:** [base-branch] **Date:** [YYYY-MM-DD]
+**Files Reviewed:** [N] | **Skipped:** [M] | **Diff:** +[X] / -[Y] lines
+
+## Summary
+[2-3 sentences. Lead with the most impactful finding.]
+
+**Verdict:** [Ready to merge | Merge after fixes | Needs significant rework]
+
+| Severity | Count |
+|----------|-------|
+| Critical | N |
+| Major | N |
+| Minor | N |
+| Nit | N |
+
+## Findings
+
+### [CR-1] [Title]
+- **File:** `path/to/file` (lines X-Y) | **Category:** Security
+- **What:** [1-2 sentences]
+- **Why it matters:** [The realistic harm scenario]
+- **Suggestion:** [Concrete fix]
+
+[Group by severity: Critical > Major > Minor > Nit. Use IDs: CR-N, MJ-N, MN-N, NT-N.
+ Omit empty severity sections.]
+
+## Files Reviewed
+| File | Changes | Findings |
+|------|---------|----------|
+| `path` | +X / -Y | MJ-1, MN-1 or "Clean" |
+
+## Skipped Files
+| File | Reason |
+|------|--------|
+| `package-lock.json` | Lockfile |
+
+## What went well
+[1-3 genuine, specific things the author did well. Not generic praise.]
+```
+
+**Verdict rules** (mechanical, not subjective):
+- No Critical and no Major = **Ready to merge**
+- Has Major, no Critical = **Merge after fixes**
+- Has any Critical = **Needs significant rework**
+
+### What NOT to flag
+
+These create noise and erode trust in the review:
+- Style preferences (brace placement, tabs vs spaces) — leave these to linters
+- Missing comments on clear code
+- Import ordering
+- Variable names that are "not ideal" but understandable
+- Patterns the project already uses consistently
+- Test file organization preferences
+
+## Example
+
+Here's what a good review looks like — notice how each finding has a concrete harm scenario:
+
+---
+
+# Code Review Report
+
+**Branch:** feat/search-feature **Base:** main **Date:** 2026-03-20
+**Files Reviewed:** 8 | **Skipped:** 4 | **Diff:** +847 / -23 lines
+
+## Summary
+
+The search feature has a critical SQL injection vulnerability in the query builder and an N+1 query pattern that will degrade at scale. Frontend implementation is solid.
+
+**Verdict:** Needs significant rework
+
+| Severity | Count |
+|----------|-------|
+| Critical | 1 |
+| Major | 2 |
+| Minor | 1 |
+
+## Findings
+
+### [CR-1] SQL injection via string interpolation in search query
+- **File:** `src/services/search.ts` (lines 34-41) | **Category:** Security
+- **What:** Query built with template literals: `` `SELECT * FROM products WHERE name LIKE '%${searchTerm}%'` ``. The `searchTerm` comes directly from the request query parameter.
+- **Why it matters:** An attacker can inject `'; DROP TABLE products; --` as a search term. This is a public endpoint (no auth), so it's immediately exploitable.
+- **Suggestion:** Use parameterized queries: `db.query('SELECT * FROM products WHERE name LIKE $1', [`%${searchTerm}%`])`.
+
+### [MJ-1] N+1 query loading categories per search result
+- **File:** `src/services/search.ts` (lines 52-58) | **Category:** Scalability
+- **What:** Each search result calls `getCategoryById(result.category_id)` individually in a loop.
+- **Why it matters:** With 50 results per page, this fires 51 DB queries per search. At 100 concurrent searches = 5,100 queries. Response time degrades from ~50ms to >2s.
+- **Suggestion:** JOIN categories in the original query, or batch-fetch with `WHERE id IN (...)`.
+
+### [MJ-2] Pagination returns duplicates at page boundaries
+- **File:** `src/services/search.ts` (lines 44-48) | **Category:** Correctness
+- **What:** `OFFSET/LIMIT` pagination without `ORDER BY`. The DB may return different row orders between requests.
+- **Why it matters:** Users see duplicate items when paging, or miss items entirely. Worse when rows are inserted between requests.
+- **Suggestion:** Add `ORDER BY id ASC`. Consider cursor-based pagination for deep offsets.
+
+### [MN-1] Duplicated validation with inconsistent limits
+- **File:** `src/components/SearchBar.tsx` (lines 22-28) and `src/services/search.ts` (lines 30-32) | **Category:** Maintainability
+- **What:** Search term length validated in both frontend (100 char max) and backend (200 char max) with different limits.
+- **Why it matters:** Frontend truncates at 100 but backend accepts up to 200 — confusing, and if rules change they need updating in two places.
+- **Suggestion:** Backend validation is the security boundary. Align frontend limit or remove it.
+
+## Files Reviewed
+| File | Changes | Findings |
+|------|---------|----------|
+| `src/services/search.ts` | +186 / -0 | CR-1, MJ-1, MJ-2 |
+| `src/components/SearchBar.tsx` | +89 / -3 | MN-1 |
+| `src/routes/search.ts` | +24 / -0 | Clean |
+| `src/components/SearchResults.tsx` | +156 / -0 | Clean |
+| `src/components/SearchPagination.tsx` | +72 / -0 | Clean |
+| `src/hooks/useSearch.ts` | +64 / -0 | Clean |
+| `src/tests/search.test.ts` | +198 / -12 | Clean |
+| `migrations/20260320_add_search.sql` | +18 / -0 | Clean |
+
+## Skipped Files
+| File | Reason |
+|------|--------|
+| `package-lock.json` | Lockfile |
+| `generated/graphql-types.ts` | Generated |
+| `public/images/search-icon.png` | Binary |
+| `public/images/no-results.svg` | Binary |
+
+## What went well
+- **Error boundaries**: `SearchResults` gracefully handles API failures with user-friendly messages. The `useSearch` hook manages loading/error/empty states cleanly.
+- **Migration quality**: The SQL migration adds indexes on `products.name`, which will help search performance.
+- **Test coverage**: Tests cover search with results, empty results, pagination, and error scenarios.

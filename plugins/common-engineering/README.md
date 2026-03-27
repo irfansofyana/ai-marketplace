@@ -118,6 +118,33 @@ Generate professional Excel project management plans with full-year Gantt charts
 - ✅ **Status validation**: Dropdown with standard statuses (Not Started, In Progress, Completed, Blocked, On Hold)
 - ✅ **Template rows**: 30 rows ready for task entry
 
+### Code Review
+
+Structured code review for git branch changes with findings classified by severity and dimension.
+
+**Review Dimensions:**
+- **Correctness**: Logic errors, edge cases, race conditions, error handling, test coverage
+- **Security**: Input validation, auth checks, credential exposure, cryptographic issues
+- **Maintainability**: Complexity, naming, duplication, code organization
+- **Scalability**: N+1 queries, unbounded operations, resource leaks, missing pagination
+
+**Key Capabilities:**
+- ✅ **Automatic diff analysis**: Detects base branch and generates structured review from git diff
+- ✅ **Noise pre-filtering**: Skips lockfiles, generated code, binaries, vendor directories
+- ✅ **Severity classification**: Critical, Major, Minor, Nit — with clear action required for each
+- ✅ **Confidence filter**: Only flags issues with realistic harm scenarios — no speculative noise
+- ✅ **Positive observations**: Reinforces good practices alongside issue identification
+- ✅ **Verdict**: Ready to merge / Merge after fixes / Needs significant rework
+- ✅ **Zero dependencies**: No MCP servers, API keys, or external tools required
+
+**Example requests:**
+```
+"Review my code changes against main"
+"Do a code review of this branch"
+"Check my diff before I open a PR"
+"Review my changes focusing on security"
+```
+
 ### Future Additions
 
 This plugin will be expanded with additional engineering tools including:
@@ -326,6 +353,29 @@ The `/project-management-plan` skill generates a complete Excel project manageme
 
 **Requirements:**
 - Python 3 with openpyxl (`pip install openpyxl`)
+
+### Code Review Skill
+
+The code review skill is automatically invoked when you ask to review code changes on your current branch.
+
+**Example requests:**
+```
+"Review my code changes against main"
+"Do a code review of this branch"
+"Check my diff before I open a PR"
+"Review my changes focusing on security"
+```
+
+**How it works:**
+- Detects the base branch automatically (defaults to `main`/`master`)
+- Generates a diff and pre-filters noise (lockfiles, generated code, binaries)
+- Reads full file context for each changed file
+- Analyzes against four dimensions: correctness, security, maintainability, scalability
+- Produces a structured report with severity-classified findings and a merge verdict
+
+**Requirements:**
+- Git (for diff generation)
+- No additional dependencies
 
 ### Direct Agent Invocation
 
@@ -542,6 +592,10 @@ plugins/common-engineering/
 │   │   ├── flowchart-diagram-reference.md
 │   │   ├── sequence-diagrams-reference.md
 │   │   └── architecture-diagram-reference.md
+│   ├── code-review/
+│   │   ├── SKILL.md                    # Skill definition + output format + example
+│   │   └── references/
+│   │       └── review-checklist.md     # Review criteria per dimension
 │   └── techdocs/
 │       ├── SKILL.md                    # Main skill definition
 │       ├── writing-guidelines.md       # Technical writing best practices
@@ -586,7 +640,7 @@ Completed features:
 - [x] Project Management Plan skill with full-year Gantt charts (v1.10.0)
 
 Planned additions to this plugin:
-- [ ] Code review agent
+- [x] Code review agent
 - [ ] Shell script expert agent
 
 ## Author
