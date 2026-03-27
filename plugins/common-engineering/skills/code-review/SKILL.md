@@ -9,6 +9,8 @@ allowed-tools: AskUserQuestion Bash Read Glob Grep
 
 Review code changes on the current branch against a base branch. Produce a structured report with findings classified by severity (Critical/Major/Minor/Nit) across four dimensions: correctness, security, maintainability, and scalability.
 
+**This skill applies the Pareto principle (80/20 rule):** Focus on the ~20% of findings that catch ~80% of real issues. Don't try to be exhaustive — be precise. A review with 3 high-confidence findings that each describe a real harm scenario is far more valuable than 15 speculative observations. Prioritize depth on what matters over breadth across everything.
+
 Everything comes from the codebase — git diffs and source files. Only ask the user about configuration (base branch, scope).
 
 ## Workflow
@@ -25,21 +27,27 @@ Everything comes from the codebase — git diffs and source files. Only ask the 
    **Always diff against `origin/<branch>`** (not the local branch) to ensure you're comparing against the latest remote state, not a potentially stale local copy. Run `git fetch origin <branch>` first if needed.
 2. Run `git diff <base>...HEAD --stat` for a summary, then `git diff <base>...HEAD` for the full diff.
 3. Skip noise automatically — lockfiles (`package-lock.json`, `yarn.lock`, `go.sum`, etc.), generated code (`*.pb.go`, `*.min.js`, `dist/`, `build/`), binaries, and vendor dirs (`node_modules/`, `vendor/`). Log what was skipped. **Exception**: Always review dependency manifest files (`package.json`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `requirements.txt`, `Gemfile`, `pom.xml`, `build.gradle`) — these are never skipped.
-4. For large diffs (>30 files), ask the user if they want to scope to specific directories or file types.
+4. For large diffs (>30 files), triage automatically using the tiered reading strategy below. Only ask the user to scope if the diff is so large (>80 files) that even tiered reading won't produce a meaningful review.
 
 ### 2. Read context
 
-For each changed file, use `Read` to load the full file — not just the diff hunks. Understanding surrounding code (function signatures, class structure, call patterns) is critical for accurate review. For very large files (>500 lines), read the changed sections with ~50 lines of surrounding context.
-
 Use `Glob` to detect the project type (`package.json`, `go.mod`, `Cargo.toml`, etc.) so you apply the right language-specific checks.
+
+**Always apply tiered reading** — even for small diffs, not every file deserves the same depth. Use the `--stat` output and diff content to triage files into risk levels:
+
+- **Deep read (full file):** Files that appear higher-risk based on signals in their path, imports, diff content, or change size. Use your judgment — security-sensitive paths, database-touching code, new endpoints, large rewrites, and new files with significant logic are typical candidates.
+- **Medium read (diff hunks + ~50 lines surrounding context):** Standard business logic and service files where the diff hunks plus some surrounding context is enough to understand the change.
+- **Light read (diff hunks only):** Tests, documentation, configuration, and UI components that rarely produce high-severity findings.
+
+For small diffs (≤15 files), most files will naturally land in deep or medium. For large diffs, be more selective — deep-read only the highest-risk files and light-read the rest. The goal is to spend your context budget where it matters most. You don't need to be told exactly which files are high-risk — look at the filenames, the diff content, the change size, and the imports to make that call yourself. When in doubt, read more rather than less.
 
 ### 3. Analyze
 
-Walk through each changed file against the four dimensions. Read `references/review-checklist.md` for the detailed criteria. The checklist is a reference — not every item applies to every file.
+Analyze files in proportion to their read tier — deep-read files get thorough multi-dimension analysis, medium-read files get focused analysis on what the diff reveals, light-read files only get flagged if something obviously wrong jumps out. Read `references/review-checklist.md` for detailed criteria. The checklist is a reference — not every item applies to every file.
 
 **The confidence filter is the most important part of this skill.** For every potential finding, ask yourself: *can I describe a realistic scenario where this causes harm in 1-2 sentences?* If yes, include it with that scenario. If no, drop it — it's noise.
 
-Why this matters: AI code reviews tend to produce ~80% noise. The value of this skill is in surfacing the 2-4 findings per file that actually matter, not in cataloguing every imperfection. A review with 3 high-confidence findings is far more useful than one with 15 speculative ones.
+Why this matters: AI code reviews tend to produce ~80% noise. The value of this skill is in surfacing the findings that actually matter, not in cataloguing every imperfection. **Cap the total report at ~10 findings maximum** regardless of diff size. For a 5-file diff that might be 2-4 findings; for a 40-file diff it's still ~10, focused on the highest-severity issues across all files. A concise review gets read and acted on — a wall of 30+ findings gets ignored.
 
 Additional confidence rules:
 - If a finding depends on runtime behavior, state your assumption explicitly ("If `user.profile` can be null — likely, since profiles are created async — this will throw")
