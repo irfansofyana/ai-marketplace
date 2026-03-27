@@ -15,7 +15,14 @@ Everything comes from the codebase — git diffs and source files. Only ask the 
 
 ### 1. Get the diff
 
-1. Run `git branch -a` and default to `main` or `master`. If ambiguous, ask.
+1. **Detect the base branch** using this priority order:
+   - If the user specified a base branch, use that.
+   - Run `git rev-parse --verify origin/main 2>/dev/null` — if it exists, use `origin/main`.
+   - Run `git rev-parse --verify origin/master 2>/dev/null` — if it exists, use `origin/master`.
+   - Run `git remote show origin 2>/dev/null | grep 'HEAD branch'` to detect the remote default branch, then use `origin/<that-branch>`.
+   - If none of the above work (e.g., no remote, unusual setup), ask the user with `AskUserQuestion`.
+
+   **Always diff against `origin/<branch>`** (not the local branch) to ensure you're comparing against the latest remote state, not a potentially stale local copy. Run `git fetch origin <branch>` first if needed.
 2. Run `git diff <base>...HEAD --stat` for a summary, then `git diff <base>...HEAD` for the full diff.
 3. Skip noise automatically — lockfiles (`package-lock.json`, `yarn.lock`, `go.sum`, etc.), generated code (`*.pb.go`, `*.min.js`, `dist/`, `build/`), binaries, and vendor dirs (`node_modules/`, `vendor/`). Log what was skipped. **Exception**: Always review dependency manifest files (`package.json`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `requirements.txt`, `Gemfile`, `pom.xml`, `build.gradle`) — these are never skipped.
 4. For large diffs (>30 files), ask the user if they want to scope to specific directories or file types.
