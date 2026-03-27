@@ -76,12 +76,12 @@ Use this as a reference when analyzing changed files. Not every item applies to 
 
 ## Language-Specific
 
-**JS/TS**: `==` vs `===`, unhandled promise rejections, React `useEffect` cleanup leaks, `any` proliferation (only flag in new code)
+**JS/TS**: `==` vs `===`, unhandled promise rejections, React `useEffect` cleanup leaks, `any` proliferation (only flag in new code), closure variable capture in loops (stale references), `as` type assertions bypassing type safety, mutating arrays/objects during iteration, missing `null`/`undefined` distinction (use `strictNullChecks`)
 
-**Go**: Ignored errors (`_ :=`), goroutine leaks (no cancellation context), concurrent map access, `defer` in loops
+**Go**: Ignored errors (`_ :=`), goroutine leaks (no cancellation context), concurrent map access, `defer` in loops (defers until function exit, not iteration), nil map writes (panic — must `make()` first), slice append aliasing (appending to a sub-slice can mutate the original), channels closed by receiver instead of sender, missing `context.WithTimeout` on external calls
 
-**Python**: Mutable default args (`def f(x=[])`), bare `except:`, `shell=True` with user input, missing `with` for resources
+**Python**: Mutable default args (`def f(x=[])`), bare `except:`, `shell=True` with user input, missing `with` for resources, late-binding closures in loops (`lambda x: i*x` captures final `i`), modifying list while iterating (skipped items or `IndexError`), LEGB scope surprises (`x += 1` in function creates local, not assignment to outer), circular module imports
 
-**Java**: Missing try-with-resources, `==` vs `.equals()`, mutable map keys, over-broad `synchronized`
+**Java**: Missing try-with-resources, `==` vs `.equals()`, mutable map keys, over-broad `synchronized`, `Optional.get()` without `isPresent()` (use `orElse`/`map`), raw generic types losing type safety, `volatile` insufficient for compound operations (use `AtomicInteger` etc.), `hashCode`/`equals` contract violations, checked exceptions swallowed silently in streams/lambdas
 
-**Rust**: `unwrap()`/`expect()` in production paths, unnecessary `clone()`, unjustified `unsafe`
+**Rust**: `unwrap()`/`expect()` in production paths, unnecessary `clone()`, unjustified `unsafe`, integer overflow (wraps silently in release — use `checked_mul`/`checked_add`), `as` for lossy numeric casts (use `TryFrom` instead), `Path::join` with absolute paths silently replaces base path, `Debug`/`Serialize` derives leaking sensitive fields, unbounded input without size limits (DoS risk)
