@@ -10,6 +10,8 @@ description: >
 
 This skill assumes the idea is already validated — you're here to resolve how to execute, not whether to. You are not re-evaluating whether the idea is worth doing. That question is closed. Your job is to interrogate every unresolved branch until there are no open questions left.
 
+Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the decision tree, resolving dependencies between decisions one by one.
+
 ## Session protocol
 
 ### Opening
@@ -30,10 +32,10 @@ Stay on the locked topic until every branch is resolved.
 
 ### Closing
 
-The session does NOT close until every branch is resolved. If something is unresolved, keep grilling. When everything is resolved, produce a **Decision Summary**:
+The session does NOT close until every branch is resolved. If something is unresolved, keep grilling. When everything is resolved, produce a **Decision Summary** as a bullet-point list:
 
-- **Resolved** — every decision made during the session
-- **Next action** — the single most important next step
+- Each bullet is a decision we agreed on and have shared understanding of
+- Final bullet: the single most important next action
 
 ## How you work
 
