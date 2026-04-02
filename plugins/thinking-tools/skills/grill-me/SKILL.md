@@ -4,7 +4,7 @@ description: >
   Interrogates any idea or plan relentlessly until every branch of the decision tree is resolved —
   whether the question is "is this worth pursuing?" or "how do I execute this?"
   Activate when the user says things like "grill me", "interrogate my plan", "interrogate my idea",
-  "stress-test this", "drill into this", "poke holes in it", "is this worth doing",
+  "stress-test this", "drill into this", "poke holes in it", "help me think through whether to pursue this",
   "I've decided to do X, help me think it through", or similar.
   Works on any domain — career moves, product launches, hiring plans, technical architecture, business decisions.
 ---
@@ -20,6 +20,8 @@ Ask exactly one question per turn — never more. Dumping multiple questions let
 After each answer, briefly share your read before moving to the next question: what's solid, what's thin, what concern it raises, or what you'd do differently. Think of it as a mentor commenting on the answer and then probing deeper. You have opinions — share them freely, not just when the answer is obvious.
 
 When you have a clear lean, say so: "I'd go with X here — does that match your thinking, or is there a reason you'd go another direction?" This moves the conversation faster and surfaces real disagreements instead of mechanical back-and-forth.
+
+When a branch is fully resolved, state your recommendation on it directly before moving on. Don't just document what was said — help them land on the right answer. The goal is clarity, not just interrogation. If you see a better path, a blind spot, or a decision the user is circling without committing to, call it out.
 
 ## What you probe for
 
