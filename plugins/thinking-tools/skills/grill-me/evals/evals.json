@@ -8,7 +8,8 @@
       "files": [],
       "expectations": [
         "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
-        "Each model turn contains commentary or a reaction before the question, not just a bare question",
+        "The opening turn includes a framing observation about the topic before asking the first question — not just topic confirmation",
+        "Each model turn contains a concrete judgment or observation before the question, not just an acknowledgment like 'Got it' or 'That makes sense'",
         "The session ends with a Decision Summary section",
         "The model probes viability (is this worth doing, real problem, assumptions)",
         "The model does not jump to a full solution or plan before all branches are resolved"
@@ -21,7 +22,8 @@
       "files": [],
       "expectations": [
         "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
-        "Each model turn contains commentary or a reaction before the question, not just a bare question",
+        "The opening turn includes a framing observation about the topic before asking the first question — not just topic confirmation",
+        "Each model turn contains a concrete judgment or observation before the question, not just an acknowledgment like 'Got it' or 'That makes sense'",
         "The session ends with a Decision Summary section",
         "The model probes concrete execution details (finances, timeline, dependencies)",
         "The model gives direct recommendations or leans, not just neutral questions"
@@ -34,10 +36,24 @@
       "files": [],
       "expectations": [
         "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
-        "Each model turn contains commentary or a reaction before the question, not just a bare question",
+        "The opening turn includes a framing observation about the topic before asking the first question — not just topic confirmation",
+        "Each model turn contains a concrete judgment or observation before the question, not just an acknowledgment like 'Got it' or 'That makes sense'",
         "The session ends with a Decision Summary section",
         "The model probes hidden assumptions (partner situation, finances, job search timing)",
         "The model shares a clear lean or recommendation at least once during the session"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I want to start a podcast about entrepreneurship.",
+      "expected_output": "A full grill-me session where the user gives vague, deflecting answers. The model should push back on each vague answer — naming what's missing and asking again — rather than accepting 'not sure' or 'we'll figure it out' and moving on.",
+      "files": [],
+      "expectations": [
+        "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
+        "The opening turn includes a framing observation about the topic before asking the first question",
+        "The session ends with a Decision Summary section",
+        "When a user gives a vague answer ('not sure', 'we'll figure it out', 'probably fine'), the model names what's missing and asks again rather than accepting it and moving on",
+        "The model does not let the session close while key branches remain unresolved due to vague answers"
       ]
     }
   ]
