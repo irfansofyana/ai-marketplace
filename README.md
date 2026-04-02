@@ -41,7 +41,7 @@ Skills are model-invoked capabilities that Claude can activate when triggered by
 | Skill | Trigger Phrases | Output |
 |-------|-----------------|--------|
 | `idea-refinery` | "pressure-test my idea", "sparring partner", "gut-check this idea", "is this worth doing" | Concise Idea Brief with problem, MVP, risks, next actions |
-| `grill-me` | "grill me", "interrogate my plan", "stress-test this design", "drill into this plan" | Resolved decision tree — every branch of execution accounted for |
+| `grill-me` | "grill me", "interrogate my idea/plan", "stress-test this", "drill into this", "is this worth doing", "poke holes in it" | Decision Summary — every branch resolved, whether viability or execution |
 
 ### softskills Skills
 
