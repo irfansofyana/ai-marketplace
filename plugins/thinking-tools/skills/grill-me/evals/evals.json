@@ -1,0 +1,60 @@
+{
+  "skill_name": "grill-me",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm thinking about building a SaaS tool for freelancers to manage invoices.",
+      "expected_output": "A full grill-me session: one question per turn with mentor commentary after each answer, covering viability and execution, ending with a Decision Summary bullet list.",
+      "files": [],
+      "expectations": [
+        "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
+        "The opening turn includes a framing observation about the topic before asking the first question — not just topic confirmation",
+        "Each model turn contains a concrete judgment or observation before the question, not just an acknowledgment like 'Got it' or 'That makes sense'",
+        "The session ends with a Decision Summary section",
+        "The model probes viability (is this worth doing, real problem, assumptions)",
+        "The model does not jump to a full solution or plan before all branches are resolved"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I've decided to quit my job and go full-time on my side project in 3 months.",
+      "expected_output": "A full grill-me session interrogating execution of this decision — sequencing, finances, dependencies, failure modes — with mentor commentary after each answer and a Decision Summary at the end.",
+      "files": [],
+      "expectations": [
+        "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
+        "The opening turn includes a framing observation about the topic before asking the first question — not just topic confirmation",
+        "Each model turn contains a concrete judgment or observation before the question, not just an acknowledgment like 'Got it' or 'That makes sense'",
+        "The session ends with a Decision Summary section",
+        "The model probes concrete execution details (finances, timeline, dependencies)",
+        "The model gives direct recommendations or leans, not just neutral questions"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I want to move to a new city for better career opportunities.",
+      "expected_output": "A full grill-me session on this life decision — interrogating viability, execution, hidden assumptions, and failure modes — with mentor commentary and a Decision Summary.",
+      "files": [],
+      "expectations": [
+        "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
+        "The opening turn includes a framing observation about the topic before asking the first question — not just topic confirmation",
+        "Each model turn contains a concrete judgment or observation before the question, not just an acknowledgment like 'Got it' or 'That makes sense'",
+        "The session ends with a Decision Summary section",
+        "The model probes hidden assumptions (partner situation, finances, job search timing)",
+        "The model shares a clear lean or recommendation at least once during the session"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I want to start a podcast about entrepreneurship.",
+      "expected_output": "A full grill-me session where the user gives vague, deflecting answers. The model should push back on each vague answer — naming what's missing and asking again — rather than accepting 'not sure' or 'we'll figure it out' and moving on.",
+      "files": [],
+      "expectations": [
+        "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
+        "The opening turn includes a framing observation about the topic before asking the first question",
+        "When a user gives a vague answer ('not sure', 'we'll figure it out', 'probably fine'), the model names what's missing and asks again rather than accepting it and moving on",
+        "The model does not let the session close while key branches remain unresolved due to vague answers",
+        "A Decision Summary is only produced once branches are genuinely resolved — the model does not fabricate resolutions or force a close just to produce a summary"
+      ]
+    }
+  ]
+}
