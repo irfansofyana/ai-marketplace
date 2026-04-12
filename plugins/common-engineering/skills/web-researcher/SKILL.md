@@ -46,7 +46,7 @@ Other tools:
 - **Complex multi-step research**: start with `deep_researcher_start`, poll `deep_researcher_check` until `"completed"`
 - **All MCP tools unavailable**: fall back to native `WebSearch` → `WebFetch`
 
-## Step 2: Search Thoroughly
+## Step 3: Search Thoroughly
 
 Don't stop at the first result. The best answers are often on page 2 or buried in a GitHub issue.
 
@@ -56,7 +56,7 @@ Don't stop at the first result. The best answers are often on page 2 or buried i
 - For code context: tune `tokensNum` (1000–50000) based on depth needed — use higher values for complex APIs
 - When results conflict across sources, note it explicitly rather than picking one silently
 
-## Step 3: Present Findings with Inline Sources
+## Step 4: Present Findings with Inline Sources
 
 Attach sources directly to the claims they support. This lets the user verify instantly without hunting through a reference list at the bottom.
 

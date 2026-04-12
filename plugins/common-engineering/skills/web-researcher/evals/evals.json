@@ -152,7 +152,7 @@
       ]
     },
     {
-      "id": 6,
+      "id": 5,
       "eval_name": "research-temporal-vs-bullmq",
       "prompt": "I'm evaluating Temporal vs BullMQ for job queues in a Node.js microservices setup. What are the real-world trade-offs people have found?",
       "expected_output": "Comparative research from community sources covering durability, complexity, operational overhead, and use-case fit — with inline citations.",
