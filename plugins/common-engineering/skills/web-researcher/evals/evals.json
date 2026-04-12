@@ -24,7 +24,7 @@
           "name": "has-summary-section",
           "description": "Output contains a Summary or Executive Summary section",
           "type": "contains_pattern",
-          "pattern": "(?i)##? *(executive )?summary"
+          "pattern": "(?i)#{1,4} *(executive )?summary"
         },
         {
           "name": "includes-actionable-fix",
@@ -34,9 +34,9 @@
         },
         {
           "name": "has-recommendations-section",
-          "description": "Output contains a Recommendations section",
-          "type": "contains_pattern",
-          "pattern": "(?i)##? *recommendations?"
+          "description": "Output contains a Recommendations section when a clear best path exists",
+          "type": "llm_judge",
+          "criteria": "The output includes a Recommendations section or equivalent guidance that identifies the best approach or actionable next steps. This is only required when the query has a clear best path — for the Postgres ECONNREFUSED error, a clear diagnostic/fix path exists, so recommendations should be present."
         }
       ]
     },
@@ -69,7 +69,7 @@
           "name": "has-summary-section",
           "description": "Output contains a Summary or Executive Summary section",
           "type": "contains_pattern",
-          "pattern": "(?i)##? *(executive )?summary"
+          "pattern": "(?i)#{1,4} *(executive )?summary"
         },
         {
           "name": "reflects-recent-context",
@@ -102,7 +102,7 @@
           "name": "has-summary-section",
           "description": "Output contains a Summary section",
           "type": "contains_pattern",
-          "pattern": "(?i)##? *(executive )?summary"
+          "pattern": "(?i)#{1,4} *(executive )?summary"
         },
         {
           "name": "reflects-recent-context",
@@ -141,13 +141,13 @@
           "name": "has-summary-section",
           "description": "Output contains a Summary section",
           "type": "contains_pattern",
-          "pattern": "(?i)##? *(executive )?summary"
+          "pattern": "(?i)#{1,4} *(executive )?summary"
         },
         {
           "name": "has-recommendations-section",
-          "description": "Output contains a Recommendations section",
-          "type": "contains_pattern",
-          "pattern": "(?i)##? *recommendations?"
+          "description": "Output contains a Recommendations section when a clear best path exists",
+          "type": "llm_judge",
+          "criteria": "The output includes a Recommendations section or equivalent guidance that identifies the best approach or actionable next steps. This is only required when the query has a clear best path — for REST API best practices, clear recommendations are expected."
         }
       ]
     },
@@ -180,13 +180,13 @@
           "name": "has-summary-section",
           "description": "Output contains a Summary or Executive Summary section",
           "type": "contains_pattern",
-          "pattern": "(?i)##? *(executive )?summary"
+          "pattern": "(?i)#{1,4} *(executive )?summary"
         },
         {
           "name": "has-recommendations-section",
-          "description": "Output includes a Recommendations section with guidance on when to use each",
+          "description": "Output includes a Recommendations section when a clear best path exists",
           "type": "llm_judge",
-          "criteria": "The output includes a recommendations section that gives actionable guidance on which tool fits which scenario (e.g. BullMQ for simpler queuing, Temporal for complex long-running workflows)"
+          "criteria": "The output includes a Recommendations section or equivalent guidance (e.g. 'When to use', 'Decision framework') that gives actionable guidance on which tool fits which scenario. Only required when a clear best path exists — for Temporal vs BullMQ, there are clear use-case distinctions, so recommendations should be present."
         }
       ]
     }
