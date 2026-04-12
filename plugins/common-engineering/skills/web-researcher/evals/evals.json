@@ -90,7 +90,7 @@
           "name": "uses-brave-news-tool",
           "description": "Skill routes to brave_news_search as primary tool for news queries",
           "type": "llm_judge",
-          "criteria": "The response was produced using brave_news_search or brave_web_search as the primary search tool, consistent with the news routing rule. Evidence: tool call logs, citation domains typical of Brave results, or explicit mention of Brave in research notes."
+          "criteria": "The response shows evidence of being produced by a news-oriented search tool (brave_news_search or brave_web_search) as the primary source. Evidence includes: citation domains typical of Brave news results (e.g. news outlets, Reuters, BBC, TechCrunch), explicit routing notes in the output stating Brave was used, or citation URLs matching news publication patterns. Fail only if the output explicitly states a different tool was used first, or if all citations point exclusively to Exa or Tavily result patterns with no news-publisher domains."
         },
         {
           "name": "has-inline-citations",
@@ -123,7 +123,7 @@
           "name": "uses-brave-as-entry-point",
           "description": "Skill routes to brave_web_search first for general best-practices queries",
           "type": "llm_judge",
-          "criteria": "The response was produced using brave_web_search as the primary discovery tool, consistent with the general routing rule. The query 'best practices for REST APIs' should not default to Exa or Tavily as the first tool."
+          "criteria": "The response shows evidence that broad web discovery (brave_web_search) was the primary entry point, not a semantic/code-focused tool. Evidence includes: citation domains typical of broad web results (blogs, article sites, dev.to, medium, smashingmagazine, etc.), explicit routing notes stating Brave was used, or a breadth of source types that indicates a general web sweep rather than a targeted semantic search. Fail only if the output explicitly states Exa or Tavily was used as the first tool, or if all citations are exclusively from code repositories or documentation sites with no general web sources."
         },
         {
           "name": "has-inline-citations",

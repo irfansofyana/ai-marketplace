@@ -34,7 +34,7 @@ Before any tool fires, classify the query into one of these intent types. The cl
 **Cost-aware policy** (Brave is the workhorse, Exa is the precision escalator):
 - Brave: ~65% of all search entry points
 - Tavily: ~30% for extraction and deepening
-- Exa: ~5–10% for technical, entity, and semantically ambiguous queries
+- Exa: ~5% for technical, entity, and semantically ambiguous queries
 
 **Research modes** — match depth to what the user actually needs:
 - **Fast**: Brave only, 5–8 results, short summary, low cost
