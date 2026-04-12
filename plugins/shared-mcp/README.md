@@ -20,6 +20,7 @@ This plugin consolidates commonly-used MCP servers to:
 |--------|---------|----------------|-----------------|
 | **Tavily** | Web search and content extraction | `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map` | stdio/npx |
 | **Exa** | AI-powered web search and code context | `web_search_exa`, `get_code_context_exa`, `crawling_exa`, `deep_researcher_start/check` | stdio/npx |
+| **Brave Search** | Privacy-focused web search with local business, image, video, and news search | `brave_web_search`, `brave_local_search`, `brave_image_search`, `brave_video_search`, `brave_news_search`, `brave_summarizer` | stdio/npx |
 
 ## Installation
 
@@ -44,6 +45,9 @@ export TAVILY_API_KEY="your-tavily-api-key"
 
 # Exa API Key (https://exa.ai - free tier available)
 export EXA_API_KEY="your-exa-api-key"
+
+# Brave Search API Key (https://brave.com/search/api - free tier available)
+export BRAVE_API_KEY="your-brave-api-key"
 ```
 
 **After adding**, reload your shell configuration:
@@ -59,11 +63,13 @@ source ~/.bashrc
 ```bash
 echo $TAVILY_API_KEY  # Should display your API key
 echo $EXA_API_KEY
+echo $BRAVE_API_KEY
 ```
 
 **Getting API Keys:**
 - **Tavily**: Sign up at [tavily.com](https://tavily.com) - Free tier available
 - **Exa**: Sign up at [exa.ai](https://exa.ai) - Free tier available
+- **Brave Search**: Sign up at [brave.com/search/api](https://brave.com/search/api) - Free tier available
 
 ## Tool Name Format
 
@@ -116,3 +122,4 @@ Ensure the plugin is installed and enabled:
 - **1.1.0**: Updated Jina MCP to use direct SSE connection instead of stdio/npx (November 2025)
 - **1.2.0**: Updated Jina MCP endpoint from `/sse` to `/v1` with Streamable HTTP transport (December 2025)
 - **1.3.0**: Removed Jina MCP server (December 2025)
+- **1.4.0**: Added Brave Search MCP server for privacy-focused web search (April 2026)
