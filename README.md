@@ -10,7 +10,7 @@ This repository serves as a marketplace for [Claude Code](https://claude.com/cla
 
 | Plugin | Description | Requirements |
 |--------|-------------|--------------|
-| **[shared-mcp](./plugins/shared-mcp/)** | **INSTALL FIRST** - MCP infrastructure for web search (Tavily, Exa) | Node.js, TAVILY_API_KEY, EXA_API_KEY |
+| **[shared-mcp](./plugins/shared-mcp/)** | **INSTALL FIRST** - MCP infrastructure for web search (Brave, Tavily, Exa) | Node.js, BRAVE_API_KEY, TAVILY_API_KEY, EXA_API_KEY |
 | **[p-assist](./plugins/p-assist/)** | Productivity: expenses, RSS, VPS | shared-mcp, N8N_API_TOKEN |
 | **[common-engineering](./plugins/common-engineering/)** | Engineering tools: code review, Mermaid diagrams, tech docs (RFCs, proposals, ADRs) | shared-mcp, mermaid-cli, CONTEXT7_API_KEY |
 | **[sys-maint](./plugins/sys-maint/)** | System maintenance: Docker cleanup, disk analysis | macOS only |
@@ -35,6 +35,7 @@ Skills are model-invoked capabilities that Claude can activate when triggered by
 | `tsd` | "write a TSD", "document an API", "API spec" | 5-20 page Technical Specification Document |
 | `poc-experiment` | "write a POC document", "Go/No-Go recommendation" | 3-8 page proof of concept with decision |
 | `project-management-plan` | "project plan excel", "Gantt chart", "project tracker" | Excel workbook with 4 tabs (plan, charters, budget, RAID) |
+| `web-researcher` | "search the web", "find online", "research", "look up", "debug error", "latest news about", "investigate company" | Findings with inline citations, recommendations, and source links. Routes via Brave (discovery) → Tavily (extraction) → Exa (semantic/technical) |
 
 ### thinking-tools Skills
 

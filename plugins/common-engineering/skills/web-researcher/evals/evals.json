@@ -1,0 +1,194 @@
+{
+  "skill_name": "web-researcher",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "debugging-postgres-econnrefused",
+      "prompt": "I'm getting ECONNREFUSED 127.0.0.1:5432 when connecting to PostgreSQL from my Node.js app. What are the common causes and how do I fix it?",
+      "expected_output": "Comprehensive findings with inline citations covering common causes (Postgres not running, wrong host/port, firewall, Docker networking) and concrete fixes, with source URLs attached to each claim.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has-inline-citations",
+          "description": "Output contains inline source citations in (source: URL) format",
+          "type": "contains_pattern",
+          "pattern": "\\(source: https?://"
+        },
+        {
+          "name": "covers-multiple-causes",
+          "description": "Output covers at least 3 distinct causes of ECONNREFUSED",
+          "type": "llm_judge",
+          "criteria": "The output identifies at least 3 distinct root causes such as: PostgreSQL not running, wrong host or port, Docker/container networking issues, firewall or pg_hba.conf blocking connections"
+        },
+        {
+          "name": "has-summary-section",
+          "description": "Output contains a Summary or Executive Summary section",
+          "type": "contains_pattern",
+          "pattern": "(?i)#{1,4} *(executive )?summary"
+        },
+        {
+          "name": "includes-actionable-fix",
+          "description": "Output includes at least one concrete, runnable fix command or code change",
+          "type": "llm_judge",
+          "criteria": "The output includes at least one concrete actionable fix such as a shell command (e.g. systemctl start postgresql, pg_ctl start), a code change to the connection string, or a Docker networking config change"
+        },
+        {
+          "name": "has-recommendations-section",
+          "description": "Output contains a Recommendations section when a clear best path exists",
+          "type": "llm_judge",
+          "criteria": "The output includes a Recommendations section or equivalent guidance that identifies the best approach or actionable next steps. This is only required when the query has a clear best path — for the Postgres ECONNREFUSED error, a clear diagnostic/fix path exists, so recommendations should be present."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "news-eu-ai-act",
+      "prompt": "What are the latest developments in the EU AI Act and how does it affect developers building AI applications in 2025/2026?",
+      "expected_output": "Current news findings with time-stamped sources, covering enforcement timelines, compliance requirements for developers, and practical impact — with inline citations.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has-inline-citations",
+          "description": "Output contains inline source citations in (source: URL) format",
+          "type": "contains_pattern",
+          "pattern": "\\(source: https?://"
+        },
+        {
+          "name": "covers-enforcement-timeline",
+          "description": "Output mentions enforcement dates or compliance deadlines",
+          "type": "llm_judge",
+          "criteria": "The output mentions specific dates, deadlines, or phased enforcement timelines for the EU AI Act (e.g. February 2025 prohibited practices, August 2025 GPAI, 2026/2027 high-risk system requirements)"
+        },
+        {
+          "name": "developer-specific-impact",
+          "description": "Output covers developer-specific requirements or obligations",
+          "type": "llm_judge",
+          "criteria": "The output addresses practical implications for software developers or AI application builders, such as transparency requirements, documentation, conformity assessments, or prohibited use cases"
+        },
+        {
+          "name": "has-summary-section",
+          "description": "Output contains a Summary or Executive Summary section",
+          "type": "contains_pattern",
+          "pattern": "(?i)#{1,4} *(executive )?summary"
+        },
+        {
+          "name": "reflects-recent-context",
+          "description": "Output reflects 2025/2026 context rather than just historical background",
+          "type": "llm_judge",
+          "criteria": "The output goes beyond general background about the EU AI Act and discusses specific developments, implementations, or impacts in 2025 or 2026"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "eval_name": "news-brave-routing",
+      "prompt": "What are the latest AI news and announcements from this week?",
+      "expected_output": "Current news findings routed through Brave news search, with time-stamped sources and inline citations covering recent AI developments.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "uses-brave-news-tool",
+          "description": "Skill routes to brave_news_search as primary tool for news queries",
+          "type": "llm_judge",
+          "criteria": "The response shows evidence of being produced by a news-oriented search tool (brave_news_search or brave_web_search) as the primary source. Evidence includes: citation domains typical of Brave news results (e.g. news outlets, Reuters, BBC, TechCrunch), explicit routing notes in the output stating Brave was used, or citation URLs matching news publication patterns. Fail only if the output explicitly states a different tool was used first, or if all citations point exclusively to Exa or Tavily result patterns with no news-publisher domains."
+        },
+        {
+          "name": "has-inline-citations",
+          "description": "Output contains inline source citations in (source: URL) format",
+          "type": "contains_pattern",
+          "pattern": "\\(source: https?://"
+        },
+        {
+          "name": "has-summary-section",
+          "description": "Output contains a Summary section",
+          "type": "contains_pattern",
+          "pattern": "(?i)#{1,4} *(executive )?summary"
+        },
+        {
+          "name": "reflects-recent-context",
+          "description": "Output reflects recent context rather than historical background",
+          "type": "llm_judge",
+          "criteria": "The output covers specific recent events or announcements rather than general background knowledge about AI. Results should reflect news from the current week or recent days."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "eval_name": "general-brave-entry-point",
+      "prompt": "What are the best practices for designing REST APIs in 2025?",
+      "expected_output": "Broad research findings routed through Brave as the entry point, deepened with Tavily extraction, covering modern REST API design principles with inline citations.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "uses-brave-as-entry-point",
+          "description": "Skill routes to brave_web_search first for general best-practices queries",
+          "type": "llm_judge",
+          "criteria": "The response shows evidence that broad web discovery (brave_web_search) was the primary entry point, not a semantic/code-focused tool. Evidence includes: citation domains typical of broad web results (blogs, article sites, dev.to, medium, smashingmagazine, etc.), explicit routing notes stating Brave was used, or a breadth of source types that indicates a general web sweep rather than a targeted semantic search. Fail only if the output explicitly states Exa or Tavily was used as the first tool, or if all citations are exclusively from code repositories or documentation sites with no general web sources."
+        },
+        {
+          "name": "has-inline-citations",
+          "description": "Output contains inline source citations in (source: URL) format",
+          "type": "contains_pattern",
+          "pattern": "\\(source: https?://"
+        },
+        {
+          "name": "covers-multiple-best-practices",
+          "description": "Output covers at least 3 distinct REST API best practices",
+          "type": "llm_judge",
+          "criteria": "The output covers at least 3 distinct REST API design best practices such as: versioning, authentication, error handling, pagination, HTTP method semantics, status codes, rate limiting, or documentation."
+        },
+        {
+          "name": "has-summary-section",
+          "description": "Output contains a Summary section",
+          "type": "contains_pattern",
+          "pattern": "(?i)#{1,4} *(executive )?summary"
+        },
+        {
+          "name": "has-recommendations-section",
+          "description": "Output contains a Recommendations section when a clear best path exists",
+          "type": "llm_judge",
+          "criteria": "The output includes a Recommendations section or equivalent guidance that identifies the best approach or actionable next steps. This is only required when the query has a clear best path — for REST API best practices, clear recommendations are expected."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "eval_name": "research-temporal-vs-bullmq",
+      "prompt": "I'm evaluating Temporal vs BullMQ for job queues in a Node.js microservices setup. What are the real-world trade-offs people have found?",
+      "expected_output": "Comparative research from community sources covering durability, complexity, operational overhead, and use-case fit — with inline citations.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has-inline-citations",
+          "description": "Output contains inline source citations in (source: URL) format",
+          "type": "contains_pattern",
+          "pattern": "\\(source: https?://"
+        },
+        {
+          "name": "covers-both-tools",
+          "description": "Output covers both Temporal and BullMQ with specific details on each",
+          "type": "llm_judge",
+          "criteria": "The output discusses both Temporal and BullMQ specifically, not just one of them. Each tool should have meaningful coverage with real characteristics, not just a passing mention."
+        },
+        {
+          "name": "covers-multiple-tradeoff-dimensions",
+          "description": "Output addresses at least 3 trade-off dimensions",
+          "type": "llm_judge",
+          "criteria": "The output covers at least 3 distinct trade-off dimensions such as: operational complexity, durability/reliability guarantees, learning curve, infrastructure requirements (Redis vs server), scalability, cost, or use-case fit"
+        },
+        {
+          "name": "has-summary-section",
+          "description": "Output contains a Summary or Executive Summary section",
+          "type": "contains_pattern",
+          "pattern": "(?i)#{1,4} *(executive )?summary"
+        },
+        {
+          "name": "has-recommendations-section",
+          "description": "Output includes a Recommendations section when a clear best path exists",
+          "type": "llm_judge",
+          "criteria": "The output includes a Recommendations section or equivalent guidance (e.g. 'When to use', 'Decision framework') that gives actionable guidance on which tool fits which scenario. Only required when a clear best path exists — for Temporal vs BullMQ, there are clear use-case distinctions, so recommendations should be present."
+        }
+      ]
+    }
+  ]
+}
