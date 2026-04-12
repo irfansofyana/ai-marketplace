@@ -35,7 +35,7 @@ Skills are model-invoked capabilities that Claude can activate when triggered by
 | `tsd` | "write a TSD", "document an API", "API spec" | 5-20 page Technical Specification Document |
 | `poc-experiment` | "write a POC document", "Go/No-Go recommendation" | 3-8 page proof of concept with decision |
 | `project-management-plan` | "project plan excel", "Gantt chart", "project tracker" | Excel workbook with 4 tabs (plan, charters, budget, RAID) |
-| `web-researcher` | "search the web", "find online", "research", "look up", "debug error", "latest news about", "investigate company" | Findings with inline citations, recommendations, and source links |
+| `web-researcher` | "search the web", "find online", "research", "look up", "debug error", "latest news about", "investigate company" | Findings with inline citations, recommendations, and source links. Routes via Brave (discovery) → Tavily (extraction) → Exa (semantic/technical) |
 
 ### thinking-tools Skills
 

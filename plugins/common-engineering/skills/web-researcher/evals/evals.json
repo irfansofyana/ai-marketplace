@@ -81,6 +81,78 @@
     },
     {
       "id": 3,
+      "eval_name": "news-brave-routing",
+      "prompt": "What are the latest AI news and announcements from this week?",
+      "expected_output": "Current news findings routed through Brave news search, with time-stamped sources and inline citations covering recent AI developments.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "uses-brave-news-tool",
+          "description": "Skill routes to brave_news_search as primary tool for news queries",
+          "type": "llm_judge",
+          "criteria": "The response was produced using brave_news_search or brave_web_search as the primary search tool, consistent with the news routing rule. Evidence: tool call logs, citation domains typical of Brave results, or explicit mention of Brave in research notes."
+        },
+        {
+          "name": "has-inline-citations",
+          "description": "Output contains inline source citations in (source: URL) format",
+          "type": "contains_pattern",
+          "pattern": "\\(source: https?://"
+        },
+        {
+          "name": "has-summary-section",
+          "description": "Output contains a Summary section",
+          "type": "contains_pattern",
+          "pattern": "(?i)##? *(executive )?summary"
+        },
+        {
+          "name": "reflects-recent-context",
+          "description": "Output reflects recent context rather than historical background",
+          "type": "llm_judge",
+          "criteria": "The output covers specific recent events or announcements rather than general background knowledge about AI. Results should reflect news from the current week or recent days."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "eval_name": "general-brave-entry-point",
+      "prompt": "What are the best practices for designing REST APIs in 2025?",
+      "expected_output": "Broad research findings routed through Brave as the entry point, deepened with Tavily extraction, covering modern REST API design principles with inline citations.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "uses-brave-as-entry-point",
+          "description": "Skill routes to brave_web_search first for general best-practices queries",
+          "type": "llm_judge",
+          "criteria": "The response was produced using brave_web_search as the primary discovery tool, consistent with the general routing rule. The query 'best practices for REST APIs' should not default to Exa or Tavily as the first tool."
+        },
+        {
+          "name": "has-inline-citations",
+          "description": "Output contains inline source citations in (source: URL) format",
+          "type": "contains_pattern",
+          "pattern": "\\(source: https?://"
+        },
+        {
+          "name": "covers-multiple-best-practices",
+          "description": "Output covers at least 3 distinct REST API best practices",
+          "type": "llm_judge",
+          "criteria": "The output covers at least 3 distinct REST API design best practices such as: versioning, authentication, error handling, pagination, HTTP method semantics, status codes, rate limiting, or documentation."
+        },
+        {
+          "name": "has-summary-section",
+          "description": "Output contains a Summary section",
+          "type": "contains_pattern",
+          "pattern": "(?i)##? *(executive )?summary"
+        },
+        {
+          "name": "has-recommendations-section",
+          "description": "Output contains a Recommendations section",
+          "type": "contains_pattern",
+          "pattern": "(?i)##? *recommendations?"
+        }
+      ]
+    },
+    {
+      "id": 6,
       "eval_name": "research-temporal-vs-bullmq",
       "prompt": "I'm evaluating Temporal vs BullMQ for job queues in a Node.js microservices setup. What are the real-world trade-offs people have found?",
       "expected_output": "Comparative research from community sources covering durability, complexity, operational overhead, and use-case fit — with inline citations.",
