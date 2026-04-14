@@ -1,10 +1,10 @@
 # My Claude Code Marketplace
 
-A personal Claude Code marketplace for hosting custom plugins that extend Claude Code with slash commands, agents, skills, hooks, and MCP server integrations.
+A skill-first repository for reusable agent workflows, packaged for Claude Code plugins and usable from Codex via `npx skills`.
 
 ## What is This?
 
-This repository serves as a marketplace for [Claude Code](https://claude.com/claude-code) plugins. Marketplaces are catalogs that allow you to organize, discover, and install custom functionality into Claude Code.
+This repository serves as a marketplace for [Claude Code](https://claude.com/claude-code) plugins and a reusable skills source for other agent runtimes. The canonical workflows live in `plugins/*/skills/*`.
 
 ## Available Plugins
 
@@ -89,6 +89,44 @@ git clone https://github.com/irfansofyana/my-claude-code-marketplace.git
 cd my-claude-code-marketplace
 /plugin marketplace add $(pwd)
 ```
+
+## Codex and Skills
+
+This repo's existing `plugins/*/skills/*` structure is already discoverable by `npx skills add`. No extra wrapper layer is required for Codex.
+
+### Use in Codex via GitHub
+
+If you use Codex inside ChatGPT, connect GitHub in ChatGPT Settings and authorize this repository. After that, Codex can read the repo directly from GitHub for analysis and coding tasks.
+
+### Install for local Codex usage
+
+Tested commands:
+
+```bash
+# Inspect available skills from the repo
+npx skills add irfansofyana/my-claude-code-marketplace --list
+
+# Install one public skill by name into the current project (default scope)
+npx skills add irfansofyana/my-claude-code-marketplace --skill mermaid
+
+# Install globally for your user environment
+npx skills add irfansofyana/my-claude-code-marketplace --global --skill mermaid
+
+# Install for Codex only without prompts
+npx skills add irfansofyana/my-claude-code-marketplace --agent codex --skill mermaid --yes
+```
+
+Use exact skill names with `--skill`. Plugin names such as `common-engineering` are not valid selectors.
+By default, `npx skills add` installs at project scope. Add `--global` (`-g`) when you want the skill available across projects in your user environment.
+Use `--agent codex` to target Codex specifically, and `--yes` (`-y`) to skip interactive prompts.
+
+Per-skill path installs should target:
+
+```text
+plugins/<plugin>/skills/<skill>
+```
+
+Important note: a whole-repo install or discovery will also surface personal/private skills such as `analyze-cc-statements` from `p-assist`. Treat `p-assist` as personal/private and do not market it as part of the public Codex-ready path.
 
 ## Using with Other AI Agents (via OPKG)
 
