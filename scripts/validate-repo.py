@@ -138,7 +138,11 @@ def validate_skills(errors: list[str]) -> list[dict[str, str | Path]]:
     return skills
 
 
-def validate_docs(skills: list[dict[str, str | Path]], errors: list[str]) -> None:
+def validate_docs(
+    skills: list[dict[str, str | Path]],
+    marketplace_plugins: list[dict[str, str]],
+    errors: list[str],
+) -> None:
     for doc in (AGENTS, CONTRIBUTING, README):
         if not doc.exists():
             errors.append(f"Missing required documentation file: {doc.relative_to(ROOT)}")
@@ -166,7 +170,8 @@ def validate_docs(skills: list[dict[str, str | Path]], errors: list[str]) -> Non
         if needle not in readme_text:
             errors.append(f"README does not mention public skill {skill['name']}")
 
-    for plugin_name in ("shared-mcp", "common-engineering", "thinking-tools", "softskills", "p-assist"):
+    for plugin in marketplace_plugins:
+        plugin_name = plugin["name"]
         if plugin_name not in readme_text:
             errors.append(f"README does not mention plugin {plugin_name}")
 
@@ -178,9 +183,10 @@ def validate_docs(skills: list[dict[str, str | Path]], errors: list[str]) -> Non
 def main() -> int:
     errors: list[str] = []
 
+    marketplace_plugins = load_marketplace()
     validate_marketplace(errors)
     skills = validate_skills(errors)
-    validate_docs(skills, errors)
+    validate_docs(skills, marketplace_plugins, errors)
 
     if errors:
         print("Repository validation failed:\n")
