@@ -2,6 +2,8 @@
 
 Shared MCP infrastructure providing common web search, content extraction, and research tools that other plugins can use.
 
+This repo also includes a Codex-native installer and config template under `codex/shared-mcp/` so the same MCP bundle can be added to Codex once and reused across Codex CLI and the IDE extension.
+
 ## Purpose
 
 This plugin consolidates commonly-used MCP servers to:
@@ -29,6 +31,32 @@ This plugin consolidates commonly-used MCP servers to:
 ```bash
 /plugin install shared-mcp@my-claude-code-marketplace
 ```
+
+### 1b. Install the same MCP bundle for Codex
+
+Codex stores MCP configuration in `~/.codex/config.toml` by default, and the CLI plus IDE extension share that configuration.
+
+Global install:
+
+```bash
+bash codex/shared-mcp/install.sh --global
+```
+
+Project-scoped install:
+
+```bash
+bash codex/shared-mcp/install.sh --project
+```
+
+This writes a managed block with these Codex MCP server names:
+
+- `shared_mcp_tavily`
+- `shared_mcp_exa`
+- `shared_mcp_brave_search`
+
+The installer forwards your existing shell environment variables instead of copying API keys into the repo.
+
+If you prefer to edit Codex config manually, copy the template from `codex/shared-mcp/config.toml` into `~/.codex/config.toml` or `.codex/config.toml`.
 
 ### 2. Configure Environment Variables
 
@@ -107,6 +135,7 @@ The following plugins require `shared-mcp` to be installed:
 2. Check that Node.js is installed: `node --version`
 3. Check that `npx` is available: `npx --version` (required for Tavily and Exa)
 4. Verify API keys are valid by testing at the provider's website
+5. For Codex installs, verify the servers are registered: `codex mcp list`
 
 ### Tool not found
 
@@ -116,6 +145,18 @@ Ensure the plugin is installed and enabled:
 /plugin enable shared-mcp@my-claude-code-marketplace
 ```
 
+For Codex installs:
+
+```bash
+codex mcp list
+```
+
+If needed, reinstall the managed block:
+
+```bash
+bash codex/shared-mcp/install.sh --global
+```
+
 ## Version History
 
 - **1.0.0**: Initial release with Tavily, Jina, and Exa MCP servers
@@ -123,3 +164,4 @@ Ensure the plugin is installed and enabled:
 - **1.2.0**: Updated Jina MCP endpoint from `/sse` to `/v1` with Streamable HTTP transport (December 2025)
 - **1.3.0**: Removed Jina MCP server (December 2025)
 - **1.4.0**: Added Brave Search MCP server for privacy-focused web search (April 2026)
+- **1.5.0**: Added Codex-native MCP installer and config template for the shared Tavily, Exa, and Brave bundle (April 2026)
