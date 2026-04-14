@@ -94,6 +94,12 @@ cd my-claude-code-marketplace
 
 This repo's existing `plugins/*/skills/*` structure is already discoverable by `npx skills add`. No extra wrapper layer is required for Codex.
 
+### Use in Codex via GitHub
+
+If you use Codex inside ChatGPT, connect GitHub in ChatGPT Settings and authorize this repository. After that, Codex can read the repo directly from GitHub for analysis and coding tasks.
+
+### Install for local Codex usage
+
 Tested commands:
 
 ```bash
@@ -102,6 +108,9 @@ npx skills add irfansofyana/my-claude-code-marketplace --list
 
 # Install one public skill by name
 npx skills add irfansofyana/my-claude-code-marketplace --skill mermaid
+
+# Install directly for Codex only
+npx skills add irfansofyana/my-claude-code-marketplace --agent codex --skill mermaid
 ```
 
 Use exact skill names with `--skill`. Plugin names such as `common-engineering` are not valid selectors.
