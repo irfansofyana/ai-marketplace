@@ -106,14 +106,19 @@ Tested commands:
 # Inspect available skills from the repo
 npx skills add irfansofyana/my-claude-code-marketplace --list
 
-# Install one public skill by name
+# Install one public skill by name into the current project (default scope)
 npx skills add irfansofyana/my-claude-code-marketplace --skill mermaid
 
-# Install directly for Codex only
-npx skills add irfansofyana/my-claude-code-marketplace --agent codex --skill mermaid
+# Install globally for your user environment
+npx skills add irfansofyana/my-claude-code-marketplace --global --skill mermaid
+
+# Install for Codex only without prompts
+npx skills add irfansofyana/my-claude-code-marketplace --agent codex --skill mermaid --yes
 ```
 
 Use exact skill names with `--skill`. Plugin names such as `common-engineering` are not valid selectors.
+By default, `npx skills add` installs at project scope. Add `--global` (`-g`) when you want the skill available across projects in your user environment.
+Use `--agent codex` to target Codex specifically, and `--yes` (`-y`) to skip interactive prompts.
 
 Per-skill path installs should target:
 
