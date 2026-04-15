@@ -94,6 +94,8 @@ cd my-claude-code-marketplace
 
 This repo's existing `plugins/*/skills/*` structure is already discoverable by `npx skills add`. No extra wrapper layer is required for Codex.
 
+For MCP servers, Codex does not use the Claude plugin marketplace flow. Instead, Codex reads MCP config from `~/.codex/config.toml` globally or `.codex/config.toml` per trusted project.
+
 ### Use in Codex via GitHub
 
 If you use Codex inside ChatGPT, connect GitHub in ChatGPT Settings and authorize this repository. After that, Codex can read the repo directly from GitHub for analysis and coding tasks.
@@ -119,6 +121,32 @@ npx skills add irfansofyana/my-claude-code-marketplace --agent codex --skill mer
 Use exact skill names with `--skill`. Plugin names such as `common-engineering` are not valid selectors.
 By default, `npx skills add` installs at project scope. Add `--global` (`-g`) when you want the skill available across projects in your user environment.
 Use `--agent codex` to target Codex specifically, and `--yes` (`-y`) to skip interactive prompts.
+
+### Install shared-mcp for Codex
+
+The `shared-mcp` bundle is now installable for Codex through a repo-managed config template and installer script.
+
+Global install across Codex:
+
+```bash
+bash codex/shared-mcp/install.sh --global
+```
+
+Project-scoped install for the current repo:
+
+```bash
+bash codex/shared-mcp/install.sh --project
+```
+
+This writes a managed block into Codex `config.toml` with these MCP server names:
+
+- `shared_mcp_tavily`
+- `shared_mcp_exa`
+- `shared_mcp_brave_search`
+
+Those names are intentionally namespaced for Codex so the installer does not overwrite unrelated `tavily`, `exa`, or `brave-search` entries you may already have.
+The config forwards `TAVILY_API_KEY`, `EXA_API_KEY`, and `BRAVE_API_KEY` from your shell at runtime instead of storing the key values in the repo.
+OpenAI’s Codex MCP docs confirm that Codex MCP servers are configured either via `codex mcp` or `config.toml`, and that CLI plus IDE share the same config: https://developers.openai.com/codex/mcp
 
 Per-skill path installs should target:
 

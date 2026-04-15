@@ -46,5 +46,5 @@ python3 scripts/validate-mcp-tool-names.py <plugin-name> <server-key> <tool1> <t
 - Keep skill `name` equal to its directory name.
 - Keep skill descriptions explicit about what the skill does and when to use it.
 - When plugin or skill inventory changes, update `README.md`.
-- When plugin behavior changes, bump the affected plugin version in `plugins/*/.claude-plugin/plugin.json`.
+- Bump a plugin version in `plugins/*/.claude-plugin/plugin.json` only when files shipped as part of that plugin change in a meaningful way, such as canonical skill content, plugin metadata, Claude-specific packaging, or plugin-local docs/assets. Do not bump a plugin version for repo-level README changes or Codex-only files that live outside that plugin directory.
 - Do not delete or rewrite user-owned local state such as `.codex`.

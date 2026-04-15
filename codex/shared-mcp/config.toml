@@ -1,0 +1,19 @@
+# BEGIN shared-mcp codex
+[mcp_servers.shared_mcp_tavily]
+command = "sh"
+args = ["-lc", "npx -y mcp-remote \"https://mcp.tavily.com/mcp/?tavilyApiKey=${TAVILY_API_KEY}\""]
+env_vars = ["TAVILY_API_KEY"]
+startup_timeout_sec = 20
+
+[mcp_servers.shared_mcp_exa]
+command = "sh"
+args = ["-lc", "npx -y mcp-remote \"https://mcp.exa.ai/mcp?exaApiKey=${EXA_API_KEY}&tools=web_search_exa,get_code_context_exa,crawling_exa,company_research_exa,linkedin_search_exa,deep_researcher_start,deep_researcher_check\""]
+env_vars = ["EXA_API_KEY"]
+startup_timeout_sec = 20
+
+[mcp_servers.shared_mcp_brave_search]
+command = "npx"
+args = ["-y", "@brave/brave-search-mcp-server", "--transport", "stdio"]
+env_vars = ["BRAVE_API_KEY"]
+startup_timeout_sec = 20
+# END shared-mcp codex
