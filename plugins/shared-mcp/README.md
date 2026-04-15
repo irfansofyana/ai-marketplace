@@ -107,6 +107,7 @@ The following plugins require `shared-mcp` to be installed:
 2. Check that Node.js is installed: `node --version`
 3. Check that `npx` is available: `npx --version` (required for Tavily and Exa)
 4. Verify API keys are valid by testing at the provider's website
+
 ### Tool not found
 
 Ensure the plugin is installed and enabled:
