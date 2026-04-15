@@ -55,16 +55,6 @@ if [[ ! -f "${template_path}" ]]; then
   exit 1
 fi
 
-if ! command -v codex >/dev/null 2>&1; then
-  echo "codex CLI not found in PATH" >&2
-  exit 1
-fi
-
-if ! command -v npx >/dev/null 2>&1; then
-  echo "npx not found in PATH" >&2
-  exit 1
-fi
-
 if [[ "${scope}" == "global" ]]; then
   target_config="${HOME}/.codex/config.toml"
 else
@@ -103,6 +93,13 @@ echo "Configured MCP servers:"
 echo "  - shared_mcp_tavily"
 echo "  - shared_mcp_exa"
 echo "  - shared_mcp_brave_search"
+echo
+if ! command -v codex >/dev/null 2>&1; then
+  echo "Warning: codex CLI not found in PATH. The config was written successfully, but you will need Codex installed to verify it with 'codex mcp list'."
+fi
+if ! command -v npx >/dev/null 2>&1; then
+  echo "Warning: npx not found in PATH. The config was written successfully, but the configured MCP commands require npx at runtime."
+fi
 echo
 echo "Next steps:"
 echo "  1. Ensure TAVILY_API_KEY, EXA_API_KEY, and BRAVE_API_KEY are exported in your shell."
