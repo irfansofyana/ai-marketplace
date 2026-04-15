@@ -81,7 +81,7 @@ else
   : > "${tmp_file}"
 fi
 
-if [[ -s "${tmp_file}" ]] && [[ "$(tail -c 1 "${tmp_file}" 2>/dev/null || true)" != $'\n' ]]; then
+if [[ -s "${tmp_file}" ]] && [[ $(tail -c 1 "${tmp_file}" 2>/dev/null | wc -l) -eq 0 ]]; then
   printf '\n' >> "${tmp_file}"
 fi
 
