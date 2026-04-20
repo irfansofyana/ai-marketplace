@@ -27,12 +27,12 @@ This plugin consolidates commonly-used MCP servers to:
 ### 1. Install the plugin
 
 ```bash
-/plugin install shared-mcp@my-claude-code-marketplace
+/plugin install shared-mcp@ai-marketplace
 ```
 
 ### 2. Configure Environment Variables
 
-**IMPORTANT**: Add these to your shell configuration file so they persist across sessions and are available to Claude Code.
+**IMPORTANT**: Add these to your shell configuration file so they persist across sessions and are available to your agent runtime.
 
 **Shell Config File Location:**
 - macOS (Zsh): `~/.zshrc`
@@ -98,7 +98,7 @@ The following plugins require `shared-mcp` to be installed:
 **Solution**:
 1. Verify variables are in your shell config file (`~/.zshrc` or `~/.bashrc`)
 2. Reload config: `source ~/.zshrc` (or `source ~/.bashrc`)
-3. Restart Claude Code completely
+3. Restart your agent runtime completely
 4. Test: `echo $TAVILY_API_KEY` should show your key
 
 ### MCP server not starting
@@ -113,7 +113,7 @@ The following plugins require `shared-mcp` to be installed:
 Ensure the plugin is installed and enabled:
 ```bash
 /plugin list
-/plugin enable shared-mcp@my-claude-code-marketplace
+/plugin enable shared-mcp@ai-marketplace
 ```
 
 ## Version History

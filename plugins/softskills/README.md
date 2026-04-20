@@ -51,7 +51,7 @@ Harassment, discrimination, retaliation, or situations requiring HR/legal interv
 ## Installation
 
 ```bash
-/plugin install softskills@my-claude-code-marketplace
+/plugin install softskills@ai-marketplace
 ```
 
 No API keys or external dependencies required.

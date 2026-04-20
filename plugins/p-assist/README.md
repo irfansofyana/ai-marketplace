@@ -6,7 +6,7 @@
 >
 > If you're interested in building similar functionality, use this plugin as a reference and adapt it to your own services and infrastructure.
 
-A comprehensive productivity plugin for Claude Code that provides expense tracking, RSS feed monitoring, and VPS management capabilities.
+A comprehensive productivity plugin that provides expense tracking, RSS feed monitoring, and VPS management capabilities.
 
 ## Prerequisites
 
@@ -14,10 +14,10 @@ A comprehensive productivity plugin for Claude Code that provides expense tracki
 
 ```bash
 # Install shared-mcp first
-/plugin install shared-mcp@my-claude-code-marketplace
+/plugin install shared-mcp@ai-marketplace
 
 # Then install p-assist
-/plugin install p-assist@my-claude-code-marketplace
+/plugin install p-assist@ai-marketplace
 ```
 
 ## Features
@@ -57,7 +57,7 @@ This plugin uses the n8n MCP server for all integrations:
 
 1. **Install and configure shared-mcp first** (provides Tavily and Exa):
    ```bash
-   /plugin install shared-mcp@my-claude-code-marketplace
+   /plugin install shared-mcp@ai-marketplace
    ```
    See [shared-mcp README](../shared-mcp/README.md) for API key setup.
 
@@ -80,7 +80,7 @@ This plugin uses the n8n MCP server for all integrations:
    echo $N8N_API_TOKEN  # Should show your token
    ```
 
-5. **Restart Claude Code** to ensure it picks up the new environment variables.
+5. **Restart your agent runtime** to ensure it picks up the new environment variables.
 
 ## Available Commands
 
@@ -231,10 +231,10 @@ To modify or extend this plugin:
 2. Update MCP configuration in `.claude-plugin/plugin.json`
 3. Test changes by reinstalling the plugin:
    ```bash
-   /plugin uninstall p-assist@my-claude-code-marketplace
-   /plugin install p-assist@my-claude-code-marketplace
+   /plugin uninstall p-assist@ai-marketplace
+   /plugin install p-assist@ai-marketplace
    ```
 
 ## License
 
-This plugin is part of the Claude Code Marketplace.
+This plugin is part of the AI Marketplace, but remains personal/private infrastructure and is not intended as a public install target.
