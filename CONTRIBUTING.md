@@ -1,6 +1,6 @@
 # Contributing
 
-This repository now supports two distribution targets:
+This repository now supports multiple distribution targets:
 
 - Claude Code marketplace packaging under `plugins/*/.claude-plugin/`
 - Codex and other agent installs through reusable skills

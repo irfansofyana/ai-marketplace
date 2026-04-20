@@ -1,6 +1,6 @@
 # System Maintenance Plugin
 
-A Claude Code plugin for system maintenance and cleanup tasks. Helps you reclaim disk space and manage Docker resources through interactive, safe cleanup workflows.
+A plugin for system maintenance and cleanup tasks. Helps you reclaim disk space and manage Docker resources through interactive, safe cleanup workflows.
 
 **Platform**: macOS only (tested on macOS)
 
@@ -135,12 +135,12 @@ What would you like to do?
 
 ### Add this marketplace to Claude Code:
 ```bash
-/plugin marketplace add /Users/irfanputra/Personal/my-claude-code-marketplace
+/plugin marketplace add https://github.com/irfansofyana/ai-marketplace
 ```
 
 ### Install the sys-maint plugin:
 ```bash
-/plugin install sys-maint@my-claude-code-marketplace
+/plugin install sys-maint@ai-marketplace
 ```
 
 ### Verify installation:
@@ -319,4 +319,4 @@ MIT License - see repository root for details
 
 ## Author
 
-Created by irfansofyana as part of the my-claude-code-marketplace plugin collection.
+Created by irfansofyana as part of the ai-marketplace plugin collection.

@@ -1,10 +1,10 @@
-# My Claude Code Marketplace
+# AI Marketplace
 
-A skill-first repository for reusable agent workflows, packaged for Claude Code plugins and usable from Codex via `npx skills`.
+A skill-first repository for reusable agent workflows, packaged for multiple agent runtimes and installable from Codex via `npx skills`.
 
 ## What is This?
 
-This repository serves as a marketplace for [Claude Code](https://claude.com/claude-code) plugins and a reusable skills source for other agent runtimes. The canonical workflows live in `plugins/*/skills/*`.
+This repository serves as a marketplace for reusable agent workflows across agent runtimes. Claude Code packaging is still supported, but the canonical workflows live in `plugins/*/skills/*`.
 
 ## Available Plugins
 
@@ -21,7 +21,7 @@ See individual plugin READMEs for detailed setup instructions.
 
 ## Available Skills
 
-Skills are model-invoked capabilities that Claude can activate when triggered by natural language. They are organized by plugin:
+Skills are model-invoked capabilities that agent runtimes can activate when triggered by natural language. They are organized by plugin:
 
 ### common-engineering Skills
 
@@ -55,7 +55,7 @@ Skills are model-invoked capabilities that Claude can activate when triggered by
 ### 1. Add Marketplace
 
 ```bash
-/plugin marketplace add https://github.com/irfansofyana/my-claude-code-marketplace
+/plugin marketplace add https://github.com/irfansofyana/ai-marketplace
 ```
 
 ### 2. Configure Environment Variables
@@ -73,11 +73,12 @@ Reload: `source ~/.zshrc` or `source ~/.bashrc`
 ### 3. Install Plugins (in dependency order)
 
 ```bash
-/plugin install shared-mcp@my-claude-code-marketplace     # REQUIRED - install first
-/plugin install p-assist@my-claude-code-marketplace       # Optional
-/plugin install common-engineering@my-claude-code-marketplace  # Optional
-/plugin install sys-maint@my-claude-code-marketplace      # Optional (macOS only)
-/plugin install thinking-tools@my-claude-code-marketplace # Optional
+/plugin install shared-mcp@ai-marketplace     # REQUIRED - install first
+/plugin install p-assist@ai-marketplace       # Optional
+/plugin install common-engineering@ai-marketplace  # Optional
+/plugin install sys-maint@ai-marketplace      # Optional (macOS only)
+/plugin install thinking-tools@ai-marketplace # Optional
+/plugin install softskills@ai-marketplace     # Optional
 ```
 
 ### Manual Installation (Alternative)
@@ -85,8 +86,8 @@ Reload: `source ~/.zshrc` or `source ~/.bashrc`
 For local development or offline access:
 
 ```bash
-git clone https://github.com/irfansofyana/my-claude-code-marketplace.git
-cd my-claude-code-marketplace
+git clone https://github.com/irfansofyana/ai-marketplace.git
+cd ai-marketplace
 /plugin marketplace add $(pwd)
 ```
 
@@ -106,16 +107,16 @@ Tested commands:
 
 ```bash
 # Inspect available skills from the repo
-npx skills add irfansofyana/my-claude-code-marketplace --list
+npx skills add irfansofyana/ai-marketplace --list
 
 # Install one public skill by name into the current project (default scope)
-npx skills add irfansofyana/my-claude-code-marketplace --skill mermaid
+npx skills add irfansofyana/ai-marketplace --skill mermaid
 
 # Install globally for your user environment
-npx skills add irfansofyana/my-claude-code-marketplace --global --skill mermaid
+npx skills add irfansofyana/ai-marketplace --global --skill mermaid
 
 # Install for Codex only without prompts
-npx skills add irfansofyana/my-claude-code-marketplace --agent codex --skill mermaid --yes
+npx skills add irfansofyana/ai-marketplace --agent codex --skill mermaid --yes
 ```
 
 Use exact skill names with `--skill`. Plugin names such as `common-engineering` are not valid selectors.
@@ -213,8 +214,8 @@ plugins/my-plugin/
 
 **3. Test:**
 ```bash
-/plugin uninstall my-plugin@my-claude-code-marketplace
-/plugin install my-plugin@my-claude-code-marketplace
+/plugin uninstall my-plugin@ai-marketplace
+/plugin install my-plugin@ai-marketplace
 ```
 
 ## Troubleshooting

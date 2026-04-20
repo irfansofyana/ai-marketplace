@@ -84,7 +84,7 @@ Inspired by Matt Pocock's [grill-me skill](https://www.aihero.dev/my-grill-me-sk
 ## Installation
 
 ```bash
-/plugin install thinking-tools@my-claude-code-marketplace
+/plugin install thinking-tools@ai-marketplace
 ```
 
 No API keys or external dependencies required.

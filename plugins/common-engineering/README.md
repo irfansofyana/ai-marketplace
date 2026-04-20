@@ -1,6 +1,6 @@
 # Common Engineering Plugin
 
-A foundational plugin for Claude Code containing essential agents and skills for software engineers. This plugin provides common development utilities, diagram generation, documentation helpers, and other engineering tools to streamline your development workflow.
+A foundational plugin containing essential agents and skills for software engineers. This plugin provides common development utilities, diagram generation, documentation helpers, and other engineering tools to streamline your development workflow.
 
 ## Prerequisites
 
@@ -8,10 +8,10 @@ A foundational plugin for Claude Code containing essential agents and skills for
 
 ```bash
 # Install shared-mcp first
-/plugin install shared-mcp@my-claude-code-marketplace
+/plugin install shared-mcp@ai-marketplace
 
 # Then install common-engineering
-/plugin install common-engineering@my-claude-code-marketplace
+/plugin install common-engineering@ai-marketplace
 ```
 
 ## Overview
@@ -168,7 +168,7 @@ The web research specialist uses Exa's powerful search capabilities from the `sh
 
 1. **Installed the shared-mcp plugin**:
    ```bash
-   /plugin install shared-mcp@my-claude-code-marketplace
+   /plugin install shared-mcp@ai-marketplace
    ```
 
 2. **Configured the EXA_API_KEY** as described in the [shared-mcp README](../shared-mcp/README.md)
@@ -223,12 +223,12 @@ python3 -c "import openpyxl; print(openpyxl.__version__)"
 
 1. **Add this marketplace to Claude Code** (if not already added):
    ```bash
-   /plugin marketplace add https://github.com/irfansofyana/my-claude-code-marketplace
+   /plugin marketplace add https://github.com/irfansofyana/ai-marketplace
    ```
 
 2. **Install the plugin:**
    ```bash
-   /plugin install common-engineering@my-claude-code-marketplace
+   /plugin install common-engineering@ai-marketplace
    ```
 
 ## Usage
@@ -530,7 +530,7 @@ npm install -g @mermaid-js/mermaid-cli
 **Solution:**
 ```bash
 # 1. Ensure shared-mcp plugin is installed
-/plugin install shared-mcp@my-claude-code-marketplace
+/plugin install shared-mcp@ai-marketplace
 
 # 2. Check if EXA_API_KEY is set
 echo $EXA_API_KEY
@@ -611,8 +611,8 @@ To contribute new engineering tools to this plugin:
 4. **Document the feature**: Update this README with the new capability
 5. **Test locally**:
    ```bash
-   /plugin uninstall common-engineering@my-claude-code-marketplace
-   /plugin install common-engineering@my-claude-code-marketplace
+   /plugin uninstall common-engineering@ai-marketplace
+   /plugin install common-engineering@ai-marketplace
    ```
 
 ### Reference Documentation
@@ -642,7 +642,7 @@ Planned additions to this plugin:
 
 ## License
 
-This plugin is part of the Claude Code Marketplace.
+This plugin is part of the AI Marketplace and ships Claude Code packaging as one supported target.
 
 ## Learn More
 

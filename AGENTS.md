@@ -4,20 +4,20 @@ This file is the repo contract for Codex and other agent tooling.
 
 ## Repository Purpose
 
-This repository publishes reusable agent workflows as skills and packages them for Claude Code. The portable source of truth is the skill content under `plugins/*/skills/*`.
+This repository publishes reusable agent workflows as skills and packages them for multiple agent runtimes. The portable source of truth is the skill content under `plugins/*/skills/*`.
 
 ## Source of Truth
 
 - Canonical workflow logic lives in `plugins/*/skills/*/SKILL.md`.
 - Supporting files stay beside each canonical skill in `scripts/`, `references/`, and `assets/`.
-- Claude-specific packaging lives in `plugins/*/.claude-plugin/`, `commands/`, and `agents/`.
+- Claude packaging lives in `plugins/*/.claude-plugin/`, `commands/`, and `agents/`.
 - The existing nested skill layout is installable through `npx skills add` directly from this GitHub repo.
 
-## Portable vs Claude-only
+## Portable vs Platform-specific
 
 - Prefer adding reusable behavior as a skill.
 - Use `commands/` only for Claude slash-command workflows that do not need portability.
-- Use `agents/` only for Claude-specific delegation or isolation. If the behavior matters across agents, move it into a skill first.
+- Use `agents/` only for Claude-specific delegation or isolation. If the behavior matters across runtimes, move it into a skill first.
 - `plugins/p-assist` is personal/private. Do not market it as Codex-ready or recommend full-repo public installs unless the repo owner explicitly asks for that.
 
 ## Required Validation
@@ -46,5 +46,5 @@ python3 scripts/validate-mcp-tool-names.py <plugin-name> <server-key> <tool1> <t
 - Keep skill `name` equal to its directory name.
 - Keep skill descriptions explicit about what the skill does and when to use it.
 - When plugin or skill inventory changes, update `README.md`.
-- Bump a plugin version in `plugins/*/.claude-plugin/plugin.json` only when files shipped as part of that plugin change in a meaningful way, such as canonical skill content, plugin metadata, Claude-specific packaging, or plugin-local docs/assets. Do not bump a plugin version for repo-level README changes or Codex-only files that live outside that plugin directory.
+- Bump a plugin version in `plugins/*/.claude-plugin/plugin.json` only when files shipped as part of that plugin change in a meaningful way, such as canonical skill content, plugin metadata, Claude packaging, or plugin-local docs/assets. Do not bump a plugin version for repo-level README changes or Codex-only files that live outside that plugin directory.
 - Do not delete or rewrite user-owned local state such as `.codex`.
