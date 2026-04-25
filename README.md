@@ -14,7 +14,7 @@ This repository serves as a marketplace for reusable agent workflows across agen
 | **[p-assist](./plugins/p-assist/)** | Productivity: expenses, RSS, VPS | shared-mcp, N8N_API_TOKEN |
 | **[common-engineering](./plugins/common-engineering/)** | Engineering tools: code review, Mermaid diagrams, tech docs (RFCs, proposals, ADRs) | shared-mcp, mermaid-cli, CONTEXT7_API_KEY |
 | **[sys-maint](./plugins/sys-maint/)** | System maintenance: Docker cleanup, disk analysis | macOS only |
-| **[thinking-tools](./plugins/thinking-tools/)** | Thinking tools: pressure-test ideas (idea-refinery) and drill into execution plans (grill-me) | None |
+| **[thinking-tools](./plugins/thinking-tools/)** | Thinking tools: pressure-test ideas (idea-refinery) and resolve decision branches (decision-sparring) | None |
 | **[softskills](./plugins/softskills/)** | Office politics coach for navigating workplace dynamics | None |
 
 See individual plugin READMEs for detailed setup instructions.
@@ -42,7 +42,7 @@ Skills are model-invoked capabilities that agent runtimes can activate when trig
 | Skill | Trigger Phrases | Output |
 |-------|-----------------|--------|
 | `idea-refinery` | "pressure-test my idea", "sparring partner", "gut-check this idea", "is this worth doing" | Concise Idea Brief with problem, MVP, risks, next actions |
-| `grill-me` | "grill me", "interrogate my idea/plan", "stress-test this", "drill into this", "poke holes in it", "help me think through whether to pursue this" | Decision Summary — every branch resolved, whether viability or execution |
+| `decision-sparring` | "decision sparring", "spar with this decision", "interrogate my idea/plan", "stress-test this", "drill into this", "poke holes in it", "help me think through whether to pursue this" | Decision Summary — every branch resolved, whether viability or execution |
 
 ### softskills Skills
 
