@@ -7,9 +7,9 @@ Thinking tools for pressure-testing ideas and sharpening decisions before you co
 | Question | Skill |
 |---|---|
 | Should I pursue this idea at all? | idea-refinery |
-| How do I actually build / execute this? | grill-me |
+| What decisions must be resolved before I commit or execute? | decision-sparring |
 
-Natural order: run **idea-refinery** first to validate the idea and produce an Idea Brief, then run **grill-me** to drill into execution.
+Natural order: run **idea-refinery** first to validate the idea and produce an Idea Brief, then run **decision-sparring** to resolve the remaining decision branches.
 
 ## Skills
 
@@ -50,21 +50,20 @@ A sparring partner that challenges your raw ideas through natural conversation, 
 | **Biggest risk** | The single most likely thing to kill this |
 | **Next 3 actions** | Concrete P0/P1/P2 steps |
 
-**Scope:** Viability only — problem-fit, assumptions, risks, and whether this is worth doing. Implementation details are out of scope; that's what grill-me is for.
+**Scope:** Viability only — problem-fit, assumptions, risks, and whether this is worth doing. Implementation details are out of scope; that's what decision-sparring is for.
 
 **Works for any kind of idea:** product features, technical decisions, process changes, org changes, personal projects.
 
-### grill-me
+### decision-sparring
 
-A relentless interrogator that drills into every branch of a plan's decision tree until nothing is unresolved. Probes for unknown unknowns, failure modes, and constraints the user hasn't stated.
-
-Inspired by Matt Pocock's [grill-me skill](https://www.aihero.dev/my-grill-me-skill-has-gone-viral).
+A direct sparring partner that drills into every branch of an idea or plan until nothing important is unresolved. Probes for hidden assumptions, failure modes, tradeoffs, and constraints the user has not stated.
 
 **Trigger phrases:**
-- "grill me"
+- "decision sparring"
+- "spar with this decision"
 - "interrogate my plan"
 - "walk through my design"
-- "stress-test this design"
+- "stress-test this decision"
 - "drill into this plan"
 - "I have a plan, poke holes in it"
 - "I've decided to build X, help me think it through"
@@ -72,12 +71,12 @@ Inspired by Matt Pocock's [grill-me skill](https://www.aihero.dev/my-grill-me-sk
 **What it does:**
 
 1. You share a plan — any type, any format
-2. The agent asks sharp questions one or two at a time, walking every branch of the decision tree and resolving dependencies one-by-one
+2. The agent asks sharp questions one at a time, walking every branch of the decision tree and resolving dependencies one-by-one
 3. When a question has an obvious answer, it offers its lean: "I'd go with X here — does that match your thinking?"
 4. Probes for what you haven't thought to mention: undisclosed constraints, hidden assumptions, overlooked stakeholders, failure modes, and second-order effects of the implementation
 5. If the plan involves code or systems, it can explore the codebase to ground its questions in reality
 
-**Scope:** Execution only — assumes the idea is already validated. Probes implementation details, sequencing, edge cases, and hidden constraints. Does not re-open the question of whether to pursue the idea.
+**Scope:** Viability and execution — useful when a decision still has unresolved branches, whether they are about pursuing the idea, sequencing the work, handling edge cases, or committing to concrete next steps.
 
 **Works for:** technical architecture, product plans, process changes, any decision with multiple moving parts.
 

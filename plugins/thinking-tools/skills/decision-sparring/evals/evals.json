@@ -1,10 +1,10 @@
 {
-  "skill_name": "grill-me",
+  "skill_name": "decision-sparring",
   "evals": [
     {
       "id": 1,
       "prompt": "I'm thinking about building a SaaS tool for freelancers to manage invoices.",
-      "expected_output": "A full grill-me session: one question per turn with mentor commentary after each answer, covering viability and execution, ending with a Decision Summary bullet list.",
+      "expected_output": "A full decision-sparring session: one question per turn with mentor commentary after each answer, covering viability and execution, ending with a Decision Summary bullet list.",
       "files": [],
       "expectations": [
         "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
@@ -18,7 +18,7 @@
     {
       "id": 2,
       "prompt": "I've decided to quit my job and go full-time on my side project in 3 months.",
-      "expected_output": "A full grill-me session interrogating execution of this decision — sequencing, finances, dependencies, failure modes — with mentor commentary after each answer and a Decision Summary at the end.",
+      "expected_output": "A full decision-sparring session interrogating execution of this decision — sequencing, finances, dependencies, failure modes — with mentor commentary after each answer and a Decision Summary at the end.",
       "files": [],
       "expectations": [
         "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
@@ -32,7 +32,7 @@
     {
       "id": 3,
       "prompt": "I want to move to a new city for better career opportunities.",
-      "expected_output": "A full grill-me session on this life decision — interrogating viability, execution, hidden assumptions, and failure modes — with mentor commentary and a Decision Summary.",
+      "expected_output": "A full decision-sparring session on this life decision — interrogating viability, execution, hidden assumptions, and failure modes — with mentor commentary and a Decision Summary.",
       "files": [],
       "expectations": [
         "Each model turn asks exactly one question (no turn has more than one question mark from the model)",
@@ -46,7 +46,7 @@
     {
       "id": 4,
       "prompt": "I want to start a podcast about entrepreneurship.",
-      "expected_output": "A full grill-me session where the user gives vague, deflecting answers. The model should push back on each vague answer — naming what's missing and asking again — rather than accepting 'not sure' or 'we'll figure it out' and moving on.",
+      "expected_output": "A full decision-sparring session where the user gives vague, deflecting answers. The model should push back on each vague answer — naming what's missing and asking again — rather than accepting 'not sure' or 'we'll figure it out' and moving on.",
       "files": [],
       "expectations": [
         "Each model turn asks exactly one question (no turn has more than one question mark from the model)",

@@ -1,15 +1,16 @@
 ---
-name: grill-me
+name: decision-sparring
 description: >
-  Interrogates any idea or plan relentlessly until every branch of the decision tree is resolved —
+  Pressure-tests any idea or plan through direct decision sparring until every branch is resolved —
   whether the question is "is this worth pursuing?" or "how do I execute this?"
-  Activate when the user says things like "grill me", "interrogate my plan", "interrogate my idea",
-  "stress-test this", "drill into this", "poke holes in it", "help me think through whether to pursue this",
+  Activate when the user says things like "decision sparring", "spar with this decision",
+  "interrogate my plan", "interrogate my idea", "stress-test this", "drill into this",
+  "poke holes in it", "help me think through whether to pursue this",
   "I've decided to do X, help me think it through", or similar.
   Works on any domain — career moves, product launches, hiring plans, technical architecture, business decisions.
 ---
 
-Your job is to interrogate every unresolved branch until there are no open questions left — whether that means questioning whether the idea is worth pursuing, drilling into how to execute it, or both. Follow the questions wherever they lead.
+Your job is to pressure-test every unresolved branch until there are no open questions left — whether that means questioning whether the idea is worth pursuing, drilling into how to execute it, or both. Follow the questions wherever they lead.
 
 Start by confirming the topic in one sentence, then begin. Stay on that topic until it's fully resolved — if the conversation drifts, bring it back. When every branch is closed, produce a **Decision Summary**: a bullet-point list of every decision agreed on, with one final bullet naming the single most important next action.
 
