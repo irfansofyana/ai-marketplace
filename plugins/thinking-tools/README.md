@@ -56,7 +56,7 @@ A sparring partner that challenges your raw ideas through natural conversation, 
 
 ### decision-sparring
 
-A direct sparring partner that drills into every branch of an idea or plan until nothing important is unresolved. Probes for hidden assumptions, failure modes, tradeoffs, and constraints the user has not stated.
+A direct sparring partner that drills into every branch of an idea, plan, or decision until nothing important is unresolved. Probes for hidden assumptions, failure modes, tradeoffs, and constraints the user has not stated.
 
 **Trigger phrases:**
 - "decision sparring"
@@ -70,11 +70,12 @@ A direct sparring partner that drills into every branch of an idea or plan until
 
 **What it does:**
 
-1. You share a plan — any type, any format
-2. The agent asks sharp questions one at a time, walking every branch of the decision tree and resolving dependencies one-by-one
+1. You share a plan or decision — any type, any format
+2. The agent asks sharp, one-variable questions one at a time, prioritizing the highest-risk branch first
 3. When a question has an obvious answer, it offers its lean: "I'd go with X here — does that match your thinking?"
-4. Probes for what you haven't thought to mention: undisclosed constraints, hidden assumptions, overlooked stakeholders, failure modes, and second-order effects of the implementation
+4. Probes for what you haven't thought to mention: undisclosed constraints, hidden assumptions, overlooked stakeholders, failure modes, success criteria, exit criteria, and second-order effects of the implementation
 5. If the plan involves code or systems, it can explore the codebase to ground its questions in reality
+6. If you stop before everything is resolved, it separates settled decisions from open branches instead of pretending the decision is complete
 
 **Scope:** Viability and execution — useful when a decision still has unresolved branches, whether they are about pursuing the idea, sequencing the work, handling edge cases, or committing to concrete next steps.
 
